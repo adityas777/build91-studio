@@ -1,0 +1,324 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background-color: #05071A;
+  color: #ffffff;
+}
+
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgba(124, 58, 237, 0.4);
+  color: #ffffff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #05071A;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #5B21B6, #7C3AED);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7C3AED;
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-6 md:px-10 lg:px-16;
+  }
+
+  .text-display {
+    font-family: var(--font-space), system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .text-accent-italic {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-style: italic;
+  }
+
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full
+           bg-gradient-to-r from-violet-deep to-violet-glow px-7 py-3.5
+           text-sm font-medium text-white shadow-[0_10px_40px_-10px_rgba(124,58,237,0.6)]
+           transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(124,58,237,0.9)]
+           hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border
+           border-white/20 bg-white/[0.03] px-7 py-3.5 text-sm font-medium
+           text-white backdrop-blur-md transition-all duration-300
+           hover:border-violet-glow/60 hover:bg-white/[0.07];
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+           bg-gradient-to-r from-gold to-gold-soft px-7 py-3.5
+           text-sm font-medium text-ink-900 shadow-[0_10px_40px_-10px_rgba(224,184,114,0.6)]
+           transition-all duration-300 hover:-translate-y-0.5;
+  }
+
+  .glass-panel {
+    @apply rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl;
+  }
+
+  .section-heading {
+    @apply text-display text-4xl font-semibold leading-tight md:text-5xl lg:text-6xl;
+  }
+
+  .section-eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.3em] text-violet-soft;
+  }
+}
+
+/* Grid backdrop for hero sections */
+.bg-mesh {
+  background-image:
+    radial-gradient(at 20% 20%, rgba(124, 58, 237, 0.25) 0px, transparent 50%),
+    radial-gradient(at 80% 30%, rgba(91, 33, 182, 0.2) 0px, transparent 50%),
+    radial-gradient(at 50% 90%, rgba(224, 184, 114, 0.08) 0px, transparent 50%),
+    radial-gradient(at 10% 80%, rgba(124, 58, 237, 0.18) 0px, transparent 50%);
+}
+
+.bg-grid-soft {
+  background-image:
+    linear-gradient(to right, rgba(124, 58, 237, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 58, 237, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, #ffffff 0%, #C4B5FD 50%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(120deg, #ffffff 0%, #F3D690 50%, #E0B872 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Animated gradient utility */
+.animated-gradient {
+  background: linear-gradient(120deg, #0A0E2A, #1A1247, #5B21B6, #0A0E2A);
+  background-size: 300% 300%;
+  animation: gradient-shift 18s ease infinite;
+}
+
+/* Subtle radial vignette for cinematic sections */
+.vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(5, 7, 26, 0.85) 100%);
+}
+
+/* ───────────────────────────────────────────────────────────
+   Section moods — distinct color washes per section that flow
+   into each other for a premium, cinematic scroll.
+   ─────────────────────────────────────────────────────────── */
+
+.section-base {
+  position: relative;
+  isolation: isolate;
+}
+
+/* 1 — Warm "premise" wash: subtle gold + violet bloom */
+.section-warm {
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(224, 184, 114, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 100%, rgba(124, 58, 237, 0.14) 0%, transparent 50%),
+    linear-gradient(180deg, #060823 0%, #0B0A24 50%, #0C0820 100%);
+}
+
+/* 2 — Rich "service" wash: deeper violet with cinematic vignette */
+.section-violet {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 0% 80%, rgba(91, 33, 182, 0.18) 0%, transparent 50%),
+    linear-gradient(180deg, #0C0820 0%, #110A2C 50%, #0A0820 100%);
+}
+
+/* 3 — Cool "process" wash: deeper navy, blue tint, restrained */
+.section-cool {
+  background:
+    radial-gradient(ellipse at 100% 30%, rgba(56, 89, 200, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 90%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #0A0820 0%, #07091F 50%, #060823 100%);
+}
+
+/* 4 — Neutral mid "showcase" wash: balanced, ready for portfolio media */
+.section-neutral {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
+    linear-gradient(180deg, #060823 0%, #08092A 100%);
+}
+
+/* 5 — Cosmic "global" wash: starry deep navy with violet aurora */
+.section-cosmic {
+  background:
+    radial-gradient(circle at 30% 40%, rgba(124, 58, 237, 0.16) 0%, transparent 45%),
+    radial-gradient(circle at 80% 60%, rgba(224, 184, 114, 0.08) 0%, transparent 45%),
+    linear-gradient(180deg, #08092A 0%, #050720 50%, #060622 100%);
+}
+
+/* 6 — Premium "CTA" wash: most saturated, gold + violet bloom */
+.section-premium {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.28) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(224, 184, 114, 0.18) 0%, transparent 50%),
+    linear-gradient(135deg, #0A0820 0%, #1A0F40 50%, #0F0820 100%);
+}
+
+/* Smooth blend element — drops between sections so colors melt */
+.section-fade-bottom::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 12rem;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(5, 7, 26, 0.6));
+}
+
+.section-fade-top::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 12rem;
+  pointer-events: none;
+  background: linear-gradient(0deg, transparent, rgba(5, 7, 26, 0.6));
+}
+
+/* Subtle starfield for cosmic section */
+.starfield {
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 33% 72%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 58% 28%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 78% 62%, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 90% 15%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 5% 88%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 22% 45%, rgba(167, 139, 250, 0.45), transparent),
+    radial-gradient(2px 2px at 70% 80%, rgba(224, 184, 114, 0.4), transparent);
+  background-repeat: no-repeat;
+}
+
+/* ───────────────────────────────────────────────────────────
+   Logo-wall monochrome treatment
+   ───────────────────────────────────────────────────────────
+   Goal: render every partner logo as a clean white silhouette
+   on the dark navy section, regardless of whether the source
+   PNG has a transparent OR a baked-in white background.
+
+   How it works:
+     • invert(1) flips ink colors → dark logos become white,
+       white bgs become black.
+     • mix-blend-mode: screen blends the now-black bg with the
+       section's dark navy → it visually disappears, leaving
+       only the inverted (white) logo ink.
+
+   Trade-off: logos that are *already* light/white in source
+   become dark after invert and will vanish. For those, set
+   the logo entry's `forceColor: true` (TODO) and skip the
+   class. Today none of the 11 partner logos are light-on-
+   transparent so this isn't an issue yet.
+   ─────────────────────────────────────────────────────────── */
+.logo-mono {
+  filter: invert(1) brightness(1.05);
+  mix-blend-mode: screen;
+}
+
+/* Hide scrollbar where opted in */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Thin themed horizontal scrollbar — used on swipeable strips so users
+   get an affordance cue that there's more content to the right. */
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(167, 139, 250, 0.45) rgba(255, 255, 255, 0.06);
+}
+.thin-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #7C3AED, #E0B872);
+  border-radius: 999px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #A78BFA, #F3D690);
+}
+
+/* Marquee for filter bar on mobile if needed */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+}
+.scroll-snap-item {
+  scroll-snap-align: start;
+}
+
+/* Infinite left-to-right marquee */
+@keyframes marquee-ltr {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-ltr {
+  animation: marquee-ltr 24s linear infinite;
+}
+
+/* Infinite right-to-left marquee */
+@keyframes marquee-rtl {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-rtl {
+  animation: marquee-rtl 24s linear infinite;
+}
+
+.hover-pause:hover {
+  animation-play-state: paused;
+}
