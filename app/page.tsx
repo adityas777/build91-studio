@@ -69,7 +69,7 @@ const SERVICE_SLIDES: ScrollPinSlide[] = [
     ),
     body:
       'Cinematic skies and interactive aerial maps of every site — connectivity, landmarks and value told from above.',
-    mediaSrc: 'https://drive.google.com/uc?export=view&id=1gpdnAD3oTIpELChd-fmNGz6abnBL0ys6',
+    mediaSrc: '/video/scroll-reveal/group1_desktop.mp4',
     mediaSrcMobile: '/video/scroll-reveal/group1_mobile.mp4',
     posterTint: 'violet',
   },
@@ -83,7 +83,7 @@ const SERVICE_SLIDES: ScrollPinSlide[] = [
     ),
     body:
       'Interiors, exteriors and amenities that look like photographs of buildings that already exist.',
-    mediaSrc: 'https://drive.google.com/uc?export=view&id=1cH9W0LNPtoygR0sBjZlR0ym3iCmldSX2',
+    mediaSrc: '/video/scroll-reveal/group2_desktop.mp4',
     mediaSrcMobile: '/video/scroll-reveal/group2_mobile.mp4',
     posterTint: 'gold',
   },
@@ -97,7 +97,7 @@ const SERVICE_SLIDES: ScrollPinSlide[] = [
     ),
     body:
       'Move buyers through the project from any device, anywhere — the emotional pull a render can’t deliver.',
-    mediaSrc: 'https://drive.google.com/uc?export=view&id=11DwJunpetuHhw_1SODcjwH7fBzVIDWCi',
+    mediaSrc: '/video/scroll-reveal/group3_desktop.mp4',
     mediaSrcMobile: '/video/scroll-reveal/group3_mobile.mp4',
     posterTint: 'deep',
   },
@@ -111,7 +111,7 @@ const SERVICE_SLIDES: ScrollPinSlide[] = [
     ),
     body:
       'The full performance suite — websites, social kits, vertical reels and digital brochures tuned for conversion.',
-    mediaSrc: 'https://drive.google.com/uc?export=view&id=1s93SZzQEy37IEbgK-Y1vDXegAz9pE9sX',
+    mediaSrc: '/video/scroll-reveal/group4_desktop.mp4',
     mediaSrcMobile: '/video/scroll-reveal/group4_mobile.mp4',
     posterTint: 'cool',
   },
@@ -125,7 +125,7 @@ const SERVICE_SLIDES: ScrollPinSlide[] = [
     ),
     body:
       'One immersive URL. Every asset. Your sales team’s superpower — no app, no friction, full immersion.',
-    mediaSrc: 'https://drive.google.com/uc?export=view&id=1rj2ZTUKQB4EFP8ForrjyLeNCHqCjuHPL',
+    mediaSrc: '/video/scroll-reveal/group5_desktop.mp4',
     mediaSrcMobile: '/video/scroll-reveal/group5_mobile.mp4',
     posterTint: 'gold',
   },
