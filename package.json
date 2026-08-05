@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sst:dev": "sst dev",
+    "deploy": "sst deploy --stage prod"
   },
   "dependencies": {
     "@types/d3-geo": "^3.1.0",
@@ -24,15 +26,19 @@
     "world-atlas": "^2.0.2"
   },
   "devDependencies": {
+    "@aws-sdk/client-cloudwatch-logs": "^3.1103.0",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
+    "aws-cdk-lib": "^2.263.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.5",
     "postcss": "^8.4.39",
     "sharp": "^0.34.5",
+    "sst": "^4.17.1",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.5.3"
-  }
+  },
+  "packageManager": "pnpm@11.20.0+sha512.9a6f330a95b66446ea088faf1521405a8a01f07fde7124cc9958dfed52d4bb436737e65b08f85f37b46fcba375092558ac51262b816844b22f63406ed166bfee"
 }

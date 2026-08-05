@@ -130,11 +130,11 @@ export function GlobalPresence() {
               >
                 <div className="relative">
                   <span
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full ${s.ping}`}
+                    className={`absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full ${s.ping}`}
                     style={{ width: pingSize, height: pingSize }}
                   />
                   <span
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full ${s.dot}`}
+                    className={`absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full ${s.dot}`}
                     style={{ width: dotSize, height: dotSize }}
                   />
                   <span

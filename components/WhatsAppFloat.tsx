@@ -34,7 +34,7 @@ export function WhatsAppFloat() {
       initial={{ opacity: 0, y: 24, scale: 0.85 }}
       animate={visible ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="group fixed bottom-6 right-6 z-40 inline-flex items-center gap-3 rounded-full border border-white/15 bg-ink-900/80 py-3 pl-3 pr-5 text-sm font-medium text-white shadow-[0_15px_50px_-15px_rgba(124,58,237,0.7)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-glow/60 hover:bg-ink-900/90 md:bottom-8 md:right-8"
+      className="group fixed bottom-6 right-6 z-40 inline-flex items-center gap-3 rounded-full border border-white/15 bg-ink-900/80 p-3 sm:pr-5 text-sm font-medium text-white shadow-[0_15px_50px_-15px_rgba(124,58,237,0.7)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-glow/60 hover:bg-ink-900/90 md:bottom-8 md:right-8"
     >
       <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-inner">
         <span className="absolute inset-0 animate-pulse-glow rounded-full bg-emerald-400/40 blur-md" />
