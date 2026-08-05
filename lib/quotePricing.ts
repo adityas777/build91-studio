@@ -340,7 +340,6 @@ const PRICE_AERIAL_TOWER = 25000; // Placeholder pending calibration against rea
 const PRICE_AERIAL_UNIT = 8000; // Placeholder pending calibration against real project costs
 const PRICE_AERIAL_VILLA = 4000; // Placeholder pending calibration against real project costs
 const PRICE_AERIAL_PLOT = 500; // Placeholder pending calibration against real project costs
-const PRICE_AERIAL_HR_UNIT = 150; // Placeholder pending calibration against real project costs (Task 1)
 
 const PRICE_INTERACTIVE_BASE = 150000; // Placeholder pending calibration against real project costs
 const PRICE_INTERACTIVE_AMENITY = 10000; // Placeholder pending calibration against real project costs
@@ -353,7 +352,6 @@ const RATE_SUPERIMPOSE_ACRE = 10000; // Placeholder pending calibration against 
 const RATE_SUPERIMPOSE_PLOT = 800; // Placeholder pending calibration against real project costs
 const RATE_SUPERIMPOSE_VILLA = 800; // Placeholder pending calibration against real project costs
 const RATE_SUPERIMPOSE_UNIT = 800; // Placeholder pending calibration against real project costs
-const RATE_SUPERIMPOSE_HR_UNIT = 150; // Placeholder pending calibration against real project costs (Task 1)
 
 const PRICE_SUPERIMPOSITION_BASE = 75000; // Placeholder pending calibration against real project costs
 const PRICE_BRAND_CREDENTIALS_BASE = 50000; // Placeholder pending calibration against real project costs
@@ -547,9 +545,6 @@ function superimpositionCost(ctx: PricingContext): number {
     { upTo: Infinity, rate: RATE_SUPERIMPOSE_UNIT * 0.6 }
   ]);
   
-  // Task 1: Use avgUnitsPerTower (density term)
-  const hrUnitsCost = ctx.type === 'high-rise' ? (s.towers ?? 0) * (s.avgUnitsPerTower ?? 0) * RATE_SUPERIMPOSE_HR_UNIT : 0;
-  
   const towersCost = tieredCost(towers, [
     { upTo: 2, rate: RATE_SUPERIMPOSE_TOWER },
     { upTo: Infinity, rate: RATE_SUPERIMPOSE_TOWER * 0.7 }
@@ -559,7 +554,7 @@ function superimpositionCost(ctx: PricingContext): number {
     { upTo: Infinity, rate: RATE_SUPERIMPOSE_ACRE * 0.7 }
   ]);
   
-  const totalUnitsCost = plotsCost + villasCost + unitsCost + hrUnitsCost;
+  const totalUnitsCost = plotsCost + villasCost + unitsCost;
   
   return PRICE_SUPERIMPOSITION_BASE + towersCost + totalUnitsCost + areaCost;
 }
@@ -572,7 +567,6 @@ function brandCredentialsCost(ctx: PricingContext): number {
     case 'high-rise':
       scaleFactor =
         (s.towers ?? 0) * 1.5 +
-        ((s.towers ?? 0) * (s.avgUnitsPerTower ?? 0)) / 100 +
         (s.plotAreaAcres ?? 0);
       break;
     case 'plotted':
@@ -634,10 +628,7 @@ const ASSET_PRICERS: Record<string, AssetPricer> = {
     const villasCost = (s.villas ?? 0) * PRICE_AERIAL_VILLA;
     const plotsCost = (s.plots ?? 0) * PRICE_AERIAL_PLOT;
     
-    // Task 1: Use avgUnitsPerTower (density term)
-    const hrUnitsCost = ctx.type === 'high-rise' ? (s.towers ?? 0) * (s.avgUnitsPerTower ?? 0) * PRICE_AERIAL_HR_UNIT : 0;
-    
-    const units = towersCost + unitsCost + villasCost + plotsCost + hrUnitsCost;
+    const units = towersCost + unitsCost + villasCost + plotsCost;
     
     return Math.round(PRICE_AERIAL_BASE + area + units);
   },
@@ -739,9 +730,10 @@ const ASSET_PRICERS: Record<string, AssetPricer> = {
       { upTo: Infinity, rate: 110000 }
     ]);
     // Task 1: Use avgUnitsPerTower (density term)
+    // Rate adjusted slightly upward (from 1200/700 to 1800/1000) to compensate for consolidating density terms.
     const density = tieredCost((s.towers ?? 0) * (s.avgUnitsPerTower ?? 0), [
-      { upTo: 100, rate: 1200 },
-      { upTo: Infinity, rate: 700 }
+      { upTo: 100, rate: 1800 },
+      { upTo: Infinity, rate: 1000 }
     ]);
     const amenities = tieredCost(s.amenities ?? 0, [
       { upTo: 5, rate: 30000 },

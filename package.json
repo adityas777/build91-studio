@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "sst:dev": "sst dev",
-    "deploy": "sst deploy --stage prod"
+    "deploy": "sst deploy --stage prod",
+    "test": "tsx scripts/run-regression-tests.ts"
   },
   "dependencies": {
     "@types/d3-geo": "^3.1.0",
@@ -38,6 +39,7 @@
     "sharp": "^0.34.5",
     "sst": "^4.17.1",
     "tailwindcss": "^3.4.6",
+    "tsx": "^4.23.0",
     "typescript": "^5.5.3"
   },
   "packageManager": "pnpm@11.20.0+sha512.9a6f330a95b66446ea088faf1521405a8a01f07fde7124cc9958dfed52d4bb436737e65b08f85f37b46fcba375092558ac51262b816844b22f63406ed166bfee"
