@@ -34,6 +34,11 @@ export default $config({
     }
 
     new sst.aws.Nextjs("MyWeb", {
+      domain: {
+        name: "dev.build91.in",
+        dns: false,
+        cert: "arn:aws:acm:us-east-1:533267081620:certificate/567d4fe4-a433-4f4b-b713-dea5835bcb8d",
+      },
       environment: {
         RESEND_API_KEY: process.env.RESEND_API_KEY || "",
         QUOTE_TO_EMAIL: process.env.QUOTE_TO_EMAIL || "",
