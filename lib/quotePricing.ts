@@ -24,9 +24,9 @@ import {
    Reveal   : Customer sees ONLY the final total after contact submit
    ─────────────────────────────────────────────────────────────────────── */
 
-export const PRICING_VERSION = 'v2-draft';
-export const QUOTE_VALIDITY_DAYS = 30;
-export const GST_RATE = 0.18;
+export const PRICING_VERSION = 'v3-draft'; // Bumped to v3 for pricing revisions (Task 10)
+export const QUOTE_VALIDITY_DAYS = 30; // Placeholder pending calibration against real project costs (Task 10)
+export const GST_RATE = 0.18; // Standard GST rate
 
 /** Today's date in ISO format. Computed at call-time so the pricing
  *  snapshot in any quote reflects when it was generated. */
@@ -64,16 +64,6 @@ export type ScaleField = {
   /** Description shown on the ⓘ tooltip. */
   hint?: string;
 };
-
-/** Plot-count range options used by Plotted Land. Values are midpoints
- *  of the displayed range so pricing reflects "typical" project size. */
-const PLOT_RANGE_OPTIONS = [
-  { value: 25, label: '0–50' },
-  { value: 125, label: '50–200' },
-  { value: 300, label: '200–400' },
-  { value: 500, label: '400–600' },
-  { value: 800, label: '600+' },
-];
 
 export const SCALE_FIELDS_BY_TYPE: Record<ProjectTypeId, ScaleField[]> = {
   'high-rise': [
@@ -134,9 +124,12 @@ export const SCALE_FIELDS_BY_TYPE: Record<ProjectTypeId, ScaleField[]> = {
     {
       key: 'plots',
       label: 'Total no. of plots',
-      control: 'range',
-      default: 300,
-      options: PLOT_RANGE_OPTIONS,
+      control: 'stepper',
+      default: 100,
+      min: 1,
+      max: 2000,
+      step: 10,
+      unit: 'plots',
     },
     {
       key: 'amenities',
@@ -339,32 +332,84 @@ export const DRONE_INVOLVED_ASSETS = new Set<string>([
 
 /* ── Pricing constants (tune these — they're the "knobs") ──────────── */
 
-// Location-intelligence variants — sub-option prices
-const PRICE_LOC_INTEL = {
-  'site-based': 75000,
-  'google-maps': 40000,
-  'drone-route': 60000,
-};
-const PRICE_LOC_CATCHMENT = {
-  'site-based': 90000,
-  'google-maps': 50000,
-  'drone-route': 75000,
-};
-const PRICE_LOC_LOGISTICS = {
-  'site-based': 95000,
-  'google-maps': 55000,
-  'drone-route': 80000,
+// Named pricing constants and rates (Task 3 & 10)
+// Note: Placeholder pending calibration against real project costs (Task 10)
+const PRICE_AERIAL_BASE = 150000; // Placeholder pending calibration against real project costs
+const PRICE_AERIAL_ACRE_RATE = 20000; // Placeholder pending calibration against real project costs
+const PRICE_AERIAL_TOWER = 25000; // Placeholder pending calibration against real project costs
+const PRICE_AERIAL_UNIT = 8000; // Placeholder pending calibration against real project costs
+const PRICE_AERIAL_VILLA = 4000; // Placeholder pending calibration against real project costs
+const PRICE_AERIAL_PLOT = 500; // Placeholder pending calibration against real project costs
+const PRICE_AERIAL_HR_UNIT = 150; // Placeholder pending calibration against real project costs (Task 1)
+
+const PRICE_INTERACTIVE_BASE = 150000; // Placeholder pending calibration against real project costs
+const PRICE_INTERACTIVE_AMENITY = 10000; // Placeholder pending calibration against real project costs
+const PRICE_INTERACTIVE_PLOT = 500; // Placeholder pending calibration against real project costs
+const PRICE_INTERACTIVE_VILLA = 500; // Placeholder pending calibration against real project costs
+const PRICE_INTERACTIVE_UNIT = 500; // Placeholder pending calibration against real project costs
+
+const RATE_SUPERIMPOSE_TOWER = 50000; // Placeholder pending calibration against real project costs
+const RATE_SUPERIMPOSE_ACRE = 10000; // Placeholder pending calibration against real project costs
+const RATE_SUPERIMPOSE_PLOT = 800; // Placeholder pending calibration against real project costs
+const RATE_SUPERIMPOSE_VILLA = 800; // Placeholder pending calibration against real project costs
+const RATE_SUPERIMPOSE_UNIT = 800; // Placeholder pending calibration against real project costs
+const RATE_SUPERIMPOSE_HR_UNIT = 150; // Placeholder pending calibration against real project costs (Task 1)
+
+const PRICE_SUPERIMPOSITION_BASE = 75000; // Placeholder pending calibration against real project costs
+const PRICE_BRAND_CREDENTIALS_BASE = 50000; // Placeholder pending calibration against real project costs
+
+const MICROSITE_PERCENT = 0.15; // Placeholder pending calibration against real project costs
+const SHOWCASE_DEPENDENCY_PERCENT = 0.20; // Placeholder pending calibration against real project costs
+
+// Standalone fallbacks for showcase-video sub-options (Task 8)
+const PRICE_SHOWCASE_WALKTHROUGH_STANDALONE = 120000; // Placeholder pending calibration against real project costs
+const PRICE_SHOWCASE_LOC_STANDALONE = 40000; // Placeholder pending calibration against real project costs
+
+// Per-asset minimum price floors (Task 5)
+const ASSET_MIN_PRICES: Record<string, number> = {
+  'location-intelligence': 50000, // Placeholder pending calibration against real project costs
+  'location-catchment': 60000, // Placeholder pending calibration against real project costs
+  'location-logistics': 65000, // Placeholder pending calibration against real project costs
+  'aerial-360-3d': 125000, // Placeholder pending calibration against real project costs
+  'pdf-brochure': 40000, // Placeholder pending calibration against real project costs
+  'pdf-leasing-kit': 60000, // Placeholder pending calibration against real project costs
+  'pdf-spec-sheet': 60000, // Placeholder pending calibration against real project costs
+  'showcase-video': 100000, // Placeholder pending calibration against real project costs
+  microsite: 50000, // Placeholder pending calibration against real project costs
+  'microsite-leasing': 50000, // Placeholder pending calibration against real project costs
+  'microsite-ipc': 60000, // Placeholder pending calibration against real project costs
+  '3d-land': 150000, // Placeholder pending calibration against real project costs
+  '3d-high-rise': 200000, // Placeholder pending calibration against real project costs
+  '3d-commercial': 200000, // Placeholder pending calibration against real project costs
+  '3d-retail': 200000, // Placeholder pending calibration against real project costs
+  '3d-warehouse': 180000, // Placeholder pending calibration against real project costs
+  'isometric-high-rise': 45000, // Placeholder pending calibration against real project costs
+  'isometric-fitout': 60000, // Placeholder pending calibration against real project costs
+  'isometric-leasing': 45000, // Placeholder pending calibration against real project costs
+  'isometric-warehouse': 60000, // Placeholder pending calibration against real project costs
+  'interactive-plotted-kit': 120000, // Placeholder pending calibration against real project costs
 };
 
-// Showcase video — 3D superimposition / brand credentials base prices
-const PRICE_SUPERIMPOSITION_BASE = 75000;
-const PRICE_BRAND_CREDENTIALS_BASE = 50000;
+// Location intelligence pricing functions of scale (Task 4)
+type ScalePricer = (scale: ScaleInputs) => number;
 
-// Microsite — % of other selected asset prices
-const MICROSITE_PERCENT = 0.15;
+const PRICE_LOC_INTEL: Record<string, ScalePricer> = {
+  'site-based': (scale) => 75000 + (scale.plotAreaAcres ?? 0) * 2000, // Placeholder pending calibration against real project costs
+  'google-maps': (scale) => 40000 + (scale.plotAreaAcres ?? 0) * 1000, // Placeholder pending calibration against real project costs
+  'drone-route': (scale) => 60000 + (scale.plotAreaAcres ?? 0) * 1500, // Placeholder pending calibration against real project costs
+};
 
-// Showcase video — % of dependent assets when sub-option selected
-const SHOWCASE_DEPENDENCY_PERCENT = 0.20;
+const PRICE_LOC_CATCHMENT: Record<string, ScalePricer> = {
+  'site-based': (scale) => 90000 + (scale.plotAreaAcres ?? 0) * 2500, // Placeholder pending calibration against real project costs
+  'google-maps': (scale) => 50000 + (scale.plotAreaAcres ?? 0) * 1200, // Placeholder pending calibration against real project costs
+  'drone-route': (scale) => 75000 + (scale.plotAreaAcres ?? 0) * 1800, // Placeholder pending calibration against real project costs
+};
+
+const PRICE_LOC_LOGISTICS: Record<string, ScalePricer> = {
+  'site-based': (scale) => 95000 + (scale.plotAreaAcres ?? 0) * 3000, // Placeholder pending calibration against real project costs
+  'google-maps': (scale) => 55000 + (scale.plotAreaAcres ?? 0) * 1500, // Placeholder pending calibration against real project costs
+  'drone-route': (scale) => 80000 + (scale.plotAreaAcres ?? 0) * 2000, // Placeholder pending calibration against real project costs
+};
 
 /* ── Sub-option price helpers ──────────────────────────────────────── */
 
@@ -451,41 +496,112 @@ export const LOCATION_INTEL_ASSET_IDS: ReadonlySet<string> = new Set([
 function sumSubOptionPrices(
   ctx: PricingContext,
   assetId: string,
-  priceMap: Record<string, number>,
+  priceMap: Record<string, ScalePricer>,
 ): number {
   const subs = ctx.subOptionsByAsset[assetId] ?? [];
-  return subs.reduce((sum, sub) => sum + (priceMap[sub] ?? 0), 0);
+  return subs.reduce((sum, sub) => {
+    const pricer = priceMap[sub];
+    return sum + (pricer ? pricer(ctx.scale) : 0);
+  }, 0);
+}
+
+interface CostTier {
+  upTo: number;
+  rate: number;
+}
+
+/** Utility to compute tiered costs for diminishing rates (Task 6) */
+export function tieredCost(count: number, tiers: CostTier[]): number {
+  let cost = 0;
+  let remaining = count;
+  let previousUpTo = 0;
+  
+  for (const tier of tiers) {
+    if (remaining <= 0) break;
+    const tierSize = tier.upTo - previousUpTo;
+    const countInTier = Math.min(remaining, tierSize);
+    cost += countInTier * tier.rate;
+    remaining -= countInTier;
+    previousUpTo = tier.upTo;
+  }
+  return cost;
 }
 
 // Common — superimposition cost = base + scale factor.
 function superimpositionCost(ctx: PricingContext): number {
   const s = ctx.scale;
   const towers = s.towers ?? 0;
-  const units = s.plots ?? s.villas ?? s.buildingUnits ?? 0;
   const area = s.plotAreaAcres ?? 0;
-  return PRICE_SUPERIMPOSITION_BASE + towers * 50000 + units * 800 + area * 10000;
+  
+  // Split combined units terms into separate coefficients with named constants (Task 3)
+  const plotsCost = tieredCost(s.plots ?? 0, [
+    { upTo: 100, rate: RATE_SUPERIMPOSE_PLOT },
+    { upTo: Infinity, rate: RATE_SUPERIMPOSE_PLOT * 0.6 }
+  ]);
+  const villasCost = tieredCost(s.villas ?? 0, [
+    { upTo: 50, rate: RATE_SUPERIMPOSE_VILLA },
+    { upTo: Infinity, rate: RATE_SUPERIMPOSE_VILLA * 0.6 }
+  ]);
+  const unitsCost = tieredCost(s.buildingUnits ?? 0, [
+    { upTo: 50, rate: RATE_SUPERIMPOSE_UNIT },
+    { upTo: Infinity, rate: RATE_SUPERIMPOSE_UNIT * 0.6 }
+  ]);
+  
+  // Task 1: Use avgUnitsPerTower (density term)
+  const hrUnitsCost = ctx.type === 'high-rise' ? (s.towers ?? 0) * (s.avgUnitsPerTower ?? 0) * RATE_SUPERIMPOSE_HR_UNIT : 0;
+  
+  const towersCost = tieredCost(towers, [
+    { upTo: 2, rate: RATE_SUPERIMPOSE_TOWER },
+    { upTo: Infinity, rate: RATE_SUPERIMPOSE_TOWER * 0.7 }
+  ]);
+  const areaCost = tieredCost(area, [
+    { upTo: 10, rate: RATE_SUPERIMPOSE_ACRE },
+    { upTo: Infinity, rate: RATE_SUPERIMPOSE_ACRE * 0.7 }
+  ]);
+  
+  const totalUnitsCost = plotsCost + villasCost + unitsCost + hrUnitsCost;
+  
+  return PRICE_SUPERIMPOSITION_BASE + towersCost + totalUnitsCost + areaCost;
 }
 
-// Common — brand credentials cost = base + scale-derived factor.
+// Common — brand credentials cost = base + scale-derived factor. (Task 9 & Task 1)
 function brandCredentialsCost(ctx: PricingContext): number {
   const s = ctx.scale;
-  const scaleFactor =
-    (s.towers ?? 0) +
-    (s.buildingUnits ?? 0) +
-    (s.villas ?? 0) +
-    (s.plots ?? 0) / 10 +
-    (s.plotAreaAcres ?? 0);
+  let scaleFactor = 0;
+  switch (ctx.type) {
+    case 'high-rise':
+      scaleFactor =
+        (s.towers ?? 0) * 1.5 +
+        ((s.towers ?? 0) * (s.avgUnitsPerTower ?? 0)) / 100 +
+        (s.plotAreaAcres ?? 0);
+      break;
+    case 'plotted':
+      scaleFactor = (s.plots ?? 0) / 10 + (s.plotAreaAcres ?? 0);
+      break;
+    case 'villa-community':
+      scaleFactor = (s.villas ?? 0) + (s.plotAreaAcres ?? 0);
+      break;
+    case 'commercial':
+    case 'retail':
+      scaleFactor = (s.buildingUnits ?? 0) + (s.plotAreaAcres ?? 0);
+      break;
+    case 'warehousing':
+      scaleFactor = (s.buildingUnits ?? 0) + (s.plotAreaAcres ?? 0);
+      break;
+    default:
+      scaleFactor = (s.plotAreaAcres ?? 0);
+  }
   return PRICE_BRAND_CREDENTIALS_BASE + Math.round(scaleFactor * 8000);
 }
 
-// Microsite — 15% of OTHER selected asset prices. Microsite-variants
-// (microsite-leasing, microsite-ipc) share the formula but read their
-// own id when filtering.
+// Sibling microsites to filter out to prevent double-counting (Task 7)
+const MICROSITE_IDS = new Set(['microsite', 'microsite-leasing', 'microsite-ipc']);
+
 function micrositeFormula(
   ctx: PricingContext,
   selfId: string,
 ): number {
-  const others = ctx.selectedAssetIds.filter((id) => id !== selfId);
+  const others = ctx.selectedAssetIds.filter((id) => !MICROSITE_IDS.has(id));
   const otherTotal = others.reduce(
     (sum, id) => sum + computeAssetPrice(id, ctx),
     0,
@@ -507,25 +623,55 @@ const ASSET_PRICERS: Record<string, AssetPricer> = {
   // Aerial 360° with 3D superimposition — universal asset, scale-based
   'aerial-360-3d': (ctx) => {
     const s = ctx.scale;
-    const area = (s.plotAreaAcres ?? 0) * 20000;
-    const units =
-      (s.towers ?? 0) * 25000 +
-      (s.buildingUnits ?? 0) * 8000 +
-      (s.villas ?? 0) * 4000 +
-      (s.plots ?? 0) * 500;
-    return Math.max(125000, 150000 + area + units);
+    const area = tieredCost(s.plotAreaAcres ?? 0, [
+      { upTo: 10, rate: PRICE_AERIAL_ACRE_RATE },
+      { upTo: Infinity, rate: PRICE_AERIAL_ACRE_RATE * 0.6 }
+    ]);
+    
+    // Split combined units terms into separate coefficients with named constants (Task 3)
+    const towersCost = (s.towers ?? 0) * PRICE_AERIAL_TOWER;
+    const unitsCost = (s.buildingUnits ?? 0) * PRICE_AERIAL_UNIT;
+    const villasCost = (s.villas ?? 0) * PRICE_AERIAL_VILLA;
+    const plotsCost = (s.plots ?? 0) * PRICE_AERIAL_PLOT;
+    
+    // Task 1: Use avgUnitsPerTower (density term)
+    const hrUnitsCost = ctx.type === 'high-rise' ? (s.towers ?? 0) * (s.avgUnitsPerTower ?? 0) * PRICE_AERIAL_HR_UNIT : 0;
+    
+    const units = towersCost + unitsCost + villasCost + plotsCost + hrUnitsCost;
+    
+    return Math.round(PRICE_AERIAL_BASE + area + units);
   },
 
   // PDF brochures — modest base + amenity factor
-  'pdf-brochure': (ctx) => 50000 + (ctx.scale.amenities ?? 0) * 5000,
-  'pdf-leasing-kit': (ctx) =>
-    75000 +
-    (ctx.scale.buildingUnits ?? 0) * 5000 +
-    (ctx.scale.amenities ?? 0) * 3000,
-  'pdf-spec-sheet': (ctx) =>
-    75000 +
-    (ctx.scale.plotAreaAcres ?? 0) * 8000 +
-    (ctx.scale.buildingUnits ?? 0) * 3000,
+  'pdf-brochure': (ctx) => {
+    const amenitiesCost = tieredCost(ctx.scale.amenities ?? 0, [
+      { upTo: 5, rate: 5000 },
+      { upTo: Infinity, rate: 3000 }
+    ]);
+    return 50000 + amenitiesCost;
+  },
+  'pdf-leasing-kit': (ctx) => {
+    const unitsCost = tieredCost(ctx.scale.buildingUnits ?? 0, [
+      { upTo: 10, rate: 5000 },
+      { upTo: Infinity, rate: 3000 }
+    ]);
+    const amenitiesCost = tieredCost(ctx.scale.amenities ?? 0, [
+      { upTo: 5, rate: 3000 },
+      { upTo: Infinity, rate: 1500 }
+    ]);
+    return 75000 + unitsCost + amenitiesCost;
+  },
+  'pdf-spec-sheet': (ctx) => {
+    const areaCost = tieredCost(ctx.scale.plotAreaAcres ?? 0, [
+      { upTo: 10, rate: 8000 },
+      { upTo: Infinity, rate: 4000 }
+    ]);
+    const unitsCost = tieredCost(ctx.scale.buildingUnits ?? 0, [
+      { upTo: 10, rate: 3000 },
+      { upTo: Infinity, rate: 1500 }
+    ]);
+    return 75000 + areaCost + unitsCost;
+  },
 
   // Showcase video — compound from sub-options
   'showcase-video': (ctx) => {
@@ -535,12 +681,16 @@ const ASSET_PRICERS: Record<string, AssetPricer> = {
       const threeDId = threeDSetIdFor(ctx.type);
       if (threeDId && ctx.selectedAssetIds.includes(threeDId)) {
         total += Math.round(computeAssetPrice(threeDId, ctx) * SHOWCASE_DEPENDENCY_PERCENT);
+      } else {
+        total += PRICE_SHOWCASE_WALKTHROUGH_STANDALONE; // Task 8 fallback
       }
     }
     if (subs.includes('location-highlights')) {
       const locId = locationAssetIdFor(ctx.type);
       if (locId && ctx.selectedAssetIds.includes(locId)) {
         total += Math.round(computeAssetPrice(locId, ctx) * SHOWCASE_DEPENDENCY_PERCENT);
+      } else {
+        total += PRICE_SHOWCASE_LOC_STANDALONE; // Task 8 fallback
       }
     }
     if (subs.includes('3d-superimposition')) {
@@ -560,73 +710,155 @@ const ASSET_PRICERS: Record<string, AssetPricer> = {
   // 3D sets — type-specific
   '3d-land': (ctx) => {
     const s = ctx.scale;
-    const area = (s.plotAreaAcres ?? 0) * 10000;
-    const amenities = (s.amenities ?? 0) * 25000;
+    const area = tieredCost(s.plotAreaAcres ?? 0, [
+      { upTo: 10, rate: 10000 },
+      { upTo: Infinity, rate: 6000 }
+    ]);
+    const amenities = tieredCost(s.amenities ?? 0, [
+      { upTo: 5, rate: 25000 },
+      { upTo: Infinity, rate: 15000 }
+    ]);
     if (ctx.type === 'villa-community') {
-      return 200000 + (s.modelVillas ?? 0) * 100000 + amenities + area;
+      const villas = tieredCost(s.modelVillas ?? 0, [
+        { upTo: 3, rate: 100000 },
+        { upTo: Infinity, rate: 60000 }
+      ]);
+      return 200000 + villas + amenities + area;
     }
     // plotted land
-    return 200000 + (s.plots ?? 0) * 1000 + amenities + area;
+    const plots = tieredCost(s.plots ?? 0, [
+      { upTo: 100, rate: 1000 },
+      { upTo: Infinity, rate: 500 }
+    ]);
+    return 200000 + plots + amenities + area;
   },
   '3d-high-rise': (ctx) => {
     const s = ctx.scale;
-    return (
-      100000 +
-      (s.towers ?? 0) * 175000 +
-      (s.amenities ?? 0) * 30000 +
-      (s.plotAreaAcres ?? 0) * 8000
-    );
+    const towers = tieredCost(s.towers ?? 0, [
+      { upTo: 2, rate: 175000 },
+      { upTo: Infinity, rate: 110000 }
+    ]);
+    // Task 1: Use avgUnitsPerTower (density term)
+    const density = tieredCost((s.towers ?? 0) * (s.avgUnitsPerTower ?? 0), [
+      { upTo: 100, rate: 1200 },
+      { upTo: Infinity, rate: 700 }
+    ]);
+    const amenities = tieredCost(s.amenities ?? 0, [
+      { upTo: 5, rate: 30000 },
+      { upTo: Infinity, rate: 15000 }
+    ]);
+    const area = tieredCost(s.plotAreaAcres ?? 0, [
+      { upTo: 5, rate: 8000 },
+      { upTo: Infinity, rate: 4000 }
+    ]);
+    return 100000 + towers + density + amenities + area;
   },
   '3d-commercial': (ctx) => {
     const s = ctx.scale;
-    return (
-      150000 +
-      (s.buildingUnits ?? 0) * 60000 +
-      (s.amenities ?? 0) * 35000 +
-      (s.plotAreaAcres ?? 0) * 10000
-    );
+    const units = tieredCost(s.buildingUnits ?? 0, [
+      { upTo: 10, rate: 60000 },
+      { upTo: Infinity, rate: 35000 }
+    ]);
+    const amenities = tieredCost(s.amenities ?? 0, [
+      { upTo: 5, rate: 35000 },
+      { upTo: Infinity, rate: 18000 }
+    ]);
+    const area = tieredCost(s.plotAreaAcres ?? 0, [
+      { upTo: 5, rate: 10000 },
+      { upTo: Infinity, rate: 5000 }
+    ]);
+    return 150000 + units + amenities + area;
   },
   '3d-retail': (ctx) => {
     const s = ctx.scale;
-    return (
-      150000 +
-      (s.buildingUnits ?? 0) * 50000 +
-      (s.amenities ?? 0) * 30000 +
-      (s.plotAreaAcres ?? 0) * 10000
-    );
+    const units = tieredCost(s.buildingUnits ?? 0, [
+      { upTo: 10, rate: 50000 },
+      { upTo: Infinity, rate: 30000 }
+    ]);
+    const amenities = tieredCost(s.amenities ?? 0, [
+      { upTo: 5, rate: 30000 },
+      { upTo: Infinity, rate: 15000 }
+    ]);
+    const area = tieredCost(s.plotAreaAcres ?? 0, [
+      { upTo: 5, rate: 10000 },
+      { upTo: Infinity, rate: 5000 }
+    ]);
+    return 150000 + units + amenities + area;
   },
   '3d-warehouse': (ctx) => {
     const s = ctx.scale;
-    return (
-      200000 +
-      (s.plotAreaAcres ?? 0) * 25000 +
-      (s.buildingUnits ?? 0) * 40000
-    );
+    const area = tieredCost(s.plotAreaAcres ?? 0, [
+      { upTo: 20, rate: 25000 },
+      { upTo: Infinity, rate: 15000 }
+    ]);
+    const units = tieredCost(s.buildingUnits ?? 0, [
+      { upTo: 5, rate: 40000 },
+      { upTo: Infinity, rate: 25000 }
+    ]);
+    return 200000 + area + units;
   },
 
   // Isometrics
   'isometric-high-rise': (ctx) => {
     const s = ctx.scale;
-    return 50000 + (s.towers ?? 0) * 40000 + (s.amenities ?? 0) * 10000;
+    const towers = tieredCost(s.towers ?? 0, [
+      { upTo: 2, rate: 40000 },
+      { upTo: Infinity, rate: 25000 }
+    ]);
+    const amenities = tieredCost(s.amenities ?? 0, [
+      { upTo: 5, rate: 10000 },
+      { upTo: Infinity, rate: 5000 }
+    ]);
+    return 50000 + towers + amenities;
   },
   'isometric-fitout': (ctx) => {
     const s = ctx.scale;
-    return 75000 + (s.buildingUnits ?? 0) * 20000;
+    const units = tieredCost(s.buildingUnits ?? 0, [
+      { upTo: 5, rate: 20000 },
+      { upTo: Infinity, rate: 12000 }
+    ]);
+    return 75000 + units;
   },
   'isometric-leasing': (ctx) => {
     const s = ctx.scale;
-    return 50000 + (s.buildingUnits ?? 0) * 18000;
+    const units = tieredCost(s.buildingUnits ?? 0, [
+      { upTo: 5, rate: 18000 },
+      { upTo: Infinity, rate: 10000 }
+    ]);
+    return 50000 + units;
   },
   'isometric-warehouse': (ctx) => {
     const s = ctx.scale;
-    return 75000 + (s.plotAreaAcres ?? 0) * 15000;
+    const area = tieredCost(s.plotAreaAcres ?? 0, [
+      { upTo: 10, rate: 15000 },
+      { upTo: Infinity, rate: 8000 }
+    ]);
+    return 75000 + area;
   },
 
   // Interactive Plotted Kit — by plots/villas count + amenities
   'interactive-plotted-kit': (ctx) => {
     const s = ctx.scale;
-    const units = (s.plots ?? 0) + (s.villas ?? 0);
-    return 150000 + units * 500 + (s.amenities ?? 0) * 10000;
+    // Task 3: Split combined units terms into separate coefficients
+    const plotsCost = tieredCost(s.plots ?? 0, [
+      { upTo: 100, rate: PRICE_INTERACTIVE_PLOT },
+      { upTo: Infinity, rate: PRICE_INTERACTIVE_PLOT * 0.6 }
+    ]);
+    const villasCost = tieredCost(s.villas ?? 0, [
+      { upTo: 50, rate: PRICE_INTERACTIVE_VILLA },
+      { upTo: Infinity, rate: PRICE_INTERACTIVE_VILLA * 0.6 }
+    ]);
+    const unitsCost = tieredCost(s.buildingUnits ?? 0, [
+      { upTo: 50, rate: PRICE_INTERACTIVE_UNIT },
+      { upTo: Infinity, rate: PRICE_INTERACTIVE_UNIT * 0.6 }
+    ]);
+    const units = plotsCost + villasCost + unitsCost;
+    
+    const amenities = tieredCost(s.amenities ?? 0, [
+      { upTo: 5, rate: PRICE_INTERACTIVE_AMENITY },
+      { upTo: Infinity, rate: PRICE_INTERACTIVE_AMENITY * 0.5 }
+    ]);
+    return PRICE_INTERACTIVE_BASE + units + amenities;
   },
 };
 
@@ -636,7 +868,12 @@ export function computeAssetPrice(
   ctx: PricingContext,
 ): number {
   const pricer = ASSET_PRICERS[assetId];
-  return pricer ? pricer(ctx) : 0;
+  if (!pricer) return 0;
+  const rawPrice = pricer(ctx);
+  // Apply a floor using a per-asset minimum constant (Task 5)
+  if (rawPrice <= 0) return 0;
+  const minPrice = ASSET_MIN_PRICES[assetId] ?? 0;
+  return Math.max(minPrice, rawPrice);
 }
 
 /* ── Aggregates + line items ───────────────────────────────────────── */
