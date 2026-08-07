@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { Play } from 'lucide-react';
 import { ASSET_REEL_ITEMS, type AssetReelItem } from '@/lib/assetReel';
 
 /* ───────────────────────────────────────────────────────────────────────
@@ -150,6 +151,7 @@ function ReelCard({ item }: { item: AssetReelItem }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [inView, setInView] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
 
   // ── Visibility tracking — start/pause playback as cards scroll ─────
   useEffect(() => {
@@ -172,11 +174,30 @@ function ReelCard({ item }: { item: AssetReelItem }) {
     const v = videoRef.current;
     if (!v) return;
     if (inView) {
-      v.play().catch(() => {});
+      v.play()
+        .then(() => setVideoPlaying(true))
+        .catch(() => {
+          setVideoPlaying(false);
+        });
     } else {
       v.pause();
+      setVideoPlaying(false);
     }
   }, [inView]);
+
+  const togglePlay = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      v.play()
+        .then(() => setVideoPlaying(true))
+        .catch(() => {});
+    } else {
+      v.pause();
+      setVideoPlaying(false);
+    }
+  };
 
   return (
     <div
@@ -197,16 +218,37 @@ function ReelCard({ item }: { item: AssetReelItem }) {
         <video
           ref={videoRef}
           key={item.id}
-          src={item.mediaSrc}
           poster={item.poster}
           autoPlay
           muted
           loop
           playsInline
           preload="metadata"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+          onPlaying={() => setVideoPlaying(true)}
+          onPlay={() => setVideoPlaying(true)}
+          onPause={() => setVideoPlaying(false)}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${videoPlaying ? 'opacity-100' : 'opacity-0'}`}
+        >
+          <source src={item.mediaSrc} type="video/mp4" />
+        </video>
       )}
+
+      {/* Play/Pause overlay - visible only when paused/blocked */}
+      {!videoPlaying && (
+        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-black/10 transition-opacity duration-300">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-ink-900/60 text-white backdrop-blur-md">
+            <Play className="h-5 w-5 translate-x-[1px] fill-current" />
+          </div>
+        </div>
+      )}
+
+      {/* Full-card click/touch target */}
+      <button
+        type="button"
+        onClick={togglePlay}
+        aria-label={videoPlaying ? `Pause ${item.project}` : `Play ${item.project}`}
+        className="absolute inset-0 z-10 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-glow"
+      />
 
       {/* Top row chips — category (left) + aspect (right) */}
       <span className="pointer-events-none absolute left-3 top-3 z-20 rounded-full border border-white/15 bg-ink-900/55 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.22em] text-white/85 backdrop-blur-md">

@@ -106,7 +106,6 @@ export function InstagramReelCard({ reel, onOpen, index }: Props) {
         <video
           ref={videoRef}
           key={reel.id}
-          src={reel.mediaUrl}
           poster={reel.thumbnailUrl}
           autoPlay
           muted
@@ -114,7 +113,9 @@ export function InstagramReelCard({ reel, onOpen, index }: Props) {
           playsInline
           preload="metadata"
           className="absolute inset-0 h-full w-full object-cover"
-        />
+        >
+          <source src={reel.mediaUrl} type="video/mp4" />
+        </video>
       )}
 
       {/* Full-card click target — opens lightbox */}

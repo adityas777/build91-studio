@@ -1,11 +1,14 @@
+import { Suspense } from 'react';
 import { VideoHero } from '@/components/VideoHero';
 import { AssetReel } from '@/components/AssetReel';
 import { StatsBar } from '@/components/StatsBar';
+import { StatsBarSkeleton, SelectedWorkSkeleton } from '@/components/Skeletons';
 import { TrustStrip } from '@/components/TrustStrip';
 import { ClientLogoWall } from '@/components/ClientLogoWall';
 import { ScrollPinReveal, type ScrollPinSlide } from '@/components/ScrollPinReveal';
 import { SolutionsRouter } from '@/components/SolutionsRouter';
 import { SelectedWork } from '@/components/SelectedWork';
+
 import { GlobalPresence } from '@/components/GlobalPresence';
 import { Testimonials } from '@/components/Testimonials';
 import { OutcomeWidgets } from '@/components/OutcomeWidgets';
@@ -217,7 +220,9 @@ export default function HomePage() {
       {/* Phase 5 — atlabs-inspired capability menu, sits right under hero */}
       <AssetReel />
 
-      <StatsBar />
+      <Suspense fallback={<StatsBarSkeleton />}>
+        <StatsBar />
+      </Suspense>
 
       {/* Phase 1 — Trust & Routing */}
       <TrustStrip />
@@ -245,7 +250,9 @@ export default function HomePage() {
       {/* Selected Work — 8 latest IG reels via Graph API (4h ISR + KV-stored
           rotating token). Falls back silently to 6 hardcoded reels on any
           API failure. See lib/instagram.ts + lib/instagram-fallback.ts. */}
-      <SelectedWork />
+      <Suspense fallback={<SelectedWorkSkeleton />}>
+        <SelectedWork />
+      </Suspense>
 
       {/* ── Our Process — TEMPORARILY REMOVED ───────────────────────────
           Commented out alongside PROCESS_SLIDES above. AssetReel (top)

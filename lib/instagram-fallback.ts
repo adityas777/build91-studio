@@ -39,7 +39,29 @@
 import type { Reel } from './instagram';
 
 function getPlaceholderPoster(seed: string, w = 720, h = 1280) {
-  return `https://picsum.photos/seed/${encodeURIComponent(`b91-instagram-fallback-${seed}`)}/${w}/${h}`;
+  const themes: Record<string, { stop1: string; stop2: string }> = {
+    'drone-360': { stop1: '#1e1b4b', stop2: '#090514' },
+    'exterior': { stop1: '#422006', stop2: '#090514' },
+    'interior': { stop1: '#172554', stop2: '#090514' },
+    'walkthrough': { stop1: '#311042', stop2: '#090514' },
+    'superimposition': { stop1: '#064e3b', stop2: '#090514' },
+    'balcony-view': { stop1: '#0f172a', stop2: '#090514' },
+  };
+  const theme = themes[seed] || themes['drone-360'];
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    <defs>
+      <radialGradient id="g" cx="50%" cy="45%" r="75%">
+        <stop offset="0%" stop-color="${theme.stop1}" stop-opacity="0.75"/>
+        <stop offset="65%" stop-color="${theme.stop2}"/>
+        <stop offset="100%" stop-color="#05071a"/>
+      </radialGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#g)"/>
+  </svg>`;
+  const base64 = typeof btoa !== 'undefined'
+    ? btoa(svg)
+    : Buffer.from(svg).toString('base64');
+  return `data:image/svg+xml;base64,${base64}`;
 }
 
 export const FALLBACK_REELS: Reel[] = [

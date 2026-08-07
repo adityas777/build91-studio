@@ -93,7 +93,6 @@ export function SelfHostedReelCard({ item }: { item: PortfolioItem }) {
         <video
           ref={videoRef}
           key={item.mediaSrc}
-          src={item.mediaSrc}
           poster={item.thumbnail}
           autoPlay
           muted={muted}
@@ -101,7 +100,9 @@ export function SelfHostedReelCard({ item }: { item: PortfolioItem }) {
           playsInline
           preload="metadata"
           className="absolute inset-0 h-full w-full object-cover"
-        />
+        >
+          <source src={item.mediaSrc} type="video/mp4" />
+        </video>
       )}
 
       {/* Click target for sound toggle — full card, but doesn't block the

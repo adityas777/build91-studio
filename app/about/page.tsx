@@ -178,7 +178,7 @@ export default function AboutPage() {
               {team.map((t, i) => (
                 <div
                   key={t.role}
-                  className="group relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-ink-800 to-ink-700 p-5"
+                  className="group relative aspect-auto min-h-[135px] sm:aspect-square overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-ink-800 to-ink-700 p-5"
                 >
                   {/* abstract avatar */}
                   <div

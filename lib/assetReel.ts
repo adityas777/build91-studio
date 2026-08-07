@@ -58,10 +58,29 @@ export type AssetReelItem = {
 const PLACEHOLDER_VIDEO = '/video/intro-reel-web.mp4';
 
 /** Seeded picsum portrait that stays stable across loads. */
-function poster(seed: string, w = 720, h = 900) {
-  return `https://picsum.photos/seed/${encodeURIComponent(
-    `b91-reel-${seed}`,
-  )}/${w}/${h}`;
+/** Generates a themed visual placeholder poster as an inline SVG to eliminate picsum.photos redirects */
+function getPlaceholderPoster(tint: 'violet' | 'gold' | 'cool' | 'deep', w = 720, h = 900) {
+  const colors = {
+    violet: { stop1: '#2e1065', stop2: '#0c0a0f' },
+    gold: { stop1: '#422006', stop2: '#0c0a0f' },
+    cool: { stop1: '#172554', stop2: '#0c0a0f' },
+    deep: { stop1: '#0f172a', stop2: '#0c0a0f' },
+  };
+  const theme = colors[tint] || colors.violet;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    <defs>
+      <radialGradient id="g" cx="50%" cy="40%" r="80%">
+        <stop offset="0%" stop-color="${theme.stop1}" stop-opacity="0.8"/>
+        <stop offset="70%" stop-color="${theme.stop2}"/>
+        <stop offset="100%" stop-color="#05071a"/>
+      </radialGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#g)"/>
+  </svg>`;
+  const base64 = typeof btoa !== 'undefined'
+    ? btoa(svg)
+    : Buffer.from(svg).toString('base64');
+  return `data:image/svg+xml;base64,${base64}`;
 }
 
 export const ASSET_REEL_ITEMS: AssetReelItem[] = [
@@ -74,7 +93,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
     shipped: 'Shot in 1 day',
     tint: 'violet',
     mediaSrc: "/video/projects/Drone 360 with landmarks highlight01.mp4",
-    poster: poster('aerial-360'),
+    poster: getPlaceholderPoster('violet'),
   },
   {
     id: '3d-walkthrough',
@@ -85,7 +104,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
     shipped: 'Built in 6 days',
     tint: 'gold',
     mediaSrc: "/video/projects/3d-walkthrough.mp4",
-    poster: poster('walkthrough'),
+    poster: getPlaceholderPoster('gold'),
   },
   {
     id: '3d-interior',
@@ -96,7 +115,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
     shipped: 'Rendered in 3 days',
     tint: 'cool',
     mediaSrc: "/video/projects/3d-interior.mp4",
-    poster: poster('interior'),
+    poster: getPlaceholderPoster('cool'),
   },
   {
     id: '3d-exterior',
@@ -107,7 +126,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
     shipped: 'Rendered in 4 days',
     tint: 'deep',
     mediaSrc: "/video/projects/3d-exterior.mp4",
-    poster: poster('exterior'),
+    poster: getPlaceholderPoster('deep'),
   },
   {
     id: 'cinematic-film',
@@ -118,7 +137,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
     shipped: 'Shipped in 14 days',
     tint: 'violet',
     mediaSrc: "/video/projects/cinematic-film.mp4",
-    poster: poster('cinematic'),
+    poster: getPlaceholderPoster('violet'),
   },
   {
     id: 'plot-superimposition',
@@ -129,7 +148,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
     shipped: 'Built in 5 days',
     tint: 'gold',
     mediaSrc: "/video/projects/plot-superimposition.mp4",
-    poster: poster('plot-super'),
+    poster: getPlaceholderPoster('gold'),
   },
   {
     id: 'vertical-reel',
@@ -140,6 +159,6 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
     shipped: 'Edited in 2 days',
     tint: 'cool',
     mediaSrc: "/video/projects/vertical-reel.mp4",
-    poster: poster('vertical-reel'),
+    poster: getPlaceholderPoster('cool'),
   }
 ];

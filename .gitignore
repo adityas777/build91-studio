@@ -40,3 +40,7 @@ next-env.d.ts
 sst-env.d.ts
 scripts/get-image-logs.js
 scripts/test-fetch.js
+*.bak
+/backups
+production-state.json
+*.webm

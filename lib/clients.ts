@@ -61,28 +61,27 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   {
     id: 'laxmi-developer',
     name: 'Laxmi Developer',
-    src: '/images/clients/laxmi-developer.png',
+    src: '/images/clients/laxmi-developer.webp',
     segment: 'developers-partners',
     country: 'India',
   },
   {
     id: 'western-arch',
     name: 'Western Arch',
-    src: '/images/clients/western-arch.png',
+    src: '/images/clients/western-arch.webp',
     segment: 'developers-partners',
     country: 'India',
   },
   // ─── Rename these to real client names when confirmed ────────────────
-  { id: 'partner-01', name: 'Partner 01', src: '/images/clients/partner-01.png', segment: 'developers-partners', country: 'Australia' },
-  { id: 'partner-02', name: 'Partner 02', src: '/images/clients/partner-02.png', segment: 'developers-partners', country: 'India' },
-  { id: 'partner-06', name: 'Partner 06', src: '/images/clients/partner-016.png', segment: 'developers-partners', country: 'UAE' },
-  { id: 'partner-03', name: 'Partner 03', src: '/images/clients/partner-03.png', segment: 'developers-partners', country: 'India' },
-  { id: 'partner-04', name: 'Partner 04', src: '/images/clients/partner-04.png', segment: 'developers-partners', country: 'India' },
-  { id: 'partner-05', name: 'Partner 05', src: '/images/clients/partner-05.png', segment: 'developers-partners', country: 'India' },
-  { id: 'partner-07', name: 'Partner 07', src: '/images/clients/partner-07.png', segment: 'developers-partners', country: 'India' },
-  { id: 'partner-08', name: 'Partner 08', src: '/images/clients/partner-08.png', segment: 'developers-partners', country: 'India' },
-  { id: 'partner-09', name: 'Partner 09', src: '/images/clients/partner-09.png', segment: 'developers-partners', country: 'India' },
-
+  { id: 'partner-01', name: 'Partner 01', src: '/images/clients/partner-01.webp', segment: 'developers-partners', country: 'Australia' },
+  { id: 'partner-02', name: 'Partner 02', src: '/images/clients/partner-02.webp', segment: 'developers-partners', country: 'India' },
+  { id: 'partner-06', name: 'Partner 06', src: '/images/clients/partner-016.webp', segment: 'developers-partners', country: 'UAE' },
+  { id: 'partner-03', name: 'Partner 03', src: '/images/clients/partner-03.webp', segment: 'developers-partners', country: 'India' },
+  { id: 'partner-04', name: 'Partner 04', src: '/images/clients/partner-04.webp', segment: 'developers-partners', country: 'India' },
+  { id: 'partner-05', name: 'Partner 05', src: '/images/clients/partner-05.webp', segment: 'developers-partners', country: 'India' },
+  { id: 'partner-07', name: 'Partner 07', src: '/images/clients/partner-07.webp', segment: 'developers-partners', country: 'India' },
+  { id: 'partner-08', name: 'Partner 08', src: '/images/clients/partner-08.webp', segment: 'developers-partners', country: 'India' },
+  { id: 'partner-09', name: 'Partner 09', src: '/images/clients/partner-09.webp', segment: 'developers-partners', country: 'India' },
 ];
 
 /** Helper — segment-filtered list, preserves declared order. */

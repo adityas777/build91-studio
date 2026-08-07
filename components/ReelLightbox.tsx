@@ -142,6 +142,7 @@ export function ReelLightbox({ reels, index, onClose, onNavigate }: Props) {
           poster={reel.thumbnailUrl}
           controls
           autoPlay
+          muted
           playsInline
           preload="metadata"
           className="aspect-[9/16] w-full bg-ink-900 object-cover"

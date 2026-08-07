@@ -47,8 +47,8 @@ import { useIsDesktop } from '@/lib/useMediaQuery';
 // REPLACE: swap these paths once the bespoke encodes land in /public/video/.
 const HERO_VIDEO_DESKTOP = '/video/hero-reel-desktop.mp4'; // → /video/hero-reel.mp4
 const HERO_VIDEO_MOBILE = '/video/herobanner_fast.mp4'; // → /video/hero-reel-mobile.mp4
-const HERO_POSTER_DESKTOP = '/video/intro-poster.jpg'; // → /video/hero-poster.jpg
-const HERO_POSTER_MOBILE = '/video/intro-poster.jpg'; // → /video/hero-poster-mobile.jpg
+const HERO_POSTER_DESKTOP = '/video/hero-poster-desktop.webp';
+const HERO_POSTER_MOBILE = '/video/hero-poster-mobile.webp';
 
 // Edit/add taglines here. Every phrase MUST follow the same two-part
 // rhythm: a bold lead (concrete category) + an italic-gradient accent
@@ -67,7 +67,14 @@ export function VideoHero() {
   const ref = useRef<HTMLElement>(null);
   const isDesktop = useIsDesktop();
   const videoSrc = isDesktop ? HERO_VIDEO_DESKTOP : HERO_VIDEO_MOBILE;
-  const posterSrc = isDesktop ? HERO_POSTER_DESKTOP : HERO_POSTER_MOBILE;
+  
+  const [isMounted, setIsMounted] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -92,29 +99,47 @@ export function VideoHero() {
       ref={ref}
       className="relative isolate flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-ink-900"
     >
-      {/* ── Looping showreel ─────────────────────────────────────────── */}
-      <motion.div
-        style={{ y: videoY }}
-        className="absolute inset-0 -z-20 h-[115%] w-full"
+      {/* ── Preload link elements (React 18 hoisted to head) ─────────── */}
+      <link rel="preload" href={HERO_POSTER_DESKTOP} as="image" media="(min-width: 768px)" />
+      <link rel="preload" href={HERO_POSTER_MOBILE} as="image" media="(max-width: 767px)" />
+
+      {/* ── Cinematic Poster Overlay (LCP Candidate) ────────────────── */}
+      <div
+        className={`absolute inset-0 -z-10 h-full w-full transition-opacity duration-1000 ${
+          videoPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
       >
-        <video
-          // `key` forces a remount when isDesktop flips so the browser picks
-          // up the new source on viewport-class change (e.g., device rotate
-          // crossing the breakpoint).
-          key={videoSrc}
-          autoPlay
-          muted
-          loop
-          playsInline
-          // preload="metadata" buffers just enough to start playback without
-          // aggressively pulling the full file on cellular.
-          preload="metadata"
-          poster={posterSrc}
-          className="h-full w-full object-cover"
+        <picture className="h-full w-full">
+          <source media="(min-width: 768px)" srcSet={HERO_POSTER_DESKTOP} />
+          <img
+            src={HERO_POSTER_MOBILE}
+            alt="Build91 Studio Showreel Poster"
+            className="h-full w-full object-cover"
+            fetchPriority="high"
+          />
+        </picture>
+      </div>
+
+      {/* ── Looping showreel ─────────────────────────────────────────── */}
+      {isMounted && (
+        <motion.div
+          style={{ y: videoY }}
+          className="absolute inset-0 -z-20 h-[115%] w-full"
         >
-          <source src={videoSrc} type="video/mp4" />
-        </video>
-      </motion.div>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            onPlaying={() => setVideoPlaying(true)}
+            onPlay={() => setVideoPlaying(true)}
+            className="h-full w-full object-cover"
+          >
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        </motion.div>
+      )}
 
       {/* ── Cinematic overlays ──────────────────────────────────────── */}
       <motion.div
