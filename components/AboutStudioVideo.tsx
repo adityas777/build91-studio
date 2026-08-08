@@ -25,8 +25,8 @@ import { useIsDesktop } from '@/lib/useMediaQuery';
 
 const VIDEO_DESKTOP = '/video/StudioTeam.mp4';
 const VIDEO_MOBILE = '/video/StudioTeam.mp4'; // REPLACE: /video/StudioTeam-mobile.mp4 (1080×1920)
-const POSTER_DESKTOP = '/video/intro-poster.jpg'; // REPLACE: /video/StudioTeam-poster.jpg
-const POSTER_MOBILE = '/video/intro-poster.jpg'; // REPLACE: /video/StudioTeam-poster-mobile.jpg
+const POSTER_DESKTOP = '/video/StudioTeam-poster.webp';
+const POSTER_MOBILE = '/video/StudioTeam-poster-mobile.webp';
 
 export function AboutStudioVideo() {
   const isDesktop = useIsDesktop();
