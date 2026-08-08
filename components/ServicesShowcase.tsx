@@ -42,7 +42,7 @@ const SERVICES: ServiceShowcaseItem[] = [
     title: 'Drone & Aerial 360°',
     pitch: 'Cinematic skies and interactive aerial maps of every site.',
     href: '/work?category=project-showcase',
-    videoSrc: '/video/intro-reel-web.mp4', // REPLACE: drone-loop.mp4
+    videoSrc: '/video/scroll-reveal/group1_desktop.mp4',
     posterTint: 'violet',
   },
   {
@@ -51,7 +51,7 @@ const SERVICES: ServiceShowcaseItem[] = [
     title: 'Photoreal Renders',
     pitch: 'Interiors, exteriors and amenities — built before the build.',
     href: '/work?category=3d-visualization',
-    videoSrc: '/video/intro-reel-web.mp4', // REPLACE: renders-loop.mp4
+    videoSrc: '/video/scroll-reveal/group2_desktop.mp4',
     posterTint: 'gold',
   },
   {
@@ -60,7 +60,7 @@ const SERVICES: ServiceShowcaseItem[] = [
     title: '3D Walkthroughs',
     pitch: 'Move buyers through the project from any device, anywhere.',
     href: '/work?category=virtual-experiences',
-    videoSrc: '/video/intro-reel-web.mp4', // REPLACE: walkthrough-loop.mp4
+    videoSrc: '/video/scroll-reveal/group3_desktop.mp4',
     posterTint: 'deep',
   },
   {
@@ -69,7 +69,7 @@ const SERVICES: ServiceShowcaseItem[] = [
     title: 'Virtual 360° Tours',
     pitch: 'Self-navigable tours that turn browsers into believers.',
     href: '/work?category=virtual-experiences',
-    videoSrc: '/video/intro-reel-web.mp4', // REPLACE: tour-loop.mp4
+    videoSrc: '/video/scroll-reveal/group3_desktop.mp4',
     posterTint: 'cool',
   },
   {
@@ -78,7 +78,7 @@ const SERVICES: ServiceShowcaseItem[] = [
     title: 'Films, Reels & Sites',
     pitch: 'The full performance suite, tuned for conversion, not vanity.',
     href: '/work?category=marketing-stack',
-    videoSrc: '/video/intro-reel-web.mp4', // REPLACE: marketing-loop.mp4
+    videoSrc: '/video/scroll-reveal/group4_desktop.mp4',
     posterTint: 'violet',
   },
   {
@@ -87,7 +87,7 @@ const SERVICES: ServiceShowcaseItem[] = [
     title: 'Project Microsites',
     pitch: 'One immersive URL. Every asset. Your sales team’s superpower.',
     href: '/work?category=digital-launchpad',
-    videoSrc: '/video/intro-reel-web.mp4', // REPLACE: microsite-loop.mp4
+    videoSrc: '/video/scroll-reveal/group5_desktop.mp4',
     posterTint: 'gold',
   },
 ];

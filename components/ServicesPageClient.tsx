@@ -137,24 +137,33 @@ export function ServicesPageClient() {
                 })}
               </div>
 
-              {/* Placeholder render preview block */}
+              {/* Real Service Image Preview */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.2 }}
-                className="relative mt-10 aspect-[16/9] overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-ink-800 to-ink-700"
+                className="group relative mt-10 aspect-[16/9] overflow-hidden rounded-2xl border border-white/10 bg-ink-800"
               >
-                <div className="absolute inset-0 bg-grid-soft opacity-40" />
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-glow/15 via-transparent to-gold/10" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-xs uppercase tracking-[0.3em] text-white/40">
-                      Render Preview
-                    </div>
-                    <div className="text-accent-italic mt-3 text-3xl text-white/60 md:text-4xl">
-                      {pillar.title}
-                    </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/images/services/${pillar.id}.webp`}
+                  alt={`${pillar.title} Preview`}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+                
+                {/* Dark overlay gradients for text readability and cinematic depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/20 to-transparent opacity-85 transition-opacity duration-300 group-hover:opacity-75" />
+                <div className="absolute inset-0 bg-gradient-to-r from-ink-950/40 via-transparent to-transparent" />
+                
+                {/* Tiny premium corner labels */}
+                <div className="absolute bottom-6 left-6 z-10">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/40">
+                    Discipline Showcase
+                  </div>
+                  <div className="text-accent-italic mt-1.5 text-2xl font-medium text-white md:text-3xl">
+                    {pillar.title}
                   </div>
                 </div>
               </motion.div>
