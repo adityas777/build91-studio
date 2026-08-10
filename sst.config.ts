@@ -50,6 +50,10 @@ export default $config({
         CRON_SECRET: process.env.CRON_SECRET || "",
         KV_REST_API_URL: process.env.KV_REST_API_URL || "",
         KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN || "",
+        LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID || "",
+        LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET || "",
+        LINKEDIN_ORGANIZATION_ID: process.env.LINKEDIN_ORGANIZATION_ID || "",
+        LINKEDIN_ACCESS_TOKEN: process.env.LINKEDIN_ACCESS_TOKEN || "",
       },
     });
   },
