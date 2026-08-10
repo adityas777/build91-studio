@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { AnimatedSection } from './AnimatedSection';
@@ -35,21 +35,7 @@ import { SITE } from '@/lib/constants';
 
 export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
   const stripRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [scale, setScale] = useState(1);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const handleResize = () => {
-      if (!containerRef.current) return;
-      const width = containerRef.current.clientWidth;
-      setScale(width / 1920);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const open = useCallback((i: number) => setLightboxIndex(i), []);
   const close = useCallback(() => setLightboxIndex(null), []);
@@ -146,31 +132,6 @@ export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
           </div>
         </AnimatedSection>
       </div>
-
-      {/* ── 3D Virtual Tour Embed ──────────────────────────────────── */}
-      <AnimatedSection className="w-full my-16 md:my-20">
-        <div
-          ref={containerRef}
-          className="relative w-full border-y border-white/10 bg-black/20 shadow-2xl overflow-hidden"
-          style={{ height: `${800 * scale}px` }}
-        >
-          <iframe
-            src="https://demo.build91.in/3BHK-Tour/index.htm"
-            className="absolute border-0"
-            style={{
-              width: '1920px',
-              height: '800px',
-              transform: `scale(${scale})`,
-              transformOrigin: 'top left',
-              left: 0,
-              top: 0,
-            }}
-            allowFullScreen
-            loading="lazy"
-            title="Build91 Studio 3D Virtual Tour"
-          />
-        </div>
-      </AnimatedSection>
 
       {/* ── Lightbox ────────────────────────────────────────────────── */}
       {lightboxIndex !== null && (

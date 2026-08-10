@@ -8,6 +8,7 @@ import { ClientLogoWall } from '@/components/ClientLogoWall';
 import { ScrollPinReveal, type ScrollPinSlide } from '@/components/ScrollPinReveal';
 import { SolutionsRouter } from '@/components/SolutionsRouter';
 import { SelectedWork } from '@/components/SelectedWork';
+import { FaqSection } from '@/components/FaqSection';
 
 import { GlobalPresence } from '@/components/GlobalPresence';
 import { Testimonials } from '@/components/Testimonials';
@@ -295,6 +296,8 @@ export default function HomePage() {
 
       {/* Phase 2 — Quote Engine entry-point band */}
       <QuoteToolPromo />
+
+      <FaqSection />
 
       <CtaSplit />
     </>

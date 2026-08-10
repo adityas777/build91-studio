@@ -58,10 +58,9 @@ export const SITE = {
 export const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
-  // '/work' removed for now (owner direction, 2026-06-10) — the route
-  // redirects to home. Restore the entry when case studies ship (Phase 3).
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/blogs', label: 'Blogs' },
   { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
 ];
 
 export type ServicePillar = {
