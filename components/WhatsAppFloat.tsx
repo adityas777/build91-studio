@@ -34,7 +34,7 @@ export function WhatsAppFloat() {
       initial={{ opacity: 0, y: 24, scale: 0.85 }}
       animate={visible ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="group fixed bottom-6 right-6 z-40 inline-flex items-center gap-3 rounded-full border border-white/15 bg-ink-900/80 p-3 sm:pr-5 text-sm font-medium text-white shadow-[0_15px_50px_-15px_rgba(124,58,237,0.7)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-glow/60 hover:bg-ink-900/90 md:bottom-8 md:right-8"
+      className="group fixed bottom-6 right-6 z-40 inline-flex items-center rounded-full border border-white/15 bg-ink-900/80 p-3 text-sm font-medium text-white shadow-[0_15px_50px_-15px_rgba(124,58,237,0.7)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-glow/60 hover:bg-ink-900/90 md:bottom-8 md:right-8"
     >
       <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-inner">
         <span className="absolute inset-0 animate-pulse-glow rounded-full bg-emerald-400/40 blur-md" />
@@ -48,7 +48,6 @@ export function WhatsAppFloat() {
           <path d="M27.13 4.85A15.85 15.85 0 0 0 16 .25 15.86 15.86 0 0 0 .15 16.13c0 2.8.73 5.54 2.12 7.95L0 32l8.13-2.13a15.84 15.84 0 0 0 7.87 2.01h.01A15.86 15.86 0 0 0 31.85 16c0-4.24-1.66-8.22-4.72-11.15zm-11.13 24.4h-.01a13.16 13.16 0 0 1-6.71-1.84l-.48-.29-4.83 1.27 1.29-4.7-.31-.5a13.18 13.18 0 0 1-2.02-7.06A13.2 13.2 0 0 1 16 2.9c3.52 0 6.83 1.37 9.32 3.86A13.13 13.13 0 0 1 29.2 16.1a13.21 13.21 0 0 1-13.2 13.15z" />
         </svg>
       </span>
-      <span className="hidden whitespace-nowrap sm:inline">Chat on WhatsApp</span>
     </motion.a>
   );
 }

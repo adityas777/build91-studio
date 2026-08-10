@@ -54,7 +54,7 @@ export function Footer() {
 
       <div className="container-page relative pt-20 pb-10">
         <div className="grid gap-12 md:grid-cols-12">
-          <div className="md:col-span-5">
+          <div className="md:col-span-3">
             <Link href="/" className="inline-flex items-center gap-3">
               <Image
                 src={SITE.logo}
@@ -103,19 +103,42 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="md:col-span-3">
+          <div className="md:col-span-2">
             <h4 className="section-eyebrow mb-5">Explore</h4>
             <ul className="space-y-3">
               {NAV_LINKS.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="text-sm text-white/70 transition-colors hover:text-white"
+                    className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
                   >
                     {l.label}
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          <div className="md:col-span-3">
+            <h4 className="section-eyebrow mb-5">Core Services</h4>
+            <ul className="space-y-2 text-sm text-white/50">
+              <li>3D Architectural Rendering</li>
+              <li>3D Interior Rendering Services</li>
+              <li>3D Exterior Rendering Services</li>
+              <li>3D Product Rendering Services</li>
+              <li>3D Visualization Services</li>
+              <li className="h-1" />
+              <li>3D 360° Virtual Tours</li>
+              <li>3D Video Walkthroughs</li>
+              <li>Drone Aerial 360 Views</li>
+              <li>Location Intelligence Video</li>
+              <li>Digital Launchpad</li>
+              <li className="h-1" />
+              <li>2D Drawings</li>
+              <li>Elevation Drawings</li>
+              <li>3D Floor Plans</li>
+              <li>3D Cut-Sections</li>
+              <li>Isometric Drawings</li>
             </ul>
           </div>
 
@@ -126,7 +149,7 @@ export function Footer() {
                 <li key={s.id}>
                   <Link
                     href={`/services#${s.id}`}
-                    className="text-sm text-white/70 transition-colors hover:text-white"
+                    className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
                   >
                     {s.title}
                   </Link>
@@ -142,14 +165,17 @@ export function Footer() {
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-violet-soft" />
                 <a
                   href={`tel:${SITE.phone.replace(/\s/g, '')}`}
-                  className="hover:text-white"
+                  className="hover:text-white underline underline-offset-2 decoration-white/20"
                 >
                   {SITE.phoneDisplay}
                 </a>
               </li>
               <li className="flex items-start gap-2">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-violet-soft" />
-                <a href={`mailto:${SITE.email}`} className="hover:text-white">
+                <a
+                  href={`mailto:${SITE.email}`}
+                  className="hover:text-white underline underline-offset-2 decoration-white/20"
+                >
                   {SITE.email}
                 </a>
               </li>
@@ -168,12 +194,30 @@ export function Footer() {
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/40 md:flex-row md:items-center">
           <p>© {year} {SITE.name}. All rights reserved.</p>
           <p>Made with love by Turbo7X</p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-white/70">
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link
+              href="/privacy"
+              className="hover:text-white/70 underline underline-offset-2 decoration-white/20"
+            >
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-white/70">
+            <Link
+              href="/terms"
+              className="hover:text-white/70 underline underline-offset-2 decoration-white/20"
+            >
               Terms
+            </Link>
+            <Link
+              href="/shipping-policy"
+              className="hover:text-white/70 underline underline-offset-2 decoration-white/20"
+            >
+              Shipping Policy
+            </Link>
+            <Link
+              href="/refund-policy"
+              className="hover:text-white/70 underline underline-offset-2 decoration-white/20"
+            >
+              Refund Policy
             </Link>
           </div>
         </div>
