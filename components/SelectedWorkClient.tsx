@@ -148,18 +148,18 @@ export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
       </div>
 
       {/* ── 3D Virtual Tour Embed ──────────────────────────────────── */}
-      <AnimatedSection className="w-full mt-12 md:mt-20">
+      <AnimatedSection className="w-full my-24 md:my-36">
         <div
           ref={containerRef}
           className="relative w-full border-y border-white/10 bg-black/20 shadow-2xl overflow-hidden"
-          style={{ height: `${1080 * scale}px` }}
+          style={{ height: `${720 * scale}px` }}
         >
           <iframe
             src="https://demo.build91.in/3BHK-Tour/index.htm"
             className="absolute border-0"
             style={{
               width: '1920px',
-              height: '1080px',
+              height: '720px',
               transform: `scale(${scale})`,
               transformOrigin: 'top left',
               left: 0,
