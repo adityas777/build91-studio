@@ -152,20 +152,7 @@ export function ServicesPageClient() {
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 />
-                
-                {/* Dark overlay gradients for text readability and cinematic depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/20 to-transparent opacity-85 transition-opacity duration-300 group-hover:opacity-75" />
-                <div className="absolute inset-0 bg-gradient-to-r from-ink-950/40 via-transparent to-transparent" />
-                
-                {/* Tiny premium corner labels */}
-                <div className="absolute bottom-6 left-6 z-10">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/40">
-                    Discipline Showcase
-                  </div>
-                  <div className="text-accent-italic mt-1.5 text-2xl font-medium text-white md:text-3xl">
-                    {pillar.title}
-                  </div>
-                </div>
+
               </motion.div>
             </section>
           );

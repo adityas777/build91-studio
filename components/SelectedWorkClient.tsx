@@ -131,6 +131,19 @@ export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
             ))}
           </div>
         </AnimatedSection>
+
+        {/* ── 3D Virtual Tour Embed ──────────────────────────────────── */}
+        <AnimatedSection className="w-full mt-12 md:mt-20">
+          <div className="relative w-full aspect-video md:aspect-[21/9] min-h-[450px] md:min-h-[600px] border-y border-white/10 bg-black/20 shadow-2xl">
+            <iframe
+              src="https://demo.build91.in/3BHK-Tour/index.htm"
+              className="absolute inset-0 h-full w-full border-0"
+              allowFullScreen
+              loading="lazy"
+              title="Build91 Studio 3D Virtual Tour"
+            />
+          </div>
+        </AnimatedSection>
       </div>
 
       {/* ── Lightbox ────────────────────────────────────────────────── */}
