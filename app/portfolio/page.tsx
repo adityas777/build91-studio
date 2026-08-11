@@ -21,62 +21,69 @@ export default function PortfolioPage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    if (activeCollection) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [activeCollection]);
+
+
   return (
     <>
-      {/* Header section */}
-      <section className="section-base section-warm overflow-hidden pb-12 pt-40 md:pb-16 md:pt-48">
-        <div className="absolute inset-0 -z-10 bg-mesh opacity-45" />
-        <div className="pointer-events-none absolute -left-32 top-1/3 -z-10 h-96 w-96 rounded-full bg-violet-glow/20 blur-[140px]" />
-        <div className="pointer-events-none absolute -right-32 bottom-0 -z-10 h-96 w-96 rounded-full bg-gold/15 blur-[140px]" />
+      {activeCollection === null ? (
+        <>
+          {/* Header section */}
+          <section className="section-base section-warm overflow-hidden pb-12 pt-40 md:pb-16 md:pt-48">
+            <div className="absolute inset-0 -z-10 bg-mesh opacity-45" />
+            <div className="pointer-events-none absolute -left-32 top-1/3 -z-10 h-96 w-96 rounded-full bg-violet-glow/20 blur-[140px]" />
+            <div className="pointer-events-none absolute -right-32 bottom-0 -z-10 h-96 w-96 rounded-full bg-gold/15 blur-[140px]" />
 
-        <div className="container-page">
-          <AnimatedSection className="max-w-4xl">
-            <span className="section-eyebrow">Portfolio</span>
-            <h1 className="text-display mt-6 text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
-              Our{' '}
-              <span className="text-accent-italic text-gradient">selected</span>{' '}
-              creative{' '}
-              <span className="text-accent-italic text-gradient-gold">
-                works.
-              </span>
-            </h1>
-            <p className="mt-8 max-w-2xl text-base leading-relaxed text-white/65 md:text-lg">
-              A curated showcase of high-end real estate rendering, photorealistic 3D visualization, and interactive virtual walkthroughs.
-            </p>
+            <div className="container-page">
+              <AnimatedSection className="max-w-4xl">
+                <span className="section-eyebrow">Portfolio</span>
+                <h1 className="text-display mt-6 text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
+                  Our{' '}
+                  <span className="text-accent-italic text-gradient">selected</span>{' '}
+                  creative{' '}
+                  <span className="text-accent-italic text-gradient-gold">
+                    works.
+                  </span>
+                </h1>
+                <p className="mt-8 max-w-2xl text-base leading-relaxed text-white/65 md:text-lg">
+                  A curated showcase of high-end real estate rendering, photorealistic 3D visualization, and interactive virtual walkthroughs.
+                </p>
+              </AnimatedSection>
+            </div>
+          </section>
+
+          {/* ── 3D Virtual Tour Embed (Moved from Homepage) ──────────────────────────────────── */}
+          <AnimatedSection className="w-full my-16 md:my-20">
+            <div
+              ref={containerRef}
+              className="relative w-full border-y border-white/10 bg-black/20 shadow-2xl overflow-hidden"
+              style={{ height: `${800 * scale}px` }}
+            >
+              <iframe
+                src="https://demo.build91.in/3BHK-Tour/index.htm"
+                className="absolute border-0"
+                style={{
+                  width: '1920px',
+                  height: '800px',
+                  transform: `scale(${scale})`,
+                  transformOrigin: 'top left',
+                  left: 0,
+                  top: 0,
+                }}
+                allowFullScreen
+                loading="lazy"
+                title="Build91 Studio 3D Virtual Tour"
+              />
+            </div>
           </AnimatedSection>
-        </div>
-      </section>
 
-      {/* ── 3D Virtual Tour Embed (Moved from Homepage) ──────────────────────────────────── */}
-      <AnimatedSection className="w-full my-16 md:my-20">
-        <div
-          ref={containerRef}
-          className="relative w-full border-y border-white/10 bg-black/20 shadow-2xl overflow-hidden"
-          style={{ height: `${800 * scale}px` }}
-        >
-          <iframe
-            src="https://demo.build91.in/3BHK-Tour/index.htm"
-            className="absolute border-0"
-            style={{
-              width: '1920px',
-              height: '800px',
-              transform: `scale(${scale})`,
-              transformOrigin: 'top left',
-              left: 0,
-              top: 0,
-            }}
-            allowFullScreen
-            loading="lazy"
-            title="Build91 Studio 3D Virtual Tour"
-          />
-        </div>
-      </AnimatedSection>
-
-      {/* ── 3D Portfolio Grid Section ──────────────────────────────────── */}
-      <section className="section-base overflow-hidden pt-4 pb-32">
-        <div className="container-page">
-          {activeCollection === null ? (
-            <>
+          {/* ── 3D Portfolio Grid Section ──────────────────────────────────── */}
+          <section className="section-base overflow-hidden pt-4 pb-32">
+            <div className="container-page">
               {/* Category Grid Header */}
               <AnimatedSection className="text-center mb-16">
                 <h2 className="text-display text-4xl md:text-6xl font-semibold leading-[1.05] tracking-tight">
@@ -219,17 +226,24 @@ export default function PortfolioPage() {
                   </div>
                 </div>
               </AnimatedSection>
-            </>
-          ) : (
-            /* Collection Gallery View */
+            </div>
+          </section>
+        </>
+      ) : (
+        /* Collection Gallery View (Independent Page layout) */
+        <section className="section-base overflow-hidden pt-40 md:pt-48 pb-32">
+          <div className="container-page">
             <AnimatedSection>
               {/* Gallery Header */}
               <div className="border-b border-white/10 pb-8 mb-12">
                 <button
-                  onClick={() => setActiveCollection(null)}
-                  className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors uppercase tracking-wider mb-8 group"
+                  onClick={() => {
+                    setActiveCollection(null);
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                  }}
+                  className="flex items-center gap-3 text-sm font-medium tracking-[0.2em] text-gold/80 hover:text-gold transition-colors uppercase mb-10 mt-6 group"
                 >
-                  <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span> Back to Collections
+                  <span className="text-lg transition-transform duration-300 group-hover:-translate-x-1">←</span> Back to Portfolio
                 </button>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                   <div>
@@ -263,9 +277,9 @@ export default function PortfolioPage() {
                 ))}
               </div>
             </AnimatedSection>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* Lightbox Modal */}
       {activeImage && (
