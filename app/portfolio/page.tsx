@@ -7,6 +7,7 @@ export default function PortfolioPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
   const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [activeCollection, setActiveCollection] = useState<string | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -73,139 +74,196 @@ export default function PortfolioPage() {
 
       {/* ── 3D Portfolio Grid Section ──────────────────────────────────── */}
       <section className="section-base overflow-hidden pt-4 pb-32">
-        <div className="container-page mb-12">
-          <AnimatedSection className="text-center">
-            <h2 className="text-display text-4xl md:text-6xl font-semibold leading-[1.05] tracking-tight">
-              3D Designs That Turn<br/>
-              <span className="text-accent-italic text-gradient">Vision Into Reality</span>
-            </h2>
-          </AnimatedSection>
-        </div>
+        <div className="container-page">
+          {activeCollection === null ? (
+            <>
+              {/* Category Grid Header */}
+              <AnimatedSection className="text-center mb-16">
+                <h2 className="text-display text-4xl md:text-6xl font-semibold leading-[1.05] tracking-tight">
+                  3D Designs That Turn<br/>
+                  <span className="text-accent-italic text-gradient">Vision Into Reality</span>
+                </h2>
+              </AnimatedSection>
 
-        <div className="w-full px-1 md:px-2">
-          <AnimatedSection>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 md:gap-1.5 items-start lg:h-[2200px]">
-              {/* Column 1 */}
-              <div className="flex flex-col gap-1 md:gap-1.5 h-auto lg:h-full">
-                {COLUMN_1.map((item) => {
-                  if (item.type === 'row') {
-                    return (
-                      <div key={item.id} className={`grid grid-cols-2 gap-1 md:gap-1.5 w-full overflow-hidden lg:h-0 ${item.flex}`}>
-                        {item.images.map((img) => (
-                          <div 
-                            key={img.id} 
-                            className="w-full h-full overflow-hidden rounded-[4px] transition-all duration-500 hover:scale-[1.015] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] cursor-pointer group"
-                            onClick={() => setActiveImage(img.src)}
-                          >
-                            <img
-                              src={img.src}
-                              alt={`3D Design Rendering ${img.id}`}
-                              className="w-full h-auto lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
+              {/* Symmetrical 2-Column + Centerpiece Collections Grid */}
+              <AnimatedSection>
+                <div className="flex flex-col gap-16">
+                  {/* Row 1: Interiors & Exteriors */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 md:gap-x-24 gap-y-12">
+                    {/* Interiors */}
+                    <div className="flex flex-col">
+                      <div 
+                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
+                        onClick={() => setActiveCollection('interiors')}
+                      >
+                        <img
+                          src={COLLECTIONS.interiors.heroImage}
+                          alt={COLLECTIONS.interiors.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          loading="lazy"
+                        />
                       </div>
-                    );
-                  }
-                  return (
+                      <h3 
+                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
+                        onClick={() => setActiveCollection('interiors')}
+                      >
+                        {COLLECTIONS.interiors.title}
+                      </h3>
+                      <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
+                        {COLLECTIONS.interiors.description}
+                      </p>
+                    </div>
+
+                    {/* Exteriors */}
+                    <div className="flex flex-col">
+                      <div 
+                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
+                        onClick={() => setActiveCollection('exteriors')}
+                      >
+                        <img
+                          src={COLLECTIONS.exteriors.heroImage}
+                          alt={COLLECTIONS.exteriors.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          loading="lazy"
+                        />
+                      </div>
+                      <h3 
+                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
+                        onClick={() => setActiveCollection('exteriors')}
+                      >
+                        {COLLECTIONS.exteriors.title}
+                      </h3>
+                      <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
+                        {COLLECTIONS.exteriors.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <hr className="border-white/10" />
+
+                  {/* Row 2: Elevations & Amenities */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 md:gap-x-24 gap-y-12">
+                    {/* Elevations */}
+                    <div className="flex flex-col">
+                      <div 
+                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
+                        onClick={() => setActiveCollection('elevations')}
+                      >
+                        <img
+                          src={COLLECTIONS.elevations.heroImage}
+                          alt={COLLECTIONS.elevations.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          loading="lazy"
+                        />
+                      </div>
+                      <h3 
+                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
+                        onClick={() => setActiveCollection('elevations')}
+                      >
+                        {COLLECTIONS.elevations.title}
+                      </h3>
+                      <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
+                        {COLLECTIONS.elevations.description}
+                      </p>
+                    </div>
+
+                    {/* Amenities */}
+                    <div className="flex flex-col">
+                      <div 
+                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
+                        onClick={() => setActiveCollection('amenities')}
+                      >
+                        <img
+                          src={COLLECTIONS.amenities.heroImage}
+                          alt={COLLECTIONS.amenities.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          loading="lazy"
+                        />
+                      </div>
+                      <h3 
+                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
+                        onClick={() => setActiveCollection('amenities')}
+                      >
+                        {COLLECTIONS.amenities.title}
+                      </h3>
+                      <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
+                        {COLLECTIONS.amenities.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <hr className="border-white/10" />
+
+                  {/* Row 3: Isometric (Full width showcase banner) */}
+                  <div className="flex flex-col">
                     <div 
-                      key={item.id} 
-                      className={`w-full overflow-hidden rounded-[4px] lg:h-0 transition-all duration-500 hover:scale-[1.015] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] cursor-pointer group ${item.flex}`}
-                      onClick={() => setActiveImage(item.src)}
+                      className="aspect-[16/7] lg:aspect-[21/9] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
+                      onClick={() => setActiveCollection('isometric')}
                     >
                       <img
-                        src={item.src}
-                        alt={`3D Design Rendering ${item.id}`}
-                        className="w-full h-auto lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        src={COLLECTIONS.isometric.heroImage}
+                        alt={COLLECTIONS.isometric.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                         loading="lazy"
                       />
                     </div>
-                  );
-                })}
+                    <h3 
+                      className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
+                      onClick={() => setActiveCollection('isometric')}
+                    >
+                      {COLLECTIONS.isometric.title}
+                    </h3>
+                    <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide max-w-2xl">
+                      {COLLECTIONS.isometric.description}
+                    </p>
+                  </div>
+                </div>
+              </AnimatedSection>
+            </>
+          ) : (
+            /* Collection Gallery View */
+            <AnimatedSection>
+              {/* Gallery Header */}
+              <div className="border-b border-white/10 pb-8 mb-12">
+                <button
+                  onClick={() => setActiveCollection(null)}
+                  className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors uppercase tracking-wider mb-8 group"
+                >
+                  <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span> Back to Collections
+                </button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                  <div>
+                    <h2 className="font-accent text-4xl md:text-6xl font-light uppercase tracking-[0.18em] text-white leading-none">
+                      {COLLECTIONS[activeCollection].title}
+                    </h2>
+                  </div>
+                  <div>
+                    <p className="text-base md:text-lg leading-relaxed text-white/65 font-light">
+                      {COLLECTIONS[activeCollection].description}
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              {/* Column 2 */}
-              <div className="flex flex-col gap-1 md:gap-1.5 h-auto lg:h-full">
-                {COLUMN_2.map((item) => {
-                  if (item.type === 'row') {
-                    return (
-                      <div key={item.id} className={`grid grid-cols-2 gap-1 md:gap-1.5 w-full overflow-hidden lg:h-0 ${item.flex}`}>
-                        {item.images.map((img) => (
-                          <div 
-                            key={img.id} 
-                            className="w-full h-full overflow-hidden rounded-[4px] transition-all duration-500 hover:scale-[1.015] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] cursor-pointer group"
-                            onClick={() => setActiveImage(img.src)}
-                          >
-                            <img
-                              src={img.src}
-                              alt={`3D Design Rendering ${img.id}`}
-                              className="w-full h-auto lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  }
-                  return (
-                    <div 
-                      key={item.id} 
-                      className={`w-full overflow-hidden rounded-[4px] lg:h-0 transition-all duration-500 hover:scale-[1.015] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] cursor-pointer group ${item.flex}`}
-                      onClick={() => setActiveImage(item.src)}
-                    >
-                      <img
-                        src={item.src}
-                        alt={`3D Design Rendering ${item.id}`}
-                        className="w-full h-auto lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    </div>
-                  );
-                })}
+              {/* Scrollable Gallery Stack */}
+              <div className="flex flex-col gap-8 md:gap-12">
+                {COLLECTIONS[activeCollection].images.map((src, index) => (
+                  <div 
+                    key={index} 
+                    className="overflow-hidden rounded-lg cursor-pointer group"
+                    onClick={() => setActiveImage(src)}
+                  >
+                    <img
+                      src={src}
+                      alt={`${COLLECTIONS[activeCollection].title} rendering ${index + 1}`}
+                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-101"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
               </div>
-
-              {/* Column 3 */}
-              <div className="flex flex-col gap-1 md:gap-1.5 h-auto lg:h-full">
-                {COLUMN_3.map((item) => {
-                  if (item.type === 'row') {
-                    return (
-                      <div key={item.id} className={`grid grid-cols-2 gap-1 md:gap-1.5 w-full overflow-hidden lg:h-0 ${item.flex}`}>
-                        {item.images.map((img) => (
-                          <div 
-                            key={img.id} 
-                            className="w-full h-full overflow-hidden rounded-[4px] transition-all duration-500 hover:scale-[1.015] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] cursor-pointer group"
-                            onClick={() => setActiveImage(img.src)}
-                          >
-                            <img
-                              src={img.src}
-                              alt={`3D Design Rendering ${img.id}`}
-                              className="w-full h-auto lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  }
-                  return (
-                    <div 
-                      key={item.id} 
-                      className={`w-full overflow-hidden rounded-[4px] lg:h-0 transition-all duration-500 hover:scale-[1.015] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] cursor-pointer group ${item.flex}`}
-                      onClick={() => setActiveImage(item.src)}
-                    >
-                      <img
-                        src={item.src}
-                        alt={`3D Design Rendering ${item.id}`}
-                        className="w-full h-auto lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </AnimatedSection>
+            </AnimatedSection>
+          )}
         </div>
       </section>
 
@@ -235,59 +293,76 @@ export default function PortfolioPage() {
   );
 }
 
-type GridItem = 
-  | { type: 'full'; id: number; src: string; flex: string }
-  | { type: 'row'; id: string; flex: string; images: { id: number; src: string }[] };
+interface Collection {
+  id: string;
+  title: string;
+  description: string;
+  heroImage: string;
+  images: string[];
+}
 
-const COLUMN_1: GridItem[] = [
-  { type: 'full', id: 7, src: '/images/portfolio/extracted_image_7.png', flex: 'lg:flex-[1.8_1_0%]' },
-  { 
-    type: 'row', 
-    id: 'c1-r2', 
-    flex: 'lg:flex-[1_1_0%]',
+const COLLECTIONS: Record<string, Collection> = {
+  interiors: {
+    id: 'interiors',
+    title: 'Interiors',
+    description: 'Exquisite living room interior designs that blend modern elegance with timeless sophistication. Spaces that embody luxury and style, tailored to your unique taste and lifestyle.',
+    heroImage: '/images/portfolio/extracted_image_12.png',
     images: [
-      { id: 4, src: '/images/portfolio/extracted_image_4.jpeg' },
-      { id: 5, src: '/images/portfolio/extracted_image_5.jpeg' }
-    ] 
+      '/images/portfolio/extracted_image_12.png',
+      '/images/portfolio/extracted_image_11.png',
+      '/images/portfolio/extracted_image_14.jpeg',
+      '/images/portfolio/extracted_image_4.jpeg',
+      '/images/portfolio/extracted_image_13.jpeg',
+      '/images/portfolio/extracted_image_1.jpeg',
+      '/images/portfolio/extracted_image_9.png',
+      '/images/portfolio/extracted_image_16.jpeg',
+      '/images/portfolio/extracted_image_10.png',
+      '/images/portfolio/extracted_image_18.jpeg',
+      '/images/portfolio/extracted_image_20.jpeg',
+      '/images/portfolio/extracted_image_21.jpeg',
+    ]
   },
-  { 
-    type: 'row', 
-    id: 'c1-r3', 
-    flex: 'lg:flex-[1_1_0%]',
+  exteriors: {
+    id: 'exteriors',
+    title: 'Exteriors',
+    description: 'Our Exterior portfolio showcases a collection of realistic and detailed projects that highlight our dedication to precision and creativity in every design.',
+    heroImage: '/images/portfolio/extracted_image_6.jpeg',
     images: [
-      { id: 8, src: '/images/portfolio/extracted_image_8.jpeg' },
-      { id: 9, src: '/images/portfolio/extracted_image_9.png' }
-    ] 
+      '/images/portfolio/extracted_image_6.jpeg',
+      '/images/portfolio/extracted_image_15.jpeg',
+      '/images/portfolio/extracted_image_17.jpeg',
+      '/images/portfolio/extracted_image_3.jpeg',
+    ]
   },
-  { type: 'full', id: 13, src: '/images/portfolio/extracted_image_13.jpeg', flex: 'lg:flex-[1.2_1_0%]' },
-  { type: 'full', id: 16, src: '/images/portfolio/extracted_image_16.jpeg', flex: 'lg:flex-[1.2_1_0%]' },
-  { type: 'full', id: 17, src: '/images/portfolio/extracted_image_17.jpeg', flex: 'lg:flex-[1.2_1_0%]' },
-];
-
-const COLUMN_2: GridItem[] = [
-  { 
-    type: 'row', 
-    id: 'c2-r1', 
-    flex: 'lg:flex-[1_1_0%]',
+  elevations: {
+    id: 'elevations',
+    title: 'Elevations',
+    description: 'Highly detailed 3D elevations illustrating structural facades, building orientations, and material distributions with pinpoint accuracy.',
+    heroImage: '/images/portfolio/extracted_image_7.png',
     images: [
-      { id: 1, src: '/images/portfolio/extracted_image_1.jpeg' },
-      { id: 2, src: '/images/portfolio/extracted_image_2.jpeg' }
-    ] 
+      '/images/portfolio/extracted_image_7.png',
+      '/images/portfolio/extracted_image_2.jpeg',
+      '/images/portfolio/extracted_image_19.jpeg',
+    ]
   },
-  { type: 'full', id: 6, src: '/images/portfolio/extracted_image_6.jpeg', flex: 'lg:flex-[1.8_1_0%]' },
-  { type: 'full', id: 12, src: '/images/portfolio/extracted_image_12.png', flex: 'lg:flex-[1.4_1_0%]' },
-  { type: 'full', id: 10, src: '/images/portfolio/extracted_image_10.png', flex: 'lg:flex-[1_1_0%]' },
-  { type: 'full', id: 18, src: '/images/portfolio/extracted_image_18.jpeg', flex: 'lg:flex-[1.2_1_0%]' },
-  { type: 'full', id: 19, src: '/images/portfolio/extracted_image_19.jpeg', flex: 'lg:flex-[1_1_0%]' },
-];
-
-const COLUMN_3: GridItem[] = [
-  { type: 'full', id: 11, src: '/images/portfolio/extracted_image_11.png', flex: 'lg:flex-[1.8_1_0%]' },
-  { type: 'full', id: 14, src: '/images/portfolio/extracted_image_14.jpeg', flex: 'lg:flex-[1.4_1_0%]' },
-  { type: 'full', id: 15, src: '/images/portfolio/extracted_image_15.jpeg', flex: 'lg:flex-[1.2_1_0%]' },
-  { type: 'full', id: 3, src: '/images/portfolio/extracted_image_3.jpeg', flex: 'lg:flex-[1_1_0%]' },
-  { type: 'full', id: 20, src: '/images/portfolio/extracted_image_20.jpeg', flex: 'lg:flex-[1_1_0%]' },
-  { type: 'full', id: 21, src: '/images/portfolio/extracted_image_21.jpeg', flex: 'lg:flex-[1.2_1_0%]' },
-];
+  amenities: {
+    id: 'amenities',
+    title: 'Amenities',
+    description: 'Immersive spaces designed for communities, detailing pool decks, clubhouses, green areas, and lifestyle facilities with CGI photorealism.',
+    heroImage: '/images/portfolio/extracted_image_8.jpeg',
+    images: [
+      '/images/portfolio/extracted_image_8.jpeg',
+    ]
+  },
+  isometric: {
+    id: 'isometric',
+    title: 'Isometric',
+    description: 'Fascinating 3D spatial cutaway plans offering a complete overview of layouts, room arrangements, and design proportions.',
+    heroImage: '/images/portfolio/extracted_image_13.jpeg',
+    images: [
+      '/images/portfolio/extracted_image_13.jpeg',
+    ]
+  }
+};
 
 
