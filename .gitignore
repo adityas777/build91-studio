@@ -44,3 +44,8 @@ scripts/test-fetch.js
 /backups
 production-state.json
 *.webm
+
+# Large media & PDF assets (stored on S3)
+*.pdf
+/public/images/extracted_portfolio/
+

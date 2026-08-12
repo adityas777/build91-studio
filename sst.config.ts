@@ -33,12 +33,17 @@ export default $config({
       }
     }
 
+    const portfolioBucket = new sst.aws.Bucket("PortfolioBucket", {
+      public: true
+    });
+
     new sst.aws.Nextjs("MyWeb", {
       domain: {
         name: "dev.build91.in",
         dns: false,
         cert: "arn:aws:acm:us-east-1:533267081620:certificate/567d4fe4-a433-4f4b-b713-dea5835bcb8d",
       },
+      link: [portfolioBucket],
       environment: {
         RESEND_API_KEY: process.env.RESEND_API_KEY || "",
         QUOTE_TO_EMAIL: process.env.QUOTE_TO_EMAIL || "",
@@ -54,7 +59,9 @@ export default $config({
         LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET || "",
         LINKEDIN_ORGANIZATION_ID: process.env.LINKEDIN_ORGANIZATION_ID || "",
         LINKEDIN_ACCESS_TOKEN: process.env.LINKEDIN_ACCESS_TOKEN || "",
+        PORTFOLIO_BUCKET_NAME: portfolioBucket.name,
       },
     });
   },
 });
+

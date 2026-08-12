@@ -6,8 +6,29 @@ import { AnimatedSection } from '@/components/AnimatedSection';
 export default function PortfolioPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
-  const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [activeCollection, setActiveCollection] = useState<string | null>(null);
+  const [COLLECTIONS, setCOLLECTIONS] = useState<Record<string, Collection>>(STATIC_COLLECTIONS);
+
+  useEffect(() => {
+    async function fetchCollections() {
+      try {
+        const res = await fetch('/api/portfolio');
+        if (!res.ok) {
+          throw new Error('S3 listing response not OK');
+        }
+        const data = await res.json();
+        // Only update state if we received a valid, non-empty collections map
+        if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+          setCOLLECTIONS(data);
+        }
+      } catch (err) {
+        console.warn('Could not load dynamic S3 portfolio. Falling back to local copy.', err);
+      }
+    }
+    fetchCollections();
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -26,6 +47,26 @@ export default function PortfolioPage() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [activeCollection]);
+
+  // Keyboard navigation listener for lightbox (Arrows to slide, Esc to close)
+  useEffect(() => {
+    if (activeImageIndex === null || !activeCollection) return;
+    const images = COLLECTIONS[activeCollection].images;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        setActiveImageIndex((prev) => (prev !== null ? (prev + 1) % images.length : null));
+      } else if (e.key === 'ArrowLeft') {
+        setActiveImageIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : null));
+      } else if (e.key === 'Escape') {
+        setActiveImageIndex(null);
+        setIsFullscreen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeImageIndex, activeCollection, COLLECTIONS]);
 
 
   return (
@@ -265,7 +306,10 @@ export default function PortfolioPage() {
                   <div 
                     key={index} 
                     className="overflow-hidden rounded-lg cursor-pointer group"
-                    onClick={() => setActiveImage(src)}
+                    onClick={() => {
+                      setActiveImageIndex(index);
+                      setIsFullscreen(false);
+                    }}
                   >
                     <img
                       src={src}
@@ -282,26 +326,114 @@ export default function PortfolioPage() {
       )}
 
       {/* Lightbox Modal */}
-      {activeImage && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 transition-opacity duration-300 cursor-zoom-out"
-          onClick={() => setActiveImage(null)}
-        >
-          <button 
-            className="absolute top-6 right-6 text-white/70 hover:text-white text-4xl font-light transition-colors duration-200"
-            onClick={() => setActiveImage(null)}
-            aria-label="Close lightbox"
-          >
-            &times;
-          </button>
-          <div className="relative max-w-5xl max-h-[90vh] cursor-default" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={activeImage}
-              alt="Enlarged 3D Render"
-              className="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-2xl"
-            />
-          </div>
-        </div>
+      {activeImageIndex !== null && activeCollection && (
+        (() => {
+          const images = COLLECTIONS[activeCollection].images;
+          const activeImageSrc = images[activeImageIndex];
+          
+          const handlePrev = (e?: React.MouseEvent) => {
+            e?.stopPropagation();
+            setActiveImageIndex((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : null));
+          };
+          
+          const handleNext = (e?: React.MouseEvent) => {
+            e?.stopPropagation();
+            setActiveImageIndex((prev) => (prev !== null ? (prev + 1) % images.length : null));
+          };
+
+          const handleClose = () => {
+            setActiveImageIndex(null);
+            setIsFullscreen(false);
+          };
+
+          const toggleFullscreen = (e: React.MouseEvent) => {
+            e.stopPropagation();
+            setIsFullscreen(!isFullscreen);
+          };
+
+          return (
+            <div 
+              className={`fixed inset-0 z-50 flex items-center justify-center bg-black/95 transition-all duration-300 select-none ${
+                isFullscreen ? 'p-0' : 'p-6 md:p-12 lg:p-16'
+              }`}
+              onClick={handleClose}
+            >
+              {/* Top-Left Action Button: Fullscreen Toggle */}
+              <button 
+                className="absolute top-6 left-6 z-50 flex items-center justify-center text-white/70 hover:text-white bg-black/40 hover:bg-black/60 rounded-full w-12 h-12 transition-all duration-300"
+                onClick={toggleFullscreen}
+                aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+              >
+                {isFullscreen ? (
+                  /* Collapse Icon */
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3 3m12 6V4.5m0 4.5h4.5m-4.5 0l6-6M9 15v4.5M9 15H4.5M9 15l-6 6m12-6v4.5m0-4.5h4.5m-4.5 0l6 6" />
+                  </svg>
+                ) : (
+                  /* Expand Icon */
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M20.25 3.75v4.5m0-4.5h-4.5m4.5 0L15 9m-11.25 11.25v-4.5m0 4.5h4.5m-4.5 0L9 15m11.25 0v4.5m0-4.5h-4.5m4.5 0L15 15" />
+                  </svg>
+                )}
+              </button>
+
+              {/* Top-Right Action Button: Close */}
+              <button 
+                className="absolute top-6 right-6 z-50 flex items-center justify-center text-white/70 hover:text-white bg-black/40 hover:bg-black/60 rounded-full w-12 h-12 transition-all duration-300"
+                onClick={handleClose}
+                aria-label="Close lightbox"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Left Arrow Button (Only if more than 1 image) */}
+              {images.length > 1 && (
+                <button 
+                  className="absolute left-4 md:left-8 z-50 flex items-center justify-center text-white/60 hover:text-white bg-black/30 hover:bg-black/50 hover:scale-105 active:scale-95 rounded-full w-12 h-12 md:w-14 md:h-14 transition-all duration-300"
+                  onClick={handlePrev}
+                  aria-label="Previous image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 md:w-7 md:h-7">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Right Arrow Button (Only if more than 1 image) */}
+              {images.length > 1 && (
+                <button 
+                  className="absolute right-4 md:right-8 z-50 flex items-center justify-center text-white/60 hover:text-white bg-black/30 hover:bg-black/50 hover:scale-105 active:scale-95 rounded-full w-12 h-12 md:w-14 md:h-14 transition-all duration-300"
+                  onClick={handleNext}
+                  aria-label="Next image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 md:w-7 md:h-7">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Image Container */}
+              <div 
+                className={`relative flex items-center justify-center transition-all duration-500 cursor-default select-none ${
+                  isFullscreen ? 'w-full h-full' : 'max-w-[85vw] max-h-[80vh] md:max-w-[80vw] md:max-h-[85vh]'
+                }`} 
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img
+                  src={activeImageSrc}
+                  alt={`Enlarged 3D Render ${activeImageIndex + 1}`}
+                  className={`object-contain transition-all duration-500 shadow-2xl ${
+                    isFullscreen ? 'w-full h-full rounded-none' : 'w-auto h-auto max-w-full max-h-full rounded-lg'
+                  }`}
+                  loading="eager"
+                />
+              </div>
+            </div>
+          );
+        })()
       )}
     </>
   );
@@ -315,7 +447,7 @@ interface Collection {
   images: string[];
 }
 
-const COLLECTIONS: Record<string, Collection> = {
+const STATIC_COLLECTIONS: Record<string, Collection> = {
   interiors: {
     id: 'interiors',
     title: 'Interiors',
