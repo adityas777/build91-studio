@@ -4,11 +4,11 @@ import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
 export const dynamic = 'force-dynamic';
 
 
-// Initialize the S3 client using environment variables.
-// In SST production deployment, credentials are automatically resolved via IAM role.
+const isLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+
 const s3Client = new S3Client({
   region: process.env.AWS_REGION || 'us-east-1',
-  ...(process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY ? {
+  ...(!isLambda && process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY ? {
     credentials: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,

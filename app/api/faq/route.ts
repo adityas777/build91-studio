@@ -3,11 +3,11 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-// Initialize S3 client. Region defaults to us-east-1.
-// Credentials will resolve from IAM in SST prod or .env.local in dev.
+const isLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+
 const s3Client = new S3Client({
   region: process.env.AWS_REGION || 'us-east-1',
-  ...(process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY ? {
+  ...(!isLambda && process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY ? {
     credentials: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
