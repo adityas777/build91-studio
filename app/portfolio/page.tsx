@@ -19,9 +19,19 @@ export default function PortfolioPage() {
           throw new Error('S3 listing response not OK');
         }
         const data = await res.json();
-        // Only update state if we received a valid, non-empty collections map
         if (data && typeof data === 'object' && Object.keys(data).length > 0) {
-          setCOLLECTIONS(data);
+          // Merge S3 data with static fallback per-category
+          const merged: Record<string, Collection> = {};
+          for (const key of Object.keys(STATIC_COLLECTIONS)) {
+            const s3Category = data[key];
+            if (s3Category && Array.isArray(s3Category.images) && s3Category.images.length > 0) {
+              merged[key] = s3Category;
+            } else {
+              // Fallback per-category if no S3 images exist
+              merged[key] = STATIC_COLLECTIONS[key];
+            }
+          }
+          setCOLLECTIONS(merged);
         }
       } catch (err) {
         console.warn('Could not load dynamic S3 portfolio. Falling back to local copy.', err);
