@@ -7,9 +7,9 @@ import { StoryTimeline } from '@/components/StoryTimeline';
 import { SITE, VALUES } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'About Build91 Studio | 3D & Real Estate Marketing Studio',
   description:
-    'Build91 Studio — a full-stack digital sales partner for real estate. From 3D visualization to digital launchpads, we help developers present better and close faster.',
+    'Build91 Studio is a real estate marketing studio in Raipur and Bengaluru — 3D visualization, virtual tours and digital launchpads for developers across India, UAE and Australia.',
 };
 
 const team = [
@@ -38,7 +38,7 @@ export default function AboutPage() {
               <span className="text-accent-italic text-gradient">blueprints</span>{' '}
               into immersive{' '}
               <span className="text-accent-italic text-gradient-gold">
-                experiences.
+                3D experiences.
               </span>
             </h1>
             <p className="mt-8 max-w-2xl text-base leading-relaxed text-white/65 md:text-lg">
@@ -121,6 +121,14 @@ export default function AboutPage() {
                 },
               ]}
             />
+            <div className="sr-only">
+              <h3>2023 — Founded</h3>
+              <p>Started as a pure 3D visualization studio serving boutique architects and designers.</p>
+              <h3>2024 — Expanded</h3>
+              <p>Added film, motion and post, large scale properties and international operations — becoming a one-stop creative house.</p>
+              <h3>2025 — Suite Launched</h3>
+              <p>Introduced the Digital Sales Suite — Interactive experiences, location intelligence, microsites, marketing stack and the complete launch system.</p>
+            </div>
           </AnimatedSection>
         </div>
       </section>
