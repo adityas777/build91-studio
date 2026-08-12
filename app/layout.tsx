@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk, Cormorant_Garamond } from 'next/font/google';
+import { Inter, Space_Grotesk, Cormorant_Garamond, Jost, Commissioner } from 'next/font/google';
 import './globals.css';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
@@ -25,6 +25,9 @@ const cormorant = Cormorant_Garamond({
   variable: '--font-cormorant',
   display: 'swap',
 });
+
+const jost = Jost({ subsets: ['latin'], weight: ['500'], variable: '--font-jost', display: 'swap' });
+const commissioner = Commissioner({ subsets: ['latin'], variable: '--font-commissioner', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -71,7 +74,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${space.variable} ${cormorant.variable}`}
+      className={`${inter.variable} ${space.variable} ${cormorant.variable} ${jost.variable} ${commissioner.variable}`}
     >
       <body className="min-h-screen bg-ink-900 text-white antialiased">
         <Navigation />

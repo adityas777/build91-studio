@@ -25,11 +25,21 @@ const config: Config = {
           DEFAULT: '#E0B872',
           soft: '#F3D690',
         },
+        spectral: {
+          bg: '#01040b',
+          surface: '#17212d',
+          surfaceRaised: '#27313d',
+          text: '#f2f3f8',
+          accent: '#329cdd',
+          accentAlt: '#ce3ad2',
+        },
       },
       fontFamily: {
         display: ['var(--font-space)', 'system-ui', 'sans-serif'],
         body: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         accent: ['var(--font-cormorant)', 'Georgia', 'serif'],
+        monoDisplay: ['var(--font-jost)', 'system-ui', 'sans-serif'],
+        monoBody: ['var(--font-commissioner)', 'system-ui', 'sans-serif'],
       },
       animation: {
         'gradient-shift': 'gradient-shift 18s ease infinite',

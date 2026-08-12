@@ -37,12 +37,12 @@ export function BentoPortfolio() {
   return (
     <section
       id="work"
-      className="section-base section-neutral relative overflow-hidden py-28 md:py-36"
+      className="section-base relative overflow-hidden py-28 md:py-36 bg-spectral-bg text-spectral-text font-monoBody"
     >
       <div className="container-page">
         <AnimatedSection className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <span className="section-eyebrow">Selected Work</span>
+            <span className="text-xs font-medium uppercase tracking-[0.3em] text-spectral-accent">Selected Work</span>
             <h2 className="section-heading mt-4">
               A glimpse of{' '}
               <span className="text-accent-italic text-gradient">
@@ -52,7 +52,7 @@ export function BentoPortfolio() {
           </div>
           <Link
             href="/work"
-            className="inline-flex items-center gap-2 self-start text-sm font-medium text-white/80 transition-colors hover:text-gold md:self-end"
+            className="inline-flex items-center gap-2 self-start text-sm font-medium text-spectral-text/80 transition-colors hover:text-gold md:self-end"
           >
             View All Work
             <ArrowUpRight className="h-4 w-4" />

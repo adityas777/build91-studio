@@ -1,0 +1,335 @@
+import fs from 'fs';
+import path from 'path';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+
+// Load environment variables from .env.local manually
+const envPath = path.resolve(process.cwd(), '.env.local');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  const lines = envContent.split(/\r?\n/);
+  for (const line of lines) {
+    if (line.trim().startsWith('#') || !line.includes('=')) continue;
+    const parts = line.split('=');
+    const key = parts[0].trim();
+    let val = parts.slice(1).join('=').trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    if (!process.env[key]) {
+      process.env[key] = val;
+    }
+  }
+}
+
+const bucketName = process.env.PORTFOLIO_BUCKET_NAME;
+const region = process.env.AWS_REGION || 'us-east-1';
+
+if (!bucketName) {
+  console.error('ERROR: PORTFOLIO_BUCKET_NAME environment variable is not defined.');
+  process.exit(1);
+}
+
+const client = new S3Client({
+  region,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+  }
+});
+
+// Import the blogs data (or define it inline for safety since script is .mjs and not TS)
+const BLOGS = [
+  {
+    id: 'color-drenching-2025',
+    title: 'Color Drenching: The 2025 Guide',
+    subtitle: 'How to envelop rooms in one hue for immersive, modern interiors',
+    excerpt: 'How to envelop rooms in one hue for immersive, modern interiors. Color drenching treats walls, trim, and ceiling as one envelope.',
+    author: {
+      name: 'Tanu Mathur',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80',
+    },
+    createdAt: 'Sep 13, 2025',
+    readTime: '3 min read',
+    category: 'Interior Design',
+    image: '/images/blogs/page_1_img_1.png',
+    content: [
+      { type: 'paragraph', text: 'Color drenching treats walls, trim, and ceiling as one envelope.' },
+      { type: 'heading', level: 2, text: 'Introduction' },
+      { type: 'paragraph', text: 'Color drenching is reshaping interiors in 2025, enveloping walls, trim, ceilings, and furnishings in a single hue to create an immersive, cocooning atmosphere. This mood-forward approach delivers bold character with low visual noise, helping compact rooms feel calmer and more unified than contrasting schemes.' },
+      { type: 'heading', level: 2, text: 'What is color drenching' },
+      { type: 'paragraph', text: "Color drenching coats the room's architectural envelope—walls, woodwork, doors, radiators, and the ceiling—in one color or closely related tones. By minimizing breaks between surfaces, edges soften and the eye travels smoothly, boosting cohesion and comfort compared to high-contrast palettes." },
+      { type: 'image', src: '/images/blogs/page_3_img_2.png', caption: 'Unified envelope: walls, woodwork, ceiling in one tone.' },
+      { type: 'heading', level: 2, text: "Why it's trending now" },
+      { type: 'paragraph', text: 'Homeowners and designers are moving away from stark minimalism toward emotive, personal spaces, and drenching offers a cohesive way to achieve depth and mood. The ceiling is now treated as the "fifth wall," abandoning default white in favor of harmonized tones that complete the envelope and elevate architectural detail.' },
+      { type: 'heading', level: 2, text: '2025 trends to watch' },
+      {
+        type: 'list',
+        items: [
+          'Double drenching: Two related hues flood a space—one for walls, another for trim or ceiling—to add nuance without breaking unity.',
+          'Pattern drenching: One motif (stripes, florals, scenic papers) repeated across walls and key upholstery for maximalist cohesion.',
+          'Statement ceilings: Saturated ceilings that match or deepen wall color to complete the envelope and highlight moldings.',
+          'Rich tinted darks: Blue-violet and moody mid-tones offer modern calm and a sophisticated backdrop for materials and art.',
+          'Targeted scope: Applying drenching to snugs, studies, powder baths, and pantries yields intensity without overwhelming open plans.',
+        ],
+      },
+      { type: 'heading', level: 2, text: 'Where it works best' },
+      { type: 'paragraph', text: "Intimate rooms like powder baths, libraries, dens, and compact offices excel with a single saturated shade that amplifies mood and simplifies sightlines. Kitchens, butler's pantries, and dining rooms also benefit when cabinetry, beams, and paneling receive harmonized sheens for subtle dimensionality." },
+      { type: 'image', src: '/images/blogs/page_5_img_3.png', caption: 'Cocooning color in a period home.' },
+      { type: 'heading', level: 2, text: 'How to execute it well' },
+      {
+        type: 'list',
+        items: [
+          'Choose the hue: Test undertones in daylight and evening to confirm flattering behavior before applying across all surfaces.',
+          'Mix sheens: Matte for ceilings, eggshell or satin for walls, and semi-gloss for trim preserves depth and light play within one color story.',
+          'Envelop fully: Include doors, skirting, radiators, and the ceiling; avoid the default white ceiling unless used intentionally for contrast.',
+          'Layer tactility: Plaster, timber, bouclé, ribbed textiles, and woven woods keep monochrome rooms rich and multi-sensory rather than flat.',
+        ],
+      },
+      { type: 'heading', level: 2, text: 'Palettes for 2025' },
+      {
+        type: 'list',
+        items: [
+          'Blue-violet darks: Ideal for studies, dining rooms, and primary suites seeking depth and serenity.',
+          'Forest and olive: Saturated yet soothing greens that excel in offices, libraries, and cozy living rooms.',
+          'Charcoal and inky blue: Timeless shadows that photograph elegantly and read as contemporary classics.',
+          'Dusty rose to mauve: Smoked-out pinks that pair beautifully with walnut, marble, and warm metal accents.',
+        ],
+      },
+      { type: 'heading', level: 2, text: 'Advanced variations' },
+      {
+        type: 'list',
+        items: [
+          'Double drenching: Articulate moldings and doors with a slightly deeper or lighter related tone to reveal architecture within cohesion.',
+          'Pattern drenching: Carry one wallpaper or fabric story across walls and a key upholstery piece for a room that "has a moment."',
+        ],
+      },
+      { type: 'image', src: '/images/blogs/page_9_img_5.png', caption: 'Pattern drenching goes bold.' },
+      { type: 'heading', level: 2, text: 'Pitfalls and fixes' },
+      { type: 'paragraph', text: 'Uniform color plus uniform sheen can feel monotonous; vary finishes and add natural materials and texture for depth. Whole-home drenching can overwhelm; focus on discrete zones or smaller rooms to protect balance and visual comfort.' },
+      { type: 'heading', level: 2, text: 'Practical paint tips' },
+      { type: 'paragraph', text: 'Use a consistent system or compatible bases across substrates (walls, trim, metal) to maintain color continuity. Camouflage distractions by painting switch plates, access panels, and grilles to match, reducing visual interruptions.' },
+      { type: 'heading', level: 2, text: 'Styling and lighting' },
+      { type: 'paragraph', text: 'Monochrome rooms reward tactile variety—bouclé, velvet, sisal, ribbed plaster, and wood grain—to keep the eye engaged. Plan layered lighting—ambient, task, and accent—so saturated surfaces feel rich rather than heavy after dark.' },
+      { type: 'heading', level: 2, text: 'Visualizing decisions' },
+      { type: 'paragraph', text: 'Create large sample boards and trial zones; test tonal tweaks like a 25% lighter ceiling or deeper trim to refine balance. Pilot the concept in a powder room or pantry before extending the palette into adjacent rooms or circulation spaces.' },
+      { type: 'heading', level: 2, text: 'Build91 perspective' },
+      { type: 'paragraph', text: 'For residential and hospitality projects, targeted drenching can resolve tricky proportions, simplify sightlines, and create signature "moment rooms" that photograph and live beautifully. With durable finishes and strategic sheen mapping, drenching also streamlines maintenance and elevates perceived craftsmanship.' },
+    ],
+  },
+  {
+    id: 'interior-trends-2025',
+    title: 'Top Interior Design Trends for 2025 with Realistic 3D Render Inspirations',
+    subtitle: 'Discover the design movements defining modern spaces in 2025',
+    excerpt: 'The world of interior design is evolving rapidly in 2025, driven by technology, sustainability, and evolving lifestyle needs. At Build91, we create renders that bring these trends to life.',
+    author: {
+      name: 'build91design',
+      avatar: '/images/Build91Logo_circle.png',
+    },
+    createdAt: 'Jul 4, 2025',
+    readTime: '3 min read',
+    category: '3D Rendering',
+    image: '/images/blogs/page_12_img_7.png',
+    content: [
+      { type: 'paragraph', text: 'Hello we are back! The world of interior design is evolving rapidly in 2025, driven by technology, sustainability, and evolving lifestyle needs. At Build91, we work with hundreds of interior designers and homeowners to create stunning 3D renders that bring these trends to life before a single nail is hammered. Here are the top interior design trends for 2025 along with inspiring realistic 3D visuals to help you plan your next project with confidence:' },
+      { type: 'heading', level: 2, text: '1. Warm Minimalism with Textured Neutrals' },
+      { type: 'paragraph', text: 'Minimalism continues but shifts towards warmer, more inviting spaces. Think neutral palettes with layers of texture - limewashed walls, boucle fabrics, ribbed wooden panels, and handmade tiles.' },
+      { type: 'paragraph', text: 'Visual Inspiration: Imagine a living room with off-white lime plaster walls, ribbed oak panelling on the TV unit, a soft beige boucle sofa, and handwoven jute rugs. Our 3D renders can show how different textures interplay under daylight and warm artificial lights.' },
+      { type: 'heading', level: 2, text: '2. Bold Monochrome Bathrooms' },
+      { type: 'paragraph', text: 'Bathrooms are turning into statement spaces with single-colour boldness. Deep greens, terracotta, navy blues, and even matte black are popular, paired with matching tiles, paint, and sanitary fixtures.' },
+      { type: 'paragraph', text: 'Visual Inspiration: Our recent 3D visualisation for a Mumbai project showed a forest green bathroom with green subway tiles, painted ceiling, and matching green vanity - an elegant, luxurious sanctuary feel without overwhelming the senses.' },
+      { type: 'image', src: '/images/blogs/page_12_img_7.png', caption: 'Bold Forest Green Monochrome Bathroom Visualisation.' },
+      { type: 'heading', level: 2, text: '3. Biophilic Design and Indoor Green Walls' },
+      { type: 'paragraph', text: 'The focus on wellness brings nature indoors - green walls, indoor planters, and natural materials like bamboo, cane, and stone are in high demand. Even apartments are adopting vertical gardens to create a refreshing feel.' },
+      { type: 'paragraph', text: 'Visual Inspiration: 3D renders showcasing a dining area with an entire moss wall backdrop, bamboo pendant lights, and natural stone flooring help clients visualise these earthy, calming spaces before execution.' },
+      { type: 'image', src: '/images/blogs/page_13_img_8.png', caption: 'Dining area with custom indoor biophilic green moss wall.' },
+      { type: 'heading', level: 2, text: '4. Curved Forms and Organic Shapes' },
+      { type: 'paragraph', text: 'Straight lines are giving way to arches, rounded sofas, curved kitchen islands, and soft-edged furniture. This creates a flowy, comforting, and timeless aesthetic.' },
+      { type: 'paragraph', text: 'Visual Inspiration: Our renders can model arched doorways, round ottomans, curved modular sofas, and wavy wooden slat panels seamlessly, helping designers explain this concept to clients who may be used to linear layouts.' },
+      { type: 'image', src: '/images/blogs/page_14_img_9.png', caption: 'Living space showcasing organic curves and rounded architectural elements.' },
+      { type: 'heading', level: 2, text: '5. Smart Tech Integration with Invisible Design' },
+      { type: 'paragraph', text: 'Home automation, concealed lighting, invisible wireless chargers embedded in side tables, and sleek built-in appliances are defining luxury in 2025. Technology is becoming a silent enabler rather than a visible feature.' },
+      { type: 'paragraph', text: 'Visual Inspiration: We recently visualised a master bedroom with concealed strip lighting under the bed platform, motorised blinds hidden in pelmets, and an invisible charger on the bedside table, showcasing how aesthetics and tech blend perfectly.' },
+      { type: 'image', src: '/images/blogs/page_15_img_10.png', caption: 'Smart bedroom with integrated invisible lighting and Pelmet track controls.' },
+      { type: 'heading', level: 2, text: 'Why 3D Renders are Essential to Embrace These Trends' },
+      {
+        type: 'list',
+        items: [
+          'Clarity for Clients: Visualise bold choices risk-free.',
+          'Material Selection Confidence: See textures, finishes, and colour harmonies before buying.',
+          'Faster Approvals: Homeowners and builders approve designs quickly when they can see them realistically.',
+          'Marketing Edge: Builders and designers can showcase upcoming projects with hyper-realistic walkthroughs.',
+        ],
+      },
+      { type: 'heading', level: 2, text: 'Bring Your Design Ideas to Life with Build91' },
+      { type: 'paragraph', text: "At Build91, we specialise in 3D interior and exterior renders, 3D floor plans, walkthroughs, and event decor visualisations that bring your design ideas to life before execution. Whether you're an interior designer, architect, builder, planner or homeowner, our team ensures precision, photorealism, and fast delivery to make decisions easier and smarter. Contact us today to visualise your next design project with confidence." },
+    ],
+  },
+  {
+    id: 'drone-cinematics-location-intelligence',
+    title: 'Beyond the View: How Drone Cinematics & Location Intelligence Are Reshaping Real Estate Sales',
+    subtitle: 'How strategic aerial data and location mapping accelerate commercial real estate booking',
+    excerpt: 'Aerial cinematography is no longer a luxury add-on - it is a baseline requirement. See how location intelligence and 3D overlays reshape real estate sales.',
+    author: {
+      name: 'Tanu Mathur',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80',
+    },
+    createdAt: 'Mar 4, 2025',
+    readTime: '2 min read',
+    category: 'Drone mapping',
+    image: '/images/blogs/page_20_img_13.png',
+    content: [
+      { type: 'paragraph', text: "In the last decade, real estate marketing has moved from static brochures to dynamic digital experiences. Today, aerial cinematography is no longer a luxury add-on—it is a baseline requirement. But at Build91 Studio, we believe that simply having a drone shot isn't enough. The real power lies in how you use that aerial data to tell a story, validate a location, and close a deal. Here is how strategic drone cinematics can transform your project's lifecycle, from the first pitch to the final handover." },
+      { type: 'heading', level: 2, text: '1. The Marketing Edge: From Attention to Action' },
+      { type: 'paragraph', text: 'The real estate market is noisy. To cut through the clutter, your visual strategy needs to follow the AIDA principle (Attention, Interest, Desire, Action).' },
+      {
+        type: 'list',
+        items: [
+          'Attention: High-altitude panoramic shots stop the scroll on social media.',
+          'Interest: Close-range, intricate 4K reveals of the site layout showcase the scale of your vision.',
+          'Desire: This is where we innovate. By superimposing 3D renders of your upcoming project onto actual drone footage, we allow buyers to visualize the future in the context of the present.',
+          'Action: When a buyer clearly sees the value, the path to booking becomes shorter.',
+        ],
+      },
+      { type: 'heading', level: 2, text: '2. Location Intelligence: Selling the "Where"' },
+      { type: 'paragraph', text: 'A buyer doesn\'t just purchase an apartment; they purchase an ecosystem. Drone mapping brings "Location Intelligence" to your sales kit. Instead of a flat map, an aerial video tour effectively demonstrates proximity to key infrastructure—showing the exact distance to the nearest metro station, IT park, or highway. For remote investors or NRI buyers, this visual proof of connectivity is often the deciding factor.' },
+      { type: 'image', src: '/images/blogs/page_20_img_13.png', caption: 'Aerial location mapping showcasing infra connectivity layers.' },
+      { type: 'heading', level: 2, text: '3. Transparency & Progress Monitoring' },
+      { type: 'paragraph', text: 'Trust is the currency of real estate. Regular aerial updates serve a dual purpose:' },
+      {
+        type: 'list',
+        items: [
+          'For the Buyer: It provides transparent, real-time updates on construction progress, keeping them engaged and reassured that their investment is taking shape.',
+          'For the Team: It creates a "zero-incidence" mindset. Aerial views help project managers identify safety hazards, monitor logistics, and inspect hard-to-reach areas without risking personnel.',
+        ],
+      },
+      { type: 'heading', level: 2, text: '4. Data-Driven Decision Making' },
+      { type: 'paragraph', text: 'Before a single brick is laid, drone surveys provide the visual context needed for investors and architects to understand the terrain. Whether it\'s Building Information Modeling (BIM) integration or pitch presentations, accurate aerial data ensures that your entire team—from the boardroom to the construction site—is aligned with a singular vision.' },
+      { type: 'heading', level: 2, text: 'The Build91 Promise' },
+      { type: 'paragraph', text: 'At Build91 Studio, we don\'t just capture footage; we create assets that sell. Whether it\'s a Digital Launchpad microsite or a cinematic location tour, we ensure that every frame serves a business purpose. Ready to elevate your project\'s visual narrative? Let\'s give your development the perspective it deserves.' },
+    ],
+  },
+  {
+    id: 'expert-interior-design-secrets',
+    title: 'Unlocking the Secrets of Expert Interior Design: Color, Lighting, Textures, and 3D Rendering',
+    subtitle: 'Transform any environment into a cohesive, functional, and visually striking sanctuary',
+    excerpt: 'Transforming a space into something beautiful and functional can feel overwhelming. Focus on color schemes, lighting, textures, and 3D rendering.',
+    author: {
+      name: 'build91design',
+      avatar: '/images/Build91Logo_circle.png',
+    },
+    createdAt: 'Jan 14, 2025',
+    readTime: '4 min read',
+    category: 'Interior Design',
+    image: '/images/blogs/page_28_img_16.png',
+    content: [
+      { type: 'paragraph', text: 'Transforming a space into something beautiful and functional can feel overwhelming, but it doesn\'t have to be. Interior design is about creating a sanctuary that reflects your personality and meets your needs. By focusing on crucial elements like color schemes, lighting, textures, and advanced tools like 3D rendering, you can effectively enhance any environment. This article will guide you through these elements and how to use them to uplift your space.' },
+      { type: 'heading', level: 2, text: 'Understanding Color Schemes' },
+      { type: 'paragraph', text: 'Color is a fundamental part of how we perceive our environment. Different colors can significantly influence how a room feels. For example, blues and greens tend to evoke a sense of calm, making them ideal for bedrooms. On the other hand, vibrant reds and yellows can stimulate energy, perfect for areas like home offices.' },
+      { type: 'paragraph', text: 'A popular guideline is the 60-30-10 rule. This suggests that 60% of your room should feature a dominant color, 30% should be a secondary color, and the remaining 10% should be used for accents. For instance, in a cozy living room, you might choose a soft beige for the walls (60%), add sage green for your sofas (30%), and then introduce bright throw pillows in a sunny yellow (10%). This combination not only looks appealing but also creates a balanced atmosphere.' },
+      { type: 'paragraph', text: 'Don\'t hesitate to play with bolder shades in personal spaces. For example, painting an accent wall in a rich navy blue in a study can create a focused environment without overwhelming the senses.' },
+      { type: 'heading', level: 2, text: 'The Role of Lighting' },
+      { type: 'paragraph', text: 'Lighting is crucial in building a desired ambiance. It can enhance room features, impact functionality, and even change the perceived size of a space. Understanding the three primary types of lighting—ambient, task, and accent—can help you achieve a well-rounded lighting scheme in your home.' },
+      {
+        type: 'list',
+        items: [
+          'Ambient lighting generally provides an overall light throughout the room. Common choices include ceiling fixtures or recessed lights. Studies show that rooms with ample ambient light can feel 20% larger visually.',
+          'Task lighting focuses on specific activities, like reading or cooking. Examples are desk lamps or under-cabinet lights in kitchens.',
+          'Accent lighting highlights artwork or architectural elements. For example, placing spotlights on a gallery wall can increase its visual interest and add a sophisticated touch.',
+        ],
+      },
+      { type: 'paragraph', text: 'To create a layered and dynamic feel in your home, combine these different types. Dimmers are also a smart investment. They allow you to adjust the light and set the mood at any moment, improving both comfort and functionality.' },
+      { type: 'heading', level: 2, text: 'Textures in Design' },
+      { type: 'paragraph', text: 'Textures add complexity and interest to any space, making it feel more inviting. By mixing different materials, you can create a room that feels both unique and cohesive.' },
+      { type: 'paragraph', text: 'Consider this: plush rugs, soft pillows, and thick curtains can introduce warmth and a cozy atmosphere. For example, a living room might feature a fluffy white rug paired with soft grey cushions. In contrast, sleek metal accents and glass elements can lend a modern touch.' },
+      { type: 'paragraph', text: 'When incorporating textures, strive for harmony. Too many competing textures can overwhelm the eye, while too few can lead to a dull space. A good approach is to mix a maximum of three textures. For instance, pair a rough wooden coffee table with smooth leather chairs and a soft woven throw. This balance creates visual interest while maintaining cohesiveness and comfort.' },
+      { type: 'heading', level: 2, text: 'The Advantage of 3D Rendering' },
+      { type: 'paragraph', text: 'Technology has transformed the way interior design is executed. 3D rendering enables designers and clients to visualize their space before committing to any permanent changes. This modern tool offers several benefits:' },
+      {
+        type: 'list',
+        items: [
+          'Enhanced Visualization: Clients can see how different colors, textures, and layouts fit together, leading to more confident design decisions.',
+          'Effective Space Planning: It assists in determining optimal furniture placements for both functionality and aesthetics.',
+          'Research shows that clients who use 3D rendering report 30% fewer design revisions.',
+          'Cost Efficiency: Being able to preview design ideas can significantly reduce costly errors made during renovation.',
+          'Realistic Lighting Simulation: 3D rendering accurately portrays how natural and artificial light will behave in your finished space. Knowing how a room will look at different times of the day can influence your lighting choices.',
+        ],
+      },
+      { type: 'paragraph', text: 'With these advantages, both designers and clients can communicate better and work collaboratively toward a shared vision.' },
+      { type: 'image', src: '/images/blogs/page_28_img_16.png', caption: 'A sleek and stylish modern living room featuring a balanced color scheme and lighting concept.' },
+      { type: 'heading', level: 2, text: 'Implementing Your Design Strategy' },
+      { type: 'paragraph', text: 'Creating your dream interior starts with a well-defined vision. Consider factors such as your lifestyle, your favorite colors, and the purpose of each room. To help organize your thoughts, create a mood board that captures various textures, colors, and styles that inspire you. This can guide your selections as you choose paint colors, furniture, and decorative elements.' },
+      { type: 'paragraph', text: 'Once you have a plan, utilize 3D rendering to visualize your layout. Experiment with different combinations of colors and textures until you find what works best for you. After solidifying your design, it\'s time to turn your ideas into reality. Shop for materials and furnishings that align with your vision, and prepare to bring your new design to life.' },
+      { type: 'heading', level: 2, text: 'Your Journey into Interior Design' },
+      { type: 'paragraph', text: 'Understanding and applying color schemes, lighting, textures, and technology like 3D rendering can significantly elevate your living space. By thoughtfully incorporating these elements, you can create an environment that is not only visually appealing but also feels cozy and welcoming. Explore your creativity and preferences, and take the plunge into the world of interior design. You\'ll discover endless possibilities to craft a space that truly feels like home!' },
+    ],
+  },
+  {
+    id: 'rendering-process-behind-scenes',
+    title: 'Behind the Scenes: The Rendering Process',
+    subtitle: 'An in-depth look at how 3D artists turn blueprints and concept sketches into photorealistic renders',
+    excerpt: 'Creating photorealistic 3D renderings takes careful planning, artistry, and technical skills. Understand the journey from sketches to final visual post-production.',
+    author: {
+      name: 'build91design',
+      avatar: '/images/Build91Logo_circle.png',
+    },
+    createdAt: 'Dec 10, 2024',
+    readTime: '3 min read',
+    category: '3D Rendering',
+    image: '/images/blogs/page_33_img_18.png',
+    content: [
+      { type: 'paragraph', text: 'Creating stunning, photorealistic 3D renderings takes careful planning, artistry, and technical skills. For clients stepping into the world of 3D interior design, understanding the journey from initial sketches to finished images can be enlightening. This blog post outlines each step of the rendering process, discussing techniques like lighting, texturing, and post-production, while highlighting popular tools that you can use, both in the cloud and on your computer.' },
+      { type: 'heading', level: 2, text: 'Step 1: Concept Sketches' },
+      { type: 'paragraph', text: 'The journey typically begins with concept sketches. These quick, rough visualizations represent the design idea. They serve as blueprints for developing the 3D model. Concept sketches help designers visualize elements like layout and spatial relationships before getting into detailed modeling.' },
+      { type: 'paragraph', text: 'During this phase, communication is vital. Clients should provide feedback on these sketches to ensure they meet expectations. Popular tools for sketching include Adobe Fresco, which can be used for digital sketches, and Procreate for those using iPads. Many designers find that using a combination of tools helps clarify their ideas.' },
+      { type: 'heading', level: 2, text: 'Step 2: 3D Modeling' },
+      { type: 'paragraph', text: 'After the concept sketches receive approval, the next step is 3D modeling. This phase turns the sketches into digital models. Designers create the geometry of the space using software like SketchUp or Autodesk Revit, accurately defining walls, windows, furniture, and fixtures.' },
+      { type: 'paragraph', text: 'Scale and proportion are critically important. For instance, a living room designed with a sofa that measures 84" in length will feel cramped if paired with oversized side tables. Accurate dimensions ensure that everything looks and feels right. Many modeling tools come equipped with libraries featuring thousands of furniture and material options, streamlining the process.' },
+      { type: 'heading', level: 2, text: 'Step 3: Texturing' },
+      { type: 'paragraph', text: 'After completing the 3D model, designers apply textures to add realism. Texturing simulates materials like wood, fabric, and stone. A key process in this step is UV mapping, where designers unwrap the 3D model to apply textures seamlessly. Tools such as Substance Painter and 3ds Max allow designers to paint textures directly onto models. For instance, while creating wood textures, designers might add small scratches or varying shades to mimic natural wood. This attention to detail can increase realism significantly. Research shows that images with well-applied textures can improve viewer engagement by 30%.' },
+      { type: 'image', src: '/images/blogs/page_33_img_18.png', caption: "An artist's workspace showcasing various texture samples used in 3D modeling." },
+      { type: 'heading', level: 2, text: 'Step 4: Lighting' },
+      { type: 'paragraph', text: 'Lighting plays a crucial role in the rendering process. It influences the mood and perception of the space. This step requires designers to place virtual light sources in the 3D scene, understanding how natural and artificial light interacts with different surfaces. Tools like V-Ray and Lumion are commonly used. Designers can simulate daylight by adjusting the sun\'s position or using artificial lights for specific effects. For instance, a warm light can create a cozy atmosphere, while cooler light can make a space feel modern. Carefully balancing the intensity and color of lights can enhance the overall aesthetic by up to 50%.' },
+      { type: 'heading', level: 2, text: 'Step 5: Rendering' },
+      { type: 'paragraph', text: 'With the model textured and properly lit, it\'s time to render the scene. This is where the real magic happens—transforming a digital model into a photorealistic image. Rendering software processes the model\'s information, lighting, and textures to produce the final image. Popular rendering software includes KeyShot and Blender. Both offer powerful tools for high-quality outputs but require solid hardware for optimal performance. Depending on the scene\'s complexity, rendering can take anywhere from a few minutes to several hours. In fact, simple scenes may render in 10 minutes, while intricate ones can exceed several hours.' },
+      { type: 'heading', level: 2, text: 'Step 6: Post-Production' },
+      { type: 'paragraph', text: 'The final step in the rendering process is post-production. This stage involves refining the rendered images using software like Adobe Photoshop or Affinity Photo. Designers enhance colors, adjust brightness, and add elements like plants or people to make the scene feel more lifelike. Post-production tweaks can polish the final image significantly. For example, adding realistic shadows and adjusting colors can improve the overall look by 40%. Clients are often impressed by the enhancements made during this stage, which elevate the presentation and appeal.' },
+      { type: 'image', src: '/images/blogs/page_36_img_19.png', caption: 'A beautifully rendered 3D room illustrating post-production enhancements for realism.' },
+      { type: 'heading', level: 2, text: 'Wrapping Up' },
+      { type: 'paragraph', text: 'The journey from concept sketches to photorealistic 3D renderings is complex yet rewarding. Understanding each step—from the initial sketches to detailed modeling and texturing, lighting, and post-production—demystifies the rendering process. This knowledge equips clients to engage meaningfully in their projects, leading to outcomes that truly satisfy their vision. Whether you aim to transform a residential space or create stunning visuals for an interior design project, knowing the process can empower your decisions. As technology continues to advance, the possibilities in 3D rendering grow, offering exciting opportunities in the future of interior design.' },
+    ],
+  },
+];
+
+
+
+async function seed() {
+  console.log(`Seeding BLOGS JSON to S3 bucket: "${bucketName}"...`);
+  
+  const blogsJson = JSON.stringify(BLOGS, null, 2);
+  const s3Key = 'blogs/blogs.json';
+
+  const command = new PutObjectCommand({
+    Bucket: bucketName,
+    Key: s3Key,
+    Body: blogsJson,
+    ContentType: 'application/json'
+  });
+
+  try {
+    await client.send(command);
+    console.log(`Successfully uploaded BLOGS configuration to s3://${bucketName}/${s3Key}`);
+    
+    // Also save a local backup copy in the scripts folder
+    const backupPath = path.resolve(process.cwd(), 'scripts/blogs-backup.json');
+    fs.writeFileSync(backupPath, blogsJson, 'utf8');
+    console.log(`Saved local BLOGS backup to: ${backupPath}`);
+  } catch (err) {
+    console.error('Failed to upload BLOGS data to S3:', err.message);
+    process.exit(1);
+  }
+}
+
+seed().catch(err => {
+  console.error('Seed process failed:', err);
+  process.exit(1);
+});
