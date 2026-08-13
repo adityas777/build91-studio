@@ -3,6 +3,49 @@
 import { useRef, useState, useEffect } from 'react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 
+const FEATURED_VIDEOS = [
+  {
+    id: 'township-3d-walkthrough',
+    title: 'Township 3D Walkthrough',
+    type: 'drive',
+    embedId: '1P1MnAgFa3n-zDPwFHSLarOq3SfFh3_O-',
+    originalUrl: 'https://drive.google.com/file/d/1P1MnAgFa3n-zDPwFHSLarOq3SfFh3_O-/view',
+    description: 'Cinematic master planning and architectural walkthrough showcasing the design of a signature residential township.',
+  },
+  {
+    id: 'apartment-3d-walkthrough',
+    title: 'Apartment 3D Walkthrough',
+    type: 'drive',
+    embedId: '1gSJ2MVGKARpEUFBagDM127TvzU1Ug8J8',
+    originalUrl: 'https://drive.google.com/file/d/1gSJ2MVGKARpEUFBagDM127TvzU1Ug8J8/view?usp=drive_link',
+    description: 'Immersive interior visualization highlighting spatial flow, lighting, and finishes in a high-end luxury apartment layout.',
+  },
+  {
+    id: 'penthouse-design-and-visualization',
+    title: 'Penthouse Design and Visualization',
+    type: 'youtube',
+    embedId: '7CZp2JnXNLc',
+    originalUrl: 'https://youtu.be/7CZp2JnXNLc?si=tA3laSFUU9rzdvzd',
+    description: 'A luxurious duplex penthouse visual tour showcasing custom high-end furnishings, double-height spaces, and scenic vistas.',
+  },
+  {
+    id: 'classic-luxury-living',
+    title: 'Classic Luxury Living',
+    type: 'youtube',
+    embedId: 'pSb0ndJLkvs',
+    originalUrl: 'https://youtu.be/pSb0ndJLkvs?si=NUWVPcD-I_lxfF-Z',
+    description: 'A beautiful journey through classical architecture, classical pillars, and neoclassical interiors crafted with rich visual realism.',
+  },
+  {
+    id: 'mumbai-residential-community',
+    title: 'Mumbai Residential community',
+    type: 'youtube',
+    embedId: 'rJvT2l_uevw',
+    originalUrl: 'https://youtu.be/rJvT2l_uevw?si=KOncc0HkrfDlOwmN',
+    description: 'Architectural rendering and walkthrough of a prestigious residential landmark, spotlighting context and premium amenities.',
+  },
+];
+
 export default function PortfolioPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -10,6 +53,25 @@ export default function PortfolioPage() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [activeCollection, setActiveCollection] = useState<string | null>(null);
   const [COLLECTIONS, setCOLLECTIONS] = useState<Record<string, Collection>>(STATIC_COLLECTIONS);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const handleHashScroll = () => {
+        const id = window.location.hash.substring(1);
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('ring-2', 'ring-gold', 'scale-[1.02]');
+          setTimeout(() => {
+            el.classList.remove('ring-2', 'ring-gold', 'scale-[1.02]');
+          }, 3000);
+        }
+      };
+      handleHashScroll();
+      const timer = setTimeout(handleHashScroll, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [activeCollection]);
 
   useEffect(() => {
     async function fetchCollections() {
@@ -275,6 +337,84 @@ export default function PortfolioPage() {
                       {COLLECTIONS.isometric.description}
                     </p>
                   </div>
+                </div>
+              </AnimatedSection>
+            </div>
+          </section>
+
+          {/* ── 3D Video Walkthroughs Section ──────────────────────────────────── */}
+          <section className="section-base overflow-hidden pt-4 pb-32 border-t border-white/10" id="video-walkthroughs">
+            <div className="container-page">
+              <AnimatedSection className="text-center mb-16">
+                <h2 className="text-display text-4xl md:text-6xl font-semibold leading-[1.05] tracking-tight">
+                  Featured 3D<br/>
+                  <span className="text-accent-italic text-gradient">Video Walkthroughs</span>
+                </h2>
+                <p className="mt-6 mx-auto max-w-2xl text-base leading-relaxed text-white/65 md:text-lg">
+                  Explore immersive cinematic video walkthroughs showcasing township masterplans, luxury apartments, and penthouse visualizations.
+                </p>
+              </AnimatedSection>
+
+              <AnimatedSection>
+                <div className="flex flex-col gap-16 md:gap-24">
+                  {FEATURED_VIDEOS.map((video) => (
+                    <div
+                      key={video.id}
+                      id={video.id}
+                      className="group flex flex-col items-center w-full max-w-[90vw] mx-auto px-4 md:px-12 py-10 md:py-16 rounded-3xl border border-white/5 bg-white/[0.01] backdrop-blur-md transition-all duration-500 hover:border-violet-glow/20 hover:bg-white/[0.02] hover:shadow-[0_20px_60px_rgba(50,156,221,0.06)]"
+                    >
+                      {/* Video Title */}
+                      <h3 className="text-display text-2xl md:text-4xl lg:text-5xl font-medium tracking-wide text-white mb-6 md:mb-10 text-center transition-colors duration-300 group-hover:text-gold">
+                        {video.title}
+                      </h3>
+
+                      {/* Video Player covering screen width/height inside container */}
+                      <div className="relative w-full aspect-video rounded-2xl md:rounded-3xl overflow-hidden bg-black/40 border border-white/10 shadow-2xl">
+                        {video.type === 'youtube' ? (
+                          <iframe
+                            src={`https://www.youtube.com/embed/${video.embedId}?autoplay=1&mute=1&loop=1&playlist=${video.embedId}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`}
+                            title={video.title}
+                            className="absolute inset-0 w-full h-full border-0 pointer-events-none scale-102"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        ) : (
+                          <iframe
+                            src={`https://drive.google.com/file/d/${video.embedId}/preview`}
+                            title={video.title}
+                            className="absolute inset-0 w-full h-full border-0"
+                            allow="autoplay"
+                            allowFullScreen
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-100 pointer-events-none" />
+                      </div>
+
+                      {/* Video Info (Description & Label) */}
+                      <div className="mt-8 text-center max-w-4xl">
+                        <p className="text-base md:text-lg leading-relaxed text-white/70 font-light">
+                          {video.description}
+                        </p>
+                        
+                        <div className="mt-6 flex items-center justify-center gap-6">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-violet-soft border border-white/10 rounded-full px-3 py-1 bg-white/[0.02]">
+                            {video.type === 'youtube' ? 'YouTube' : 'Google Drive'}
+                          </span>
+                          <a
+                            href={video.originalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-xs text-gold/80 hover:text-gold font-medium uppercase tracking-wider transition-colors duration-300"
+                          >
+                            Open Original Link
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3.5 h-3.5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </AnimatedSection>
             </div>

@@ -76,15 +76,15 @@ type Props = {
 // targeted bottom gradient below, not by the tint.
 const TINT_BG: Record<NonNullable<ScrollPinSlide['posterTint']>, string> = {
   violet:
-    'bg-[linear-gradient(135deg,rgba(91,33,182,0.28)_0%,rgba(5,7,26,0.45)_100%)]',
+    'bg-[linear-gradient(135deg,rgba(23,109,159,0.28)_0%,rgba(1,4,11,0.45)_100%)]',
   gold:
-    'bg-[linear-gradient(135deg,rgba(224,184,114,0.22)_0%,rgba(5,7,26,0.50)_100%)]',
+    'bg-[linear-gradient(135deg,rgba(23,109,159,0.22)_0%,rgba(1,4,11,0.50)_100%)]',
   deep:
-    'bg-[linear-gradient(135deg,rgba(15,20,56,0.32)_0%,rgba(5,7,26,0.45)_100%)]',
+    'bg-[linear-gradient(135deg,rgba(23,33,45,0.32)_0%,rgba(1,4,11,0.45)_100%)]',
   cool:
-    'bg-[linear-gradient(135deg,rgba(56,89,200,0.22)_0%,rgba(5,7,26,0.45)_100%)]',
+    'bg-[linear-gradient(135deg,rgba(23,109,159,0.22)_0%,rgba(1,4,11,0.45)_100%)]',
   warm:
-    'bg-[linear-gradient(135deg,rgba(224,90,90,0.16)_0%,rgba(5,7,26,0.50)_100%)]',
+    'bg-[linear-gradient(135deg,rgba(23,109,159,0.16)_0%,rgba(1,4,11,0.50)_100%)]',
 };
 
 export function ScrollPinReveal({
@@ -262,7 +262,7 @@ function SlideBackground({
             <source src={src} type="video/mp4" />
           </video>
         ) : (
-          <div className="h-full w-full bg-[radial-gradient(circle_at_30%_30%,rgba(124,58,237,0.25),transparent_60%),radial-gradient(circle_at_70%_70%,rgba(224,184,114,0.15),transparent_60%),linear-gradient(135deg,#0A0E2A,#05071A)]" />
+          <div className="h-full w-full bg-[radial-gradient(circle_at_30%_30%,rgba(50,156,221,0.25),transparent_60%),radial-gradient(circle_at_70%_70%,rgba(206,58,210,0.15),transparent_60%),linear-gradient(135deg,#0d1822,#01040b)]" />
         )}
       </motion.div>
       <div

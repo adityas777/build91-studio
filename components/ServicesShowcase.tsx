@@ -94,13 +94,13 @@ const SERVICES: ServiceShowcaseItem[] = [
 
 const TINT_OVERLAY: Record<ServiceShowcaseItem['posterTint'], string> = {
   violet:
-    'bg-[linear-gradient(160deg,rgba(91,33,182,0.55)_0%,rgba(5,7,26,0.85)_75%)]',
+    'bg-[linear-gradient(160deg,rgba(23,109,159,0.55)_0%,rgba(1,4,11,0.85)_75%)]',
   gold:
-    'bg-[linear-gradient(160deg,rgba(224,184,114,0.4)_0%,rgba(5,7,26,0.88)_75%)]',
+    'bg-[linear-gradient(160deg,rgba(23,109,159,0.4)_0%,rgba(1,4,11,0.88)_75%)]',
   deep:
-    'bg-[linear-gradient(160deg,rgba(15,20,56,0.55)_0%,rgba(5,7,26,0.9)_75%)]',
+    'bg-[linear-gradient(160deg,rgba(23,33,45,0.55)_0%,rgba(1,4,11,0.9)_75%)]',
   cool:
-    'bg-[linear-gradient(160deg,rgba(56,89,200,0.4)_0%,rgba(5,7,26,0.88)_75%)]',
+    'bg-[linear-gradient(160deg,rgba(23,109,159,0.4)_0%,rgba(1,4,11,0.88)_75%)]',
 };
 
 export function ServicesShowcase() {

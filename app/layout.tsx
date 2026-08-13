@@ -1,22 +1,14 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk, Cormorant_Garamond, Jost, Commissioner } from 'next/font/google';
+import { Commissioner, Jost, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { WhatsAppFloat } from '@/components/WhatsAppFloat';
 import { SITE } from '@/lib/constants';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
+const inter = Commissioner({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 
-const space = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space',
-  display: 'swap',
-});
+const space = Jost({ subsets: ['latin'], weight: ['500'], variable: '--font-space', display: 'swap' });
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],

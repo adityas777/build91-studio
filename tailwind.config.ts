@@ -10,20 +10,20 @@ const config: Config = {
     extend: {
       colors: {
         ink: {
-          DEFAULT: '#05071A',
-          900: '#05071A',
-          800: '#0A0E2A',
-          700: '#0F1438',
-          600: '#161C4A',
+          DEFAULT: '#01040b',
+          900: '#01040b',
+          800: '#0d1822',
+          700: '#17212d',
+          600: '#27313d',
         },
         violet: {
-          glow: '#7C3AED',
-          soft: '#A78BFA',
-          deep: '#5B21B6',
+          glow: '#329cdd',
+          soft: '#64b6e5',
+          deep: '#176d9f',
         },
         gold: {
-          DEFAULT: '#E0B872',
-          soft: '#F3D690',
+          DEFAULT: '#ce3ad2',
+          soft: '#e35fe0',
         },
         spectral: {
           bg: '#01040b',
