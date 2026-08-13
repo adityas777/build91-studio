@@ -5,22 +5,6 @@ import { AnimatedSection } from '@/components/AnimatedSection';
 
 const FEATURED_VIDEOS = [
   {
-    id: 'township-3d-walkthrough',
-    title: 'Township 3D Walkthrough',
-    type: 'drive',
-    embedId: '1P1MnAgFa3n-zDPwFHSLarOq3SfFh3_O-',
-    originalUrl: 'https://drive.google.com/file/d/1P1MnAgFa3n-zDPwFHSLarOq3SfFh3_O-/view',
-    description: 'Cinematic master planning and architectural walkthrough showcasing the design of a signature residential township.',
-  },
-  {
-    id: 'apartment-3d-walkthrough',
-    title: 'Apartment 3D Walkthrough',
-    type: 'drive',
-    embedId: '1gSJ2MVGKARpEUFBagDM127TvzU1Ug8J8',
-    originalUrl: 'https://drive.google.com/file/d/1gSJ2MVGKARpEUFBagDM127TvzU1Ug8J8/view?usp=drive_link',
-    description: 'Immersive interior visualization highlighting spatial flow, lighting, and finishes in a high-end luxury apartment layout.',
-  },
-  {
     id: 'penthouse-design-and-visualization',
     title: 'Penthouse Design and Visualization',
     type: 'youtube',
@@ -53,6 +37,29 @@ export default function PortfolioPage() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [activeCollection, setActiveCollection] = useState<string | null>(null);
   const [COLLECTIONS, setCOLLECTIONS] = useState<Record<string, Collection>>(STATIC_COLLECTIONS);
+
+  // Dynamic YouTube Videos Section
+  const [youtubeVideos, setYoutubeVideos] = useState<any[]>([]);
+  const [loadingYoutube, setLoadingYoutube] = useState(true);
+  const [activeYoutubeVideo, setActiveYoutubeVideo] = useState<any | null>(null);
+
+  useEffect(() => {
+    async function fetchYoutubeVideos() {
+      try {
+        const res = await fetch('/api/youtube');
+        if (!res.ok) throw new Error('YouTube API response not OK');
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setYoutubeVideos(data);
+        }
+      } catch (err) {
+        console.warn('Could not fetch YouTube videos:', err);
+      } finally {
+        setLoadingYoutube(false);
+      }
+    }
+    fetchYoutubeVideos();
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hash) {
@@ -417,6 +424,122 @@ export default function PortfolioPage() {
                   ))}
                 </div>
               </AnimatedSection>
+
+              {/* Dynamic YouTube Videos Section */}
+              <AnimatedSection className="mt-32 border-t border-white/10 pt-24 pb-12">
+                <div className="text-center mb-16">
+                  <span className="section-eyebrow">Our Channel</span>
+                  <h2 className="text-display mt-4 text-4xl md:text-5xl font-semibold leading-[1.1] tracking-tight">
+                    Latest from <span className="text-accent-italic text-gradient">YouTube</span>
+                  </h2>
+                  <p className="mt-4 mx-auto max-w-2xl text-base leading-relaxed text-white/60">
+                    Stay updated with walkthroughs, site visits, and project insights directly from our active feed.
+                  </p>
+                </div>
+
+                {loadingYoutube ? (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-violet-glow border-t-transparent" />
+                    <p className="mt-4 text-sm text-white/50">Fetching latest videos...</p>
+                  </div>
+                ) : youtubeVideos.length === 0 ? (
+                  <div className="text-center py-12 text-white/40 text-sm">
+                    No recent videos found. Visit our channel directly.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {youtubeVideos.map((video) => (
+                      <div
+                        key={video.videoId}
+                        onClick={() => setActiveYoutubeVideo(video)}
+                        className="group cursor-pointer flex flex-col rounded-2xl border border-white/5 bg-white/[0.01] p-4 backdrop-blur-md transition-all duration-500 hover:border-violet-glow/20 hover:bg-white/[0.02] hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(50,156,221,0.05)]"
+                      >
+                        {/* Thumbnail Container */}
+                        <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-black/40 border border-white/10">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={video.thumbnail}
+                            alt={video.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          {/* Hover Play Button Overlay */}
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div className="w-12 h-12 rounded-full bg-gold/90 flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-lg text-black">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5 ml-0.5">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </div>
+                          </div>
+
+                          {/* Short/Vertical Badge */}
+                          {video.isShort && (
+                            <span className="absolute top-3 right-3 bg-red-600/90 text-[9px] font-bold tracking-wider text-white px-2 py-0.5 rounded uppercase">
+                              Short
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Title & Info */}
+                        <div className="mt-4 flex-grow flex flex-col">
+                          <h4 className="text-display text-sm md:text-base font-medium text-white/90 line-clamp-2 transition-colors duration-300 group-hover:text-gold">
+                            {video.title}
+                          </h4>
+                          <span className="mt-4 text-[9px] font-semibold tracking-wider text-violet-soft uppercase">
+                            {video.isShort ? 'YouTube Short' : 'Video Walkthrough'}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </AnimatedSection>
+
+              {/* Dynamic YouTube Video Lightbox Modal */}
+              {activeYoutubeVideo && (
+                <div
+                  className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
+                  onClick={() => setActiveYoutubeVideo(null)}
+                >
+                  {/* Back Button */}
+                  <button
+                    onClick={() => setActiveYoutubeVideo(null)}
+                    className="absolute top-4 left-4 md:top-8 md:left-8 flex items-center gap-2 text-xs md:text-sm font-medium text-white/85 hover:text-white transition-all duration-300 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full border border-white/10 shadow-lg hover:scale-105 active:scale-95"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3.5 h-3.5 md:w-4 h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                    </svg>
+                    Back to Portfolio
+                  </button>
+
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setActiveYoutubeVideo(null)}
+                    className="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white transition-colors p-2 rounded-full bg-white/5 hover:bg-white/10"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+
+                  {/* Player Window */}
+                  <div
+                    className={`relative w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl ${
+                      activeYoutubeVideo.isShort
+                        ? 'max-w-[420px] aspect-[9/16] h-[80vh]'
+                        : 'max-w-5xl aspect-video'
+                    }`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <iframe
+                      src={`https://www.youtube.com/embed/${activeYoutubeVideo.videoId}?autoplay=1&controls=1&rel=0&modestbranding=1`}
+                      title={activeYoutubeVideo.title}
+                      className="absolute inset-0 w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </section>
         </>

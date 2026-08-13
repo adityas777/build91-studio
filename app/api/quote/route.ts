@@ -422,8 +422,9 @@ async function deliver(
 
     const result = await resend.emails.send({
       from: fromEmail,
-      to: [toEmail],
-      replyTo,
+      to: [replyTo],
+      cc: [toEmail],
+      replyTo: toEmail,
       subject: email.subject,
       text: email.text,
       html: email.html,

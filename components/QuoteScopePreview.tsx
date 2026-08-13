@@ -92,18 +92,25 @@ export function QuoteScopePreview({
         .
       </h2>
 
-      {isReview ? <ReviewNotice /> : quote && <QuoteReveal quote={quote} />}
+      <div className="mt-10 overflow-hidden rounded-3xl border border-gold/20 bg-gradient-to-b from-gold/[0.04] to-transparent p-8 text-center md:p-10">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/10 text-gold mb-6 border border-gold/20">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+          </svg>
+        </div>
+        <div className="text-display text-xl md:text-2xl font-medium text-white mb-3">
+          Quotation Sent!
+        </div>
+        <p className="mx-auto max-w-md text-sm md:text-base leading-relaxed text-white/70 font-light">
+          The estimate breakdown has been sent to your email at <span className="text-white font-medium">{email}</span>.
+        </p>
+        <p className="mx-auto max-w-md text-sm md:text-base leading-relaxed text-gold font-medium mt-3">
+          We would love to work together!
+        </p>
+      </div>
 
       <p className="mx-auto mt-8 max-w-lg text-sm leading-relaxed text-white/55 md:text-base">
-        The detailed proposal — scope, sequencing and milestones — arrives at{' '}
-        <span className="text-white/75">{email}</span>
-        {isReview && phone ? (
-          <>
-            {' '}
-            and <span className="text-white/75">{phone}</span>
-          </>
-        ) : null}{' '}
-        within 24 hours.
+        A copy of the email was sent to our team. The detailed proposal — scope, sequencing and milestones — arrives within 24 hours.
       </p>
 
       <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">

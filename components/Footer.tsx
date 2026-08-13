@@ -158,22 +158,6 @@ export function Footer() {
               <li className="pt-2 border-t border-white/10" />
               <li>
                 <Link
-                  href="/portfolio#township-3d-walkthrough"
-                  className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
-                >
-                  Township 3D Walkthrough
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/portfolio#apartment-3d-walkthrough"
-                  className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
-                >
-                  Apartment 3D Walkthrough
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/portfolio#penthouse-design-and-visualization"
                   className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
                 >
