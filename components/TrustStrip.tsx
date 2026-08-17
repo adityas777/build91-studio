@@ -48,7 +48,7 @@ const PILLS: Pill[] = [
     id: 'inhouse',
     icon: Building2,
     title: 'In-House Studio',
-    sub: 'Your IP stays in India',
+    sub: 'Your IP stays protected',
     anchor: '/about#studio',
   },
   {

@@ -68,7 +68,7 @@ export function IndiaLaunchMap() {
             Across India
           </div>
           <h3 className="text-display mt-2 text-xl font-semibold text-white md:text-2xl">
-            Launches lit up — last 12 months
+            Deliveries — last 12 months
           </h3>
         </div>
         <span className="hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-white/60 md:inline-flex">

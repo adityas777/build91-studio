@@ -24,24 +24,38 @@ type Testimonial = {
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      'Our sales velocity doubled the month their microsite went live. The walkthroughs sold floors I hadn’t even finished marketing.',
+      'Their Digital Launchpad significantly transformed our sales. The aerial drone integration and location intelligence video was big plus for our project.',
     author: 'Anita Rao',
     role: 'Director of Sales',
     company: 'Vertex Realty',
   },
   {
     quote:
-      'Every render felt like a photograph from a building that already existed. That’s the entire game in pre-launch.',
+      'Great company. Their responses are timely and thorough and they execute renderings on time and with an eye for detail. They are my long term partner now!',
     author: 'Rohan Mehta',
     role: 'Founder',
     company: 'Crestline Estates',
   },
   {
     quote:
-      'They don’t hand you assets — they hand you a sales tool. The aerial 360° alone won us three corporate buyers.',
-    author: 'Priya Khanna',
+      'Build91 has been a dependable partner for our fitout projects. Their 3D renders help us align quickly with clients. They make completing client approvals and final execution much smoother.',
+    author: 'Amin Khalid',
+    role: 'Fitout Solutions',
+    company: 'Dubai',
+  },
+  {
+    quote:
+      'Working with the team on our project Showcase Video and the microsite was seamless. The attention to detail in all aspects of engagement has been exceptional.',
+    author: 'Ashwajeet Singh',
     role: 'Head of Marketing',
-    company: 'Coastline Group',
+    company: 'TVS Emerald',
+  },
+  {
+    quote:
+      'Build91 has been great to work with. Their 3D renders are clean, realistic, and really help communicate my designs better. The team is responsive and easy to work with.',
+    author: 'Sophie Williams',
+    role: 'Interior Designer',
+    company: 'Sydney',
   },
 ];
 
@@ -122,9 +136,8 @@ export function Testimonials() {
                 type="button"
                 onClick={() => setI(idx)}
                 aria-label={`Show testimonial ${idx + 1}`}
-                className={`h-[2px] rounded-full transition-all ${
-                  idx === i ? 'w-12 bg-gold' : 'w-6 bg-white/20 hover:bg-white/40'
-                }`}
+                className={`h-[2px] rounded-full transition-all ${idx === i ? 'w-12 bg-gold' : 'w-6 bg-white/20 hover:bg-white/40'
+                  }`}
               />
             ))}
           </div>

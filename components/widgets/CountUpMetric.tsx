@@ -53,17 +53,17 @@ export function CountUpMetric() {
     >
       <div>
         <div className="text-[10px] font-medium uppercase tracking-[0.3em] text-violet-soft">
-          Bookings supported
+          ASSETS DELIVERED
         </div>
         <div className="mt-3 flex items-baseline gap-1">
           <span className="text-display text-2xl font-medium text-white/80 md:text-3xl">
-            ₹
+            
           </span>
           <span className="text-display text-4xl font-semibold tabular-nums tracking-tight text-white md:text-5xl">
             {value}
           </span>
           <span className="text-display ml-0.5 bg-gradient-to-r from-gold to-gold-soft bg-clip-text text-2xl font-semibold text-transparent md:text-3xl">
-            cr+
+            +
           </span>
         </div>
         <p className="mt-2 text-xs text-white/55">
