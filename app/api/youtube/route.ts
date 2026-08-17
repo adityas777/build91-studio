@@ -4,8 +4,13 @@ export const revalidate = 7200; // Cache response for 2 hours
 
 export async function GET() {
   try {
-    const channelId = 'UCaAKaD1U6EdDxYO6As4O3Zg';
-    const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+    // Source: "Build91 Studio - Walkthrough Videos Playlist"
+    // https://www.youtube.com/playlist?list=PLPjZzLK2hYa4
+    // YouTube exposes a per-playlist RSS feed (same <entry> schema as the
+    // channel feed), so videos are curated by the playlist rather than being
+    // every latest upload from the channel.
+    const playlistId = 'PLPjZzLK2hYa4';
+    const feedUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
 
     const res = await fetch(feedUrl, {
       next: { revalidate: 7200 }, // 2 hours
