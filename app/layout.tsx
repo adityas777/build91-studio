@@ -1,14 +1,17 @@
 import type { Metadata } from 'next';
-import { Commissioner, Jost, Cormorant_Garamond } from 'next/font/google';
+import { Jost, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { WhatsAppFloat } from '@/components/WhatsAppFloat';
 import { SITE } from '@/lib/constants';
 
-const inter = Commissioner({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
-
-const space = Jost({ subsets: ['latin'], weight: ['500'], variable: '--font-space', display: 'swap' });
+const jost = Jost({ 
+  subsets: ['latin'], 
+  weight: ['300', '400', '500', '600', '700'], 
+  variable: '--font-jost', 
+  display: 'swap' 
+});
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -17,9 +20,6 @@ const cormorant = Cormorant_Garamond({
   variable: '--font-cormorant',
   display: 'swap',
 });
-
-const jost = Jost({ subsets: ['latin'], weight: ['500'], variable: '--font-jost', display: 'swap' });
-const commissioner = Commissioner({ subsets: ['latin'], variable: '--font-commissioner', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -66,7 +66,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${space.variable} ${cormorant.variable} ${jost.variable} ${commissioner.variable}`}
+      className={`${jost.variable} ${cormorant.variable}`}
     >
       <body className="min-h-screen bg-ink-900 text-white antialiased">
         <Navigation />

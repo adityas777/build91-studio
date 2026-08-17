@@ -13,12 +13,12 @@ export function QuoteToolPromo() {
   return (
     <section
       aria-label="Get a tailored quote"
-      className="section-base relative overflow-hidden border-y border-white/[0.06] bg-[#070825] py-12 md:py-16"
+      className="section-base section-warm relative overflow-hidden border-y border-white/[0.06] py-12 md:py-16"
     >
       <div className="pointer-events-none absolute inset-0 bg-grid-soft opacity-[0.18]" />
       <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[60%] -translate-x-1/2 bg-gradient-to-r from-transparent via-violet-glow/40 to-transparent" />
-      <div className="pointer-events-none absolute -left-32 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-violet-glow/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-32 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-gold/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -left-32 top-1/2 -z-10 h-64 w-64 -translate-y-1/2 rounded-full bg-violet-glow/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-64 w-64 -translate-y-1/2 rounded-full bg-gold/10 blur-[120px]" />
 
       <div className="container-page relative">
         <div className="mx-auto max-w-3xl text-center">

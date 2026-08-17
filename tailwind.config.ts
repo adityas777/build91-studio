@@ -35,11 +35,11 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['var(--font-space)', 'system-ui', 'sans-serif'],
-        body: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-jost)', 'system-ui', 'sans-serif'],
+        body: ['var(--font-jost)', 'system-ui', 'sans-serif'],
         accent: ['var(--font-cormorant)', 'Georgia', 'serif'],
         monoDisplay: ['var(--font-jost)', 'system-ui', 'sans-serif'],
-        monoBody: ['var(--font-commissioner)', 'system-ui', 'sans-serif'],
+        monoBody: ['var(--font-jost)', 'system-ui', 'sans-serif'],
       },
       animation: {
         'gradient-shift': 'gradient-shift 18s ease infinite',

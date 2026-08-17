@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import { AnimatedSection } from '@/components/AnimatedSection';
 
 const FEATURED_VIDEOS = [
@@ -223,11 +224,13 @@ export default function PortfolioPage() {
                         className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
                         onClick={() => setActiveCollection('interiors')}
                       >
-                        <img
+                        <Image
                           src={COLLECTIONS.interiors.heroImage}
                           alt={COLLECTIONS.interiors.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                          loading="lazy"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          priority
                         />
                       </div>
                       <h3 
@@ -247,11 +250,13 @@ export default function PortfolioPage() {
                         className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
                         onClick={() => setActiveCollection('exteriors')}
                       >
-                        <img
+                        <Image
                           src={COLLECTIONS.exteriors.heroImage}
                           alt={COLLECTIONS.exteriors.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                          loading="lazy"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          priority
                         />
                       </div>
                       <h3 
@@ -276,11 +281,12 @@ export default function PortfolioPage() {
                         className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
                         onClick={() => setActiveCollection('elevations')}
                       >
-                        <img
+                        <Image
                           src={COLLECTIONS.elevations.heroImage}
                           alt={COLLECTIONS.elevations.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                          loading="lazy"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                         />
                       </div>
                       <h3 
@@ -300,11 +306,12 @@ export default function PortfolioPage() {
                         className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
                         onClick={() => setActiveCollection('amenities')}
                       >
-                        <img
+                        <Image
                           src={COLLECTIONS.amenities.heroImage}
                           alt={COLLECTIONS.amenities.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                          loading="lazy"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                         />
                       </div>
                       <h3 
@@ -327,11 +334,12 @@ export default function PortfolioPage() {
                       className="aspect-[16/7] lg:aspect-[21/9] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
                       onClick={() => setActiveCollection('isometric')}
                     >
-                      <img
+                      <Image
                         src={COLLECTIONS.isometric.heroImage}
                         alt={COLLECTIONS.isometric.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                        loading="lazy"
+                        fill
+                        sizes="100vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                       />
                     </div>
                     <h3 
@@ -584,11 +592,14 @@ export default function PortfolioPage() {
                       setIsFullscreen(false);
                     }}
                   >
-                    <img
+                    <Image
                       src={src}
                       alt={`${COLLECTIONS[activeCollection].title} rendering ${index + 1}`}
+                      width={1600}
+                      height={1000}
+                      sizes="100vw"
                       className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-101"
-                      loading="lazy"
+                      priority={index === 0}
                     />
                   </div>
                 ))}

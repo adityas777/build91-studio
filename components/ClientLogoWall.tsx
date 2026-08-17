@@ -151,16 +151,16 @@ function LogoTile({ logo }: { logo: ClientLogo }) {
   return (
     <figure className="group flex flex-col items-center gap-3">
       <div
-        className="relative flex h-[125px] w-full items-center justify-center rounded-2xl border border-black/5 bg-white p-5 shadow-[0_2px_10px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_4px_20px_rgba(124,58,237,0.18)] md:h-[146px] md:p-6"
+        className="relative flex h-[135px] w-full items-center justify-center rounded-2xl border border-black/5 bg-white p-3 shadow-[0_2px_10px_rgba(0,0,0,0.06)] transition-shadow duration-300 hover:shadow-[0_4px_20px_rgba(124,58,237,0.18)] md:h-[156px] md:p-4"
         title={logo.name}
       >
         <Image
           src={logo.src}
           alt={logo.name}
           width={300}
-          height={146}
+          height={156}
           sizes="(max-width: 768px) 45vw, 20vw"
-          className="max-h-full w-auto max-w-full object-contain"
+          className="max-h-full w-auto max-w-full object-contain scale-[1.08] transition-transform duration-300 group-hover:scale-115"
         />
       </div>
       <CountryPill country={logo.country} />
@@ -213,16 +213,16 @@ function LogoMarquee({ logos }: { logos: ClientLogo[] }) {
           {strip.map((logo, i) => (
             <figure
               key={`${logo.id}-${i}`}
-              className="mx-3 flex w-[230px] shrink-0 flex-col items-center gap-2 md:mx-4 md:w-[290px] md:gap-3"
+              className="mx-3 flex w-[270px] shrink-0 flex-col items-center gap-2 md:mx-4 md:w-[350px] md:gap-3"
             >
-              <div className="flex h-[104px] w-full items-center justify-center rounded-2xl border border-black/5 bg-white p-4 shadow-[0_2px_10px_rgba(0,0,0,0.06)] md:h-[125px] md:p-5">
+              <div className="flex h-[116px] w-full items-center justify-center rounded-2xl border border-black/5 bg-white p-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.06)] md:h-[140px] md:p-3.5">
                 <Image
                   src={logo.src}
                   alt={logo.name}
                   width={300}
-                  height={125}
-                  sizes="(max-width: 768px) 230px, 290px"
-                  className="max-h-full w-auto max-w-full object-contain"
+                  height={140}
+                  sizes="(max-width: 768px) 270px, 350px"
+                  className="max-h-full w-auto max-w-full object-contain scale-[1.08] transition-transform duration-300 hover:scale-115"
                 />
               </div>
               <CountryPill country={logo.country} />

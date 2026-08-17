@@ -6,6 +6,8 @@ const nextConfig = {
       { protocol: 'https', hostname: 'i.ytimg.com' },
       { protocol: 'https', hostname: 'img.youtube.com' },
       { protocol: 'https', hostname: 'i.vimeocdn.com' },
+      { protocol: 'https', hostname: '*.s3.amazonaws.com' },
+      { protocol: 'https', hostname: '*.s3.*.amazonaws.com' },
     ],
   },
 };
