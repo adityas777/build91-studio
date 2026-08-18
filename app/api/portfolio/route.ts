@@ -40,16 +40,33 @@ const COLLECTION_METADATA: Record<string, { title: string; description: string }
   }
 };
 
-export async function GET() {
-  const bucketName = process.env.PORTFOLIO_BUCKET_NAME;
-  const region = process.env.AWS_REGION || 'us-east-1';
+// In-memory cache variables (persistent across hot Lambda executions)
+let cachedCollections: any = null;
+let lastFetchedTime = 0;
+const CACHE_TTL = 15 * 60 * 1000; // 15 minutes TTL
 
-  if (!bucketName) {
-    console.error('PORTFOLIO_BUCKET_NAME is missing in environment variables.');
-    return NextResponse.json({ error: 'PORTFOLIO_BUCKET_NAME environment variable is not configured.' }, { status: 500 });
-  }
-
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const bypassCache = searchParams.get('bypassCache') === 'true';
+
+    if (cachedCollections && !bypassCache && (Date.now() - lastFetchedTime < CACHE_TTL)) {
+      return NextResponse.json(cachedCollections, {
+        headers: {
+          'Cache-Control': 'public, max-age=300, stale-while-revalidate=600',
+          'X-Cache': 'HIT-MEMORY'
+        }
+      });
+    }
+
+    const bucketName = process.env.PORTFOLIO_BUCKET_NAME;
+    const region = process.env.AWS_REGION || 'us-east-1';
+
+    if (!bucketName) {
+      console.error('PORTFOLIO_BUCKET_NAME is missing in environment variables.');
+      return NextResponse.json({ error: 'PORTFOLIO_BUCKET_NAME environment variable is not configured.' }, { status: 500 });
+    }
+
     const command = new ListObjectsV2Command({
       Bucket: bucketName,
       Prefix: 'portfolio/',
@@ -110,11 +127,16 @@ export async function GET() {
       }
     }
 
+    // Update in-memory cache
+    cachedCollections = collections;
+    lastFetchedTime = Date.now();
+
     // Return the collections. Configure edge caching for 5 minutes (300s) and background revalidation (600s).
     return NextResponse.json(collections, {
       headers: {
         'Cache-Control': 's-maxage=300, stale-while-revalidate=600',
-        'CDN-Cache-Control': 's-maxage=300'
+        'CDN-Cache-Control': 's-maxage=300',
+        'X-Cache': bypassCache ? 'BYPASS' : 'MISS'
       }
     });
   } catch (error: any) {

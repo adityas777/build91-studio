@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
+import { Loader2 } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 
 const FEATURED_VIDEOS = [
@@ -30,6 +31,87 @@ const FEATURED_VIDEOS = [
     description: 'Architectural rendering and walkthrough of a prestigious residential landmark, spotlighting context and premium amenities.',
   },
 ];
+
+interface OptimizedGalleryImageProps {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  priority?: boolean;
+  onClick?: () => void;
+  sizes?: string;
+  className?: string;
+}
+
+function OptimizedGalleryImage({
+  src,
+  alt,
+  width = 1600,
+  height = 1000,
+  priority = false,
+  onClick,
+  sizes = '100vw',
+  className = ''
+}: OptimizedGalleryImageProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <div
+      className={`relative w-full overflow-hidden bg-white/[0.02] transition-all duration-300 ${className}`}
+      onClick={onClick}
+      style={{ aspectRatio: `${width}/${height}` }}
+    >
+      {/* Shimmering Skeleton Loader */}
+      {!isLoaded && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/[0.03] animate-pulse">
+          <Loader2 className="w-8 h-8 animate-spin text-white/25" />
+        </div>
+      )}
+
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        sizes={sizes}
+        priority={priority}
+        className={`w-full h-auto object-cover transition-all duration-700 group-hover:scale-101 ${
+          isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'
+        }`}
+        onLoad={() => setIsLoaded(true)}
+      />
+    </div>
+  );
+}
+
+function LightboxImage({ src, alt, isFullscreen }: { src: string; alt: string; isFullscreen: boolean }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(false);
+  }, [src]);
+
+  return (
+    <>
+      {!isLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
+          <Loader2 className="w-10 h-10 animate-spin text-gold" />
+        </div>
+      )}
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="100vw"
+        priority
+        className={`object-contain transition-all duration-300 shadow-2xl ${
+          isFullscreen ? 'rounded-none' : 'rounded-lg'
+        } ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'}`}
+        onLoad={() => setIsLoaded(true)}
+      />
+    </>
+  );
+}
 
 export default function PortfolioPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -580,31 +662,26 @@ export default function PortfolioPage() {
                   </div>
                 </div>
               </div>
-
-              {/* Scrollable Gallery Stack */}
-              <div className="flex flex-col gap-8 md:gap-12">
-                {COLLECTIONS[activeCollection].images.map((src, index) => (
-                  <div 
-                    key={index} 
-                    className="overflow-hidden rounded-lg cursor-pointer group"
-                    onClick={() => {
-                      setActiveImageIndex(index);
-                      setIsFullscreen(false);
-                    }}
-                  >
-                    <Image
-                      src={src}
-                      alt={`${COLLECTIONS[activeCollection].title} rendering ${index + 1}`}
-                      width={1600}
-                      height={1000}
-                      sizes="100vw"
-                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-101"
-                      priority={index === 0}
-                    />
-                  </div>
-                ))}
-              </div>
             </AnimatedSection>
+
+            {/* Scrollable Gallery Stack (Rendered directly to prevent opacity: 0 issues on tall containers) */}
+            <div className="flex flex-col gap-8 md:gap-12 mt-12">
+              {COLLECTIONS[activeCollection].images.map((src, index) => (
+                <OptimizedGalleryImage
+                  key={index}
+                  src={src}
+                  alt={`${COLLECTIONS[activeCollection].title} rendering ${index + 1}`}
+                  width={1600}
+                  height={1000}
+                  priority={index === 0}
+                  onClick={() => {
+                    setActiveImageIndex(index);
+                    setIsFullscreen(false);
+                  }}
+                  className="rounded-lg cursor-pointer group"
+                />
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -702,18 +779,11 @@ export default function PortfolioPage() {
               {/* Image Container */}
               <div 
                 className={`relative flex items-center justify-center transition-all duration-500 cursor-default select-none ${
-                  isFullscreen ? 'w-full h-full' : 'max-w-[85vw] max-h-[80vh] md:max-w-[80vw] md:max-h-[85vh]'
+                  isFullscreen ? 'w-full h-full' : 'w-[85vw] h-[80vh] max-w-[1600px] max-h-[1000px] md:w-[80vw] md:h-[85vh]'
                 }`} 
                 onClick={(e) => e.stopPropagation()}
               >
-                <img
-                  src={activeImageSrc}
-                  alt={`Enlarged 3D Render ${activeImageIndex + 1}`}
-                  className={`object-contain transition-all duration-500 shadow-2xl ${
-                    isFullscreen ? 'w-full h-full rounded-none' : 'w-auto h-auto max-w-full max-h-full rounded-lg'
-                  }`}
-                  loading="eager"
-                />
+                <LightboxImage src={activeImageSrc} alt={`Enlarged 3D Render ${activeImageIndex + 1}`} isFullscreen={isFullscreen} />
               </div>
             </div>
           );
