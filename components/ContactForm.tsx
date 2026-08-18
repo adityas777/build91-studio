@@ -9,6 +9,7 @@ type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -26,17 +27,34 @@ export function ContactForm() {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
     setStatus('submitting');
-    // No backend wired yet — simulate the submission so the UI is testable.
-    await new Promise((r) => setTimeout(r, 900));
-    setStatus('success');
-    setForm({
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      projectType: '',
-      message: '',
-    });
+    setErrorMessage('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Failed to send message. Please try again.');
+      }
+
+      setStatus('success');
+      setForm({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        projectType: '',
+        message: '',
+      });
+    } catch (err: any) {
+      console.error('[ContactForm] submission error', err);
+      setStatus('error');
+      setErrorMessage(err.message || 'Something went wrong. Please try again.');
+    }
   }
 
   return (
@@ -112,6 +130,12 @@ export function ContactForm() {
           className="w-full resize-none rounded-xl border border-white/10 bg-ink-900/60 px-4 py-3 text-sm text-white placeholder-white/30 transition-colors focus:border-violet-glow/50 focus:outline-none focus:ring-2 focus:ring-violet-glow/30"
         />
       </div>
+
+      {status === 'error' && (
+        <div className="rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-400">
+          {errorMessage}
+        </div>
+      )}
 
       <div className="flex flex-col items-start gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-white/40">

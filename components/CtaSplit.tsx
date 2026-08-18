@@ -92,17 +92,34 @@ export function CtaSplit() {
 }
 
 function ContactForm() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (status === 'sending') return;
     setStatus('sending');
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-    // REPLACE: wire to API route (/api/contact) or a service like Formspree/Resend.
-    console.info('[Build91 Studio] contact form submission', data);
-    await new Promise((r) => setTimeout(r, 900));
-    setStatus('sent');
+    setErrorMessage('');
+
+    try {
+      const data = Object.fromEntries(new FormData(e.currentTarget));
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Failed to send message. Please try again.');
+      }
+
+      setStatus('sent');
+    } catch (err: any) {
+      console.error('[CtaSplit] submission error', err);
+      setStatus('error');
+      setErrorMessage(err.message || 'Something went wrong. Please try again.');
+    }
   }
 
   if (status === 'sent') {
@@ -169,6 +186,12 @@ function ContactForm() {
           className="md:col-span-2"
         />
       </div>
+
+      {status === 'error' && (
+        <div className="mt-4 rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-center text-xs text-red-400">
+          {errorMessage}
+        </div>
+      )}
 
       <button
         type="submit"
