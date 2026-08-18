@@ -118,7 +118,7 @@ const SECTIONS: { title: string; body: React.ReactNode }[] = [
         <p>If you experience issues accessing files or do not receive your deliverables:</p>
         <ul>
           <li>
-            Contact us via email (<a href="mailto:studio@build91.com">studio@build91.com</a>) or
+            Contact us via email (<a href="mailto:contact@build91.in">contact@build91.in</a>) or
             WhatsApp (<a href={`https://wa.me/917880147772`} target="_blank" rel="noopener noreferrer">+91 788 014 7772</a>) within 7 days of the expected delivery
             date.
           </li>
@@ -172,10 +172,10 @@ export default function ShippingPolicyPage() {
               <p className="mt-2 text-sm leading-relaxed text-white/65">
                 Email us at{' '}
                 <a
-                  href="mailto:studio@build91.com"
+                  href="mailto:contact@build91.in"
                   className="text-violet-soft underline underline-offset-2 hover:text-gold"
                 >
-                  studio@build91.com
+                  contact@build91.in
                 </a>{' '}
                 or WhatsApp us at{' '}
                 <a

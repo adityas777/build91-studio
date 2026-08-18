@@ -109,32 +109,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Map placeholder */}
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 to-ink-700">
-              <div className="absolute inset-0 bg-grid-soft opacity-30" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(124,58,237,0.25),transparent_50%),radial-gradient(circle_at_70%_60%,rgba(224,184,114,0.15),transparent_50%)]" />
-
-              {/* Stylized location markers */}
-              <div className="absolute left-[28%] top-[55%]">
-                <span className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-violet-glow/60" />
-                <span className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-glow shadow-[0_0_12px_3px_rgba(124,58,237,0.7)]" />
-                <span className="absolute left-3 top-1 text-[10px] uppercase tracking-[0.2em] text-white/70">
-                  Bengaluru
-                </span>
-              </div>
-              <div className="absolute left-[42%] top-[42%]">
-                <span className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-gold/60" />
-                <span className="absolute h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold shadow-[0_0_12px_3px_rgba(224,184,114,0.6)]" />
-                <span className="absolute left-3 top-1 text-[10px] uppercase tracking-[0.2em] text-white/70">
-                  Raipur
-                </span>
-              </div>
-
-              <div className="absolute inset-x-0 bottom-0 p-5 text-xs text-white/40">
-                Studios across India · Clients across India, UAE & Australia
-              </div>
-            </div>
-
             {/* Offices */}
             <div className="grid gap-4 sm:grid-cols-2">
               {SITE.offices.map((o) => (

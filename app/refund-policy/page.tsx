@@ -39,7 +39,7 @@ const SECTIONS: { title: string; body: React.ReactNode }[] = [
         <p>To initiate a refund, please contact our dedicated customer support team:</p>
         <ul>
           <li>
-            <strong>Email:</strong> <a href="mailto:studio@build91.in">studio@build91.in</a>
+            <strong>Email:</strong> <a href="mailto:contact@build91.in">contact@build91.in</a>
           </li>
           <li>
             <strong>Required Details:</strong> Clearly state the reason for your refund request and
@@ -106,7 +106,7 @@ const SECTIONS: { title: string; body: React.ReactNode }[] = [
         <p>
           <strong>Still Haven&rsquo;t Received Your Refund?</strong> If you have completed the above
           steps and have not received your refund yet, please do not hesitate to contact us at{' '}
-          <a href="mailto:studio@build91.in">studio@build91.in</a>. Our dedicated support team will be
+          <a href="mailto:contact@build91.in">contact@build91.in</a>. Our dedicated support team will be
           happy to assist you.
         </p>
       </>
@@ -185,10 +185,10 @@ export default function RefundPolicyPage() {
                 We understand the importance of timely refunds and strive to resolve any issues promptly.
                 Your satisfaction is our priority. Contact our dedicated support team at{' '}
                 <a
-                  href="mailto:studio@build91.in"
+                  href="mailto:contact@build91.in"
                   className="text-violet-soft underline underline-offset-2 hover:text-gold"
                 >
-                  studio@build91.in
+                  contact@build91.in
                 </a>{' '}
                 to assist you further.
               </p>

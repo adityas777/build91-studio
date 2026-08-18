@@ -29,7 +29,7 @@ export const SITE = {
   description:
     'Build91 Studio transforms blueprints into immersive digital experiences — 3D visualization, virtual tours, microsites and marketing content for real estate developers across India, UAE & Australia.',
   url: 'https://studio.build91.in',
-  email: 'studio@build91.in',
+  email: 'contact@build91.in',
   phone: '+91 788 014 7772',
   phoneDisplay: '+91 788 014 7772',
   social: {
