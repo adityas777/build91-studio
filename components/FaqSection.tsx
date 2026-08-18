@@ -186,94 +186,58 @@ export function FaqSection() {
   );
 }
 
+// Local fallback — mirrors scripts/faq-backup.json (the source of truth that
+// gets pushed to S3 by scripts/upload-faq-s3.mjs). Shown on first paint and
+// whenever the /api/faq S3 fetch fails. Keep in sync with that JSON file.
+// Answers are plain strings; MarkdownText renders them and turns any
+// [label](url) into a link.
 const STATIC_FAQS: FaqItem[] = [
   {
-    question: 'What Is 3D Rendering in Interior Design?',
-    answer: (
-      <p>
-        Interior design rendering is the process of creating 2D or 3D digital models of interior spaces. These models are then enhanced with textures, lighting, and other details to create realistic visualizations of how a space will look once it’s completed. Interior rendering is an essential tool for architects, interior designers, and real estate developers to help visualize their designs and communicate their vision to clients and stakeholders.
-      </p>
-    ),
-    keywords: 'what is 3d rendering interior design process digital models visualisations layout plans',
+    question:
+      'What happens if our architectural plans or material specs change midway through the 3D rendering process?',
+    answer:
+      "We know that real estate development is dynamic and plans often evolve. If structural or material changes occur after we've started drafting the 3D models, we will pause and assess the impact. Minor material tweaks (like changing a wall color or floor texture) are typically covered in our standard revision cycles. However, significant structural changes (like moving load-bearing walls or altering the building facade) may require a 'change order.' We will always communicate any adjusted timelines or nominal fees upfront so there are no surprise costs before we proceed.",
+    keywords:
+      'changes structural changes modifications mid-project architectural plans material changes change order revisions',
   },
   {
-    question: 'What is the Cost of 3D Rendering Services for Interior Design?',
-    answer: (
-      <p>
-        Please{' '}
-        <Link href="/quote" className="text-gold underline hover:text-white transition-colors">
-          talk to us to get a quote
-        </Link>
-        . Our pricing typically depends on the area required to render and the type of drawings required. We work on carpet area and a per sqft rate. There are different rate slabs. We offer 3D Interior and Exterior renders, 2D interior drawings, Pano 360° walkthroughs, cut-sections and 3D floor plans. Views and revisions are unlimited for a given design. For large projects such as townships, resorts and tall buildings - it\'s a case to case basis.
-      </p>
-    ),
-    keywords: 'cost price rates pricing sqft carpet area rates views revisions charges quotation',
+    question:
+      'Do we receive the raw source files upon project completion, or just the final renders?',
+    answer:
+      'By default, our deliverables are the final, high-resolution rendered assets (JPEGs, MP4 videos, and web packages for interactive tours) ready for your marketing campaigns. The raw source files (such as 3ds Max, SketchUp, or Unreal Engine files) and proprietary 3D assets remain the intellectual property of Build91 Studio. However, if your internal team requires the source files for future modifications, we can definitely negotiate an IP handover or extended licensing agreement at the start of the project.',
+    keywords:
+      'source files raw files 3ds max unreal engine intellectual property IP ownership deliverables assets handover',
   },
   {
-    question: 'How Long Do 3D Interior Design Rendering Services Take?',
-    answer: (
-      <p>
-        The time it takes for a 3d interior design company to create renderings can vary depending on the complexity of the project and the level of detail required. Simple projects with minimal details may take 1-2 weeks, whilst more complex projects with intricate designs, customized furniture or a lack of design materials can take longer to create. Generally, factors that can affect the time it takes to complete an interior render include the number of revisions required, the size of the space, amount of customized furniture and time taken to receive feedback from the client when required.
-      </p>
-    ),
-    keywords: 'how long time duration timeline delivery turnaround weeks feedback speed schedule',
+    question:
+      'Can the interactive tools in your Digital Launchpad integrate with our CRM to track buyer behavior?',
+    answer:
+      'Yes. While our standard Digital Launchpad is delivered as a high-performing standalone web experience, we can collaborate with your IT or marketing teams to embed tracking analytics and webhooks. This means you can track valuable buyer metrics—like how long they spent on a specific floor plan, which amenities they clicked on, and direct lead captures—straight into your existing CRM (like Salesforce, Zoho, or HubSpot).',
+    keywords:
+      'CRM integration salesforce zoho hubspot tracking buyer behavior analytics webhooks lead capture data',
   },
   {
-    question: 'Can You Work with My Existing Designs and Ideas?',
-    answer: (
-      <p>
-        Absolutely. We can integrate your design ideas, sketches, or blueprints to create accurate 3D renderings that align with your vision. Our team is experienced in collaborating with interior designers and clients to bring existing ideas to life.
-      </p>
-    ),
-    keywords: 'existing designs ideas sketches blueprints drawings layouts collaboration matching integration',
+    question:
+      'Does our sales team need specialized hardware to showcase the 3D walkthroughs to clients?',
+    answer:
+      'Not at all. We optimize our entire Digital Sales Suite to be universally accessible. Your interactive assets, 360° tours, and plotted developments are designed to run smoothly on standard iPads, touchscreen kiosks in your sales gallery, smart TVs, and everyday web browsers on mobile phones. If you specifically want an immersive Virtual Reality (VR) setup for your sales office, we can optimize the files for headsets like the Meta Quest, but standard devices are more than enough to close deals.',
+    keywords:
+      'hardware VR headsets ipads touchscreens kiosks smart tv accessibility requirements equipment setup',
   },
   {
-    question: 'What If I Need Revisions?',
-    answer: (
-      <p>
-        We understand that design is a collaborative process. We offer a structured revision process to ensure that the final renderings meet your exact expectations. Minor adjustments are usually included in our pricing, and our team will provide clear guidance on revision limits.
-      </p>
-    ),
-    keywords: 'revisions changes edit modifications corrections revision limits adjust review process',
+    question:
+      'Our upcoming flagship project is strictly confidential. How do you ensure data security and prevent premature leaks?',
+    answer:
+      'Confidentiality is a cornerstone of our workflow, especially since we work on high-stakes project launches. We routinely execute strict Non-Disclosure Agreements (NDAs) before receiving any initial CAD files or design briefs. Internally, your project data is stored on secure, access-controlled servers, and our team members are bound by legal confidentiality clauses. Furthermore, we never publish your unreleased projects on our portfolio or social media without your explicit, written consent post-launch.',
+    keywords:
+      'confidentiality NDA non-disclosure security data protection leaks unreleased privacy stealth mode',
   },
   {
-    question: 'How Do You Ensure the Renderings Are Accurate?',
-    answer: (
-      <p>
-        Our team uses high-quality software and works closely with you to gather precise measurements, material preferences, and style details. We also offer a review stage where you can confirm that everything looks accurate before finalizing.
-      </p>
-    ),
-    keywords: 'accuracy precise check measures material details software review quality quality check',
-  },
-  {
-    question: 'What Makes Your Renderings Different from Competitors?',
-    answer: (
-      <p>
-        We pride ourselves on producing photorealistic images with exceptional attention to detail. Our renderings are crafted to captivate viewers and help your spaces stand out in the market, all while providing personalized service and quick turnaround times.
-      </p>
-    ),
-    keywords: 'difference competitors benefit stand out photorealistic speed quality personal unique',
-  },
-  {
-    question: 'How Can 3D Renderings Help Increase My Sales?',
-    answer: (
-      <p>
-        High-quality 3D renderings showcase your designs in a visually engaging way, making it easier for clients to envision themselves in the space. This emotional connection can lead to faster decision-making and increased sales, as clients are more likely to be drawn to realistic, detailed presentations of your work.
-      </p>
-    ),
-    keywords: 'sales help increase lead conversion conversion speed decision making return of investment marketing',
-  },
-  {
-    question: 'Do you also do 2D Drawings?',
-    answer: (
-      <p>
-        Yes we do! You can get 2D elevation drawings which shows the vertical layout of a room’s features. It typically includes the overall dimensions, placement of furnishings (like the bed and side tables), wall treatments, lighting fixtures, and finish specifications (e.g., paint colors, textures, or materials). Checkout some samples in our{' '}
-        <Link href="/portfolio" className="text-gold underline hover:text-white transition-colors">
-          Portfolio
-        </Link>
-        .
-      </p>
-    ),
-    keywords: '2d drawings elevation vertical layout dimensions furnishings materials plans samples',
+    question:
+      'We are launching a massive township in just a few weeks. Can your team scale up for high-volume asset creation on a tight deadline?',
+    answer:
+      "Speed is one of our core values because we understand that launch windows are unforgiving. Because we house a multidisciplinary team of 3D artists, designers, and software developers under one roof, we can parallel-process different parts of your project. While we prefer standard lead times to ensure maximum photorealism, we can allocate dedicated 'squads' to your project to accommodate aggressive go-to-market timelines for large-scale townships or multi-tower developments.",
+    keywords:
+      'scale capacity large projects township high volume deadline rush order fast track speed go-to-market',
   },
 ];

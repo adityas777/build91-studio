@@ -87,7 +87,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
   {
     id: 'aerial-360',
     category: 'Aerial 360°',
-    project: 'Skyline Heights · Bengaluru',
+    project: 'Silvermist Orchards · Bengaluru',
     aspect: '4:5',
     duration: '0:04 loop',
     shipped: 'Shot in 1 day',
@@ -120,7 +120,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
   {
     id: '3d-exterior',
     category: '3D Exterior Render',
-    project: 'The Crest · Pune',
+    project: 'The Crest · Goa',
     aspect: '4:5',
     duration: 'Still frame',
     shipped: 'Rendered in 4 days',
@@ -131,7 +131,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
   {
     id: 'cinematic-film',
     category: 'Cinematic Project Film',
-    project: 'Marina Bay · Mangaluru',
+    project: 'Shiva Estates · Mangaluru',
     aspect: '4:5',
     duration: '0:04 loop',
     shipped: 'Shipped in 14 days',
@@ -142,7 +142,7 @@ export const ASSET_REEL_ITEMS: AssetReelItem[] = [
   {
     id: 'plot-superimposition',
     category: 'Plot Superimposition',
-    project: 'Greenway Estates · Raipur',
+    project: 'Skyline Heights · Mumbai',
     aspect: '4:5',
     duration: '0:04 loop',
     shipped: 'Built in 5 days',

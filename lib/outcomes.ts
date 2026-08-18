@@ -84,7 +84,7 @@ export const LAUNCH_MILESTONES: ReadonlyArray<LaunchMilestone> = [
 
 // CONFIRM: aggregate booking value backed by Build91-built creative
 // in the last 12-18 months. Quoted in ₹ crore.
-export const BOOKINGS_SUPPORTED_CR = 500;
+export const BOOKINGS_SUPPORTED_CR = 1500;
 
 /* ── Widget 4: Asset attribution — "What gets buyers to walk in" ──── */
 
@@ -110,12 +110,12 @@ export type AssetAttribution = {
 // Sum must equal 100 (renderer asserts this in dev mode).
 export const WALK_IN_ATTRIBUTION: AssetAttribution[] = [
   { label: 'Interactive Digital Experience', value: 30, color: '#E0B872' }, // gold
-  { label: 'Location Intelligence',          value: 19, color: '#F3D690' }, // gold-soft
-  { label: 'Aerial 360',                     value: 15, color: '#7C3AED' }, // violet-glow
-  { label: 'Project Showcase',               value: 12, color: '#A78BFA' }, // violet-soft
-  { label: '3D Walkthrough',                 value: 10, color: '#5B21B6' }, // violet-deep
-  { label: 'Virtual Tours',                  value: 8,  color: '#6B7FCC' }, // cool blue (new accent)
-  { label: 'Digital Brochure',               value: 6,  color: '#3E3A5C' }, // muted gray-violet (tail)
+  { label: 'Location Intelligence', value: 19, color: '#F3D690' }, // gold-soft
+  { label: 'Aerial 360', value: 15, color: '#7C3AED' }, // violet-glow
+  { label: 'Project Showcase', value: 12, color: '#A78BFA' }, // violet-soft
+  { label: '3D Walkthrough', value: 10, color: '#5B21B6' }, // violet-deep
+  { label: 'Virtual Tours', value: 8, color: '#6B7FCC' }, // cool blue (new accent)
+  { label: 'Digital Brochure', value: 6, color: '#3E3A5C' }, // muted gray-violet (tail)
 ];
 
 /** Sample-size strap rendered under the legend ("Across X we've measured"). */

@@ -44,7 +44,14 @@
       "PowerShell(Stop-Process -Id 32296, 3996 -Force -ErrorAction SilentlyContinue)",
       "PowerShell(Move-Item -Path \"C:\\\\Users\\\\itsam\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\5f7372c2-0a7d-4a21-8585-3add8e429bd2\\\\d54fad19-e31a-46e9-afbd-1bc5210238cd\\\\skills\\\\xlsx\\\\Content_Asset_Tracker.xlsx\" -Destination \"C:\\\\AmitBackup\\\\Decor\\\\Code\\\\build91studio_new\\\\build91-studio\\\\docs\\\\Content_Asset_Tracker.xlsx\" -Force)",
       "PowerShell(Get-ChildItem -Recurse -File \"C:\\\\AmitBackup\\\\Decor\\\\Code\\\\build91studio_new\\\\build91-studio\\\\public\" | Select-Object @{N='Path';E={$_.FullName.Replace\\('C:\\\\AmitBackup\\\\Decor\\\\Code\\\\build91studio_new\\\\build91-studio\\\\public',''\\)}}, @{N='KB';E={[math]::Round\\($_.Length/1KB,0\\)}} | Sort-Object Path | Format-Table -AutoSize)",
-      "PowerShell($src=\"C:\\\\Users\\\\itsam\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\5f7372c2-0a7d-4a21-8585-3add8e429bd2\\\\d54fad19-e31a-46e9-afbd-1bc5210238cd\\\\skills\\\\xlsx\\\\Content_Asset_Tracker.xlsx\"; $dst=\"C:\\\\AmitBackup\\\\Decor\\\\Code\\\\build91studio_new\\\\build91-studio\\\\docs\\\\Content_Asset_Tracker.xlsx\"; Copy-Item $src $dst -Force; Remove-Item $src -Force; \"{0} KB at {1}\" -f [math]::Round\\(\\(Get-Item $dst\\).Length/1KB,1\\), $dst)"
+      "PowerShell($src=\"C:\\\\Users\\\\itsam\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\5f7372c2-0a7d-4a21-8585-3add8e429bd2\\\\d54fad19-e31a-46e9-afbd-1bc5210238cd\\\\skills\\\\xlsx\\\\Content_Asset_Tracker.xlsx\"; $dst=\"C:\\\\AmitBackup\\\\Decor\\\\Code\\\\build91studio_new\\\\build91-studio\\\\docs\\\\Content_Asset_Tracker.xlsx\"; Copy-Item $src $dst -Force; Remove-Item $src -Force; \"{0} KB at {1}\" -f [math]::Round\\(\\(Get-Item $dst\\).Length/1KB,1\\), $dst)",
+      "Bash(npm run *)",
+      "Bash(curl -s \"https://www.youtube.com/feeds/videos.xml?playlist_id=PLPjZzLK2hYa4\")",
+      "Bash(curl -s \"http://localhost:3000/api/youtube\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(f\\\\\"{i+1}. {v['videoId']} | short={v['isShort']} | {v['title'][:70]}\\\\\"\\) for i,v in enumerate\\(d\\)]\")",
+      "Bash(echo \"=== tsc exit: $? ===\")",
+      "Bash(curl -s \"http://localhost:3000/email-preview\" -o /dev/null -w \"HTTP %{http_code}  size=%{size_download} bytes\\\\n\")",
+      "Bash(rm -rf app/email-preview)"
     ]
   }
 }
