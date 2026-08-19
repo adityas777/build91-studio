@@ -27,7 +27,7 @@ export const SITE = {
   name: 'Build91 Studio',
   tagline: 'The Complete Digital Sales Suite for Real Estate',
   description:
-    'Build91 Studio transforms blueprints into immersive digital experiences — 3D visualization, virtual tours, microsites and marketing content for real estate developers across India, UAE & Australia.',
+    'Build91 Studio turns blueprints into photoreal 3D renders, immersive virtual tours, walkthroughs & digital launchpads for real estate developers.',
   url: 'https://studio.build91.in',
   email: 'contact@build91.in',
   phone: '+91 788 014 7772',

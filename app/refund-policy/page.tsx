@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: 'Refund Policy',
   description:
     'Refund policy details for Build91 Studio — eligibility criteria, refund process, approval timeline, non-refundable items, and support channels.',
+  alternates: {
+    canonical: '/refund-policy',
+  },
 };
 
 const SECTIONS: { title: string; body: React.ReactNode }[] = [

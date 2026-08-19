@@ -151,12 +151,7 @@ export function InstagramReelCard({ reel, onOpen, index }: Props) {
         className="absolute inset-0 z-10 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-glow"
       />
 
-      {/* Top-left subcategory pill — keeps the BentoPortfolio visual
-          rhythm. For IG reels we use a static "From Instagram" tag so
-          the strip doesn't look bare. */}
-      <span className="pointer-events-none absolute left-4 top-4 z-20 rounded-full border border-white/15 bg-ink-900/55 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.25em] text-white/85 backdrop-blur-md">
-        Instagram
-      </span>
+
 
       {/* Top-right play icon — fades in on hover. Tells the visitor
           there's more to this card than the silent auto-play preview. */}

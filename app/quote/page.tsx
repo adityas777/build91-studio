@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Get a Quote',
   description:
     'Tell us about your project — type, stage, scale and asset needs — and we will give an instant ballpark quote; and then share a tailored proposal within 24 hours. No hidden charges, no friction.',
+  alternates: {
+    canonical: '/quote',
+  },
 };
 
 type SearchParams = Promise<{ type?: string; stage?: string }>;

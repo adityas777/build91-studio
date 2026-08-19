@@ -114,7 +114,7 @@ export function SolutionsRouter({
         </div>
 
         {/* Chip rail */}
-        <div className="mt-4 -mx-6 flex overflow-x-auto hide-scrollbar px-6 gap-2.5 pb-2.5 md:mx-0 md:px-0 md:pb-0 md:flex-wrap md:justify-center md:mt-6">
+        <div className="mt-6 flex flex-wrap justify-center gap-2.5 px-4 md:px-0">
           {mode === 'type'
             ? PROJECT_TYPE_ORDER.map((id) => {
               const b = PROJECT_TYPES[id];
@@ -147,7 +147,7 @@ export function SolutionsRouter({
         {/* Expanded card */}
         <div className="mt-8 md:mt-10">
           <AnimatePresence mode="wait">
-            {activeBundle ? (
+            {activeBundle && (
               <BundleCard
                 key={`${mode}-${activeBundle.id}`}
                 bundle={activeBundle}
@@ -157,27 +157,6 @@ export function SolutionsRouter({
                     : quoteHref({ stage: activeBundle.id as StageId })
                 }
               />
-            ) : (
-              <motion.div
-                key="empty"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="mx-auto max-w-3xl rounded-3xl border border-dashed border-white/10 bg-white/[0.01] p-12 text-center text-sm text-white/50 backdrop-blur-sm"
-              >
-                <div className="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/5 bg-white/[0.02] text-gold/80">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-bounce">
-                    <path d="m18 15-6-6-6 6"/>
-                  </svg>
-                </div>
-                <p className="font-medium text-white/70">
-                  Tap any {mode === 'type' ? 'project type' : 'stage'} above
-                </p>
-                <p className="mt-1 text-xs text-white/45">
-                  to view typical deliverables and ballpark details
-                </p>
-              </motion.div>
             )}
           </AnimatePresence>
         </div>
@@ -288,7 +267,7 @@ function BundleCard({ bundle, href }: { bundle: Bundle; href: string }) {
               className="flex items-start gap-2.5 text-sm text-white/80"
             >
               <Check
-                className="mt-1 h-4 w-4 shrink-0 text-gold"
+                className="mt-1 h-4 w-4 shrink-0 text-violet-soft"
                 strokeWidth={2.2}
               />
               <div className="min-w-0 flex-1">
@@ -313,7 +292,7 @@ function BundleCard({ bundle, href }: { bundle: Bundle; href: string }) {
               className="flex items-start gap-2.5 text-sm text-white/75"
             >
               <Check
-                className="mt-0.5 h-4 w-4 shrink-0 text-gold"
+                className="mt-0.5 h-4 w-4 shrink-0 text-violet-soft"
                 strokeWidth={2.2}
               />
               <span>{asset}</span>

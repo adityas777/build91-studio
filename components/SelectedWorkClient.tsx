@@ -66,7 +66,7 @@ export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
     >
       <div className="container-page">
         {/* ── Header ────────────────────────────────────────────────── */}
-        <AnimatedSection className="mb-10 flex flex-col gap-4 max-w-2xl">
+        <AnimatedSection className="mb-5 flex flex-col gap-4 max-w-2xl">
           <div>
             <span className="section-eyebrow">Selected Work</span>
             <h2 className="section-heading mt-4">

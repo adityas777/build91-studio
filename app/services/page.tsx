@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: 'Services',
   description:
     'Build91 Studio services — five visual disciplines: Project Showcase, 3D Visualization, Virtual Experiences, Marketing Stack and Digital Launchpad. A complete digital sales suite for real estate.',
+  alternates: {
+    canonical: '/services',
+  },
 };
 
 export default function ServicesPage() {

@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: 'Terms & Conditions',
   description:
     'Terms and conditions for engaging Build91 Studio (Manojava Systems Private Limited) — quotations, deposits, usage rights, payment terms and governing law.',
+  alternates: {
+    canonical: '/terms',
+  },
 };
 
 /* ───────────────────────────────────────────────────────────────────────

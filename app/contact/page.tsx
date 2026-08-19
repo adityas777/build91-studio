@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'Contact',
   description:
     'Talk to Build91 Studio about your next real estate project. Studios in Bengaluru and Raipur, serving developers across India, UAE and Australia.',
+  alternates: {
+    canonical: '/contact',
+  },
 };
 
 export default function ContactPage() {

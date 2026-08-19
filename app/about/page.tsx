@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: 'About Build91 Studio | 3D & Real Estate Marketing Studio',
   description:
     'Build91 Studio is a real estate marketing studio in Raipur and Bengaluru — 3D visualization, virtual tours and digital launchpads for developers across India, UAE and Australia.',
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 const team = [

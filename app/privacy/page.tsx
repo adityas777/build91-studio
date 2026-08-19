@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
     'How Build91 Studio (Manojava Systems Private Limited) collects, uses and protects your personal information.',
+  alternates: {
+    canonical: '/privacy',
+  },
 };
 
 /* ───────────────────────────────────────────────────────────────────────

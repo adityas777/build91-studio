@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: 'Shipping & Delivery Policy',
   description:
     'Shipping and digital delivery policy for Build91 Studio — electronic transfer methods, timelines, revisions, storage access, and support channels.',
+  alternates: {
+    canonical: '/shipping-policy',
+  },
 };
 
 const SECTIONS: { title: string; body: React.ReactNode }[] = [
