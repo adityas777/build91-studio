@@ -50,7 +50,7 @@ export function AssetReel() {
         <div className="mb-6 flex items-center justify-between md:mb-8">
           <span className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.3em] text-violet-soft">
             <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
-            What we make
+            Our Services
           </span>
           <div className="flex items-center gap-4 text-[10px] font-medium uppercase tracking-[0.3em]">
             <span className="text-white/55">Swipe / scroll →</span>

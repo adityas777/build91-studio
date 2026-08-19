@@ -27,7 +27,7 @@ export function QuoteToolPromo() {
           </div>
           <h2 className="text-display mt-6 text-3xl font-semibold leading-tight md:text-5xl">
             Get an instant ballpark quote{' '}
-            <span className="font-light text-gradient-gold">
+            <span className="text-accent-italic text-gradient">
               and a tailored proposal in 24 hours.
             </span>
           </h2>
@@ -35,12 +35,12 @@ export function QuoteToolPromo() {
             Tell us what you&rsquo;re launching. We&rsquo;ll share an approx quote with you, and will get back with the
             asset bundle, sequence and timeline within 24 hours.
           </p>
-          <div className="mt-8 flex flex-row items-center justify-center gap-2 sm:gap-3">
-            <Link href="/quote" className="btn-primary group px-4 py-3 text-xs sm:px-7 sm:py-3.5 sm:text-sm shrink-0">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+            <Link href="/quote" className="btn-primary group w-64 justify-center py-3.5 text-sm sm:w-auto sm:px-7 shrink-0">
               Get a Custom Quote
-              <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
-            <Link href="/contact" className="btn-secondary px-4 py-3 text-xs sm:px-7 sm:py-3.5 sm:text-sm shrink-0">
+            <Link href="/contact" className="btn-secondary w-64 justify-center py-3.5 text-sm sm:w-auto sm:px-7 shrink-0">
               Or talk to us first
             </Link>
           </div>

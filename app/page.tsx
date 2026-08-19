@@ -232,7 +232,7 @@ export default function HomePage() {
       {/* What We Make — pinned scroll-reveal of services */}
       <ScrollPinReveal
         id="services"
-        sectionEyebrow="What We Make"
+        sectionEyebrow="Our Services"
         sectionHeading={
           <>
             Don&rsquo;t read about it.{' '}

@@ -49,7 +49,7 @@ export function CountUpMetric() {
   return (
     <div
       ref={ref}
-      className="relative flex min-h-[11rem] flex-col rounded-2xl border border-white/[0.08] bg-[linear-gradient(180deg,rgba(124,58,237,0.10)_0%,rgba(10,8,32,0.6)_100%)] p-5 md:h-full md:min-h-0 md:[grid-area:metric]"
+      className="relative flex min-h-0 flex-col rounded-2xl border border-white/[0.08] bg-[linear-gradient(180deg,rgba(124,58,237,0.10)_0%,rgba(10,8,32,0.6)_100%)] p-5 md:h-full md:min-h-0 md:[grid-area:metric]"
     >
       <div>
         <div className="flex items-center justify-between gap-2">

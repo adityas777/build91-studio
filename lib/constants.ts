@@ -6,7 +6,7 @@ import {
   Megaphone,
   Rocket,
   PencilRuler,
-  Sparkles,
+  Sofa,
   Camera,
   Film,
   Layers,
@@ -131,7 +131,7 @@ export const SERVICE_PILLARS: ServicePillar[] = [
         title: '3D Interiors',
         description:
           'Photorealistic interiors across your unit typologies — spaces buyers can walk into mentally.',
-        icon: Sparkles,
+        icon: Sofa,
       },
       {
         title: '3D Exteriors',

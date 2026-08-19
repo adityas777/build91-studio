@@ -114,7 +114,7 @@ export function ServicesShowcase() {
       <div className="container-page">
         <AnimatedSection className="mb-14 flex flex-col gap-6 md:mb-20 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <span className="section-eyebrow">What We Make</span>
+            <span className="section-eyebrow">Our Services</span>
             <h2 className="section-heading mt-4">
               Don&rsquo;t read about it.{' '}
               <span className="text-accent-italic text-gradient-gold">

@@ -1,9 +1,18 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
 import type { Reel } from '@/lib/instagram';
+
+const BACKUP_VIDEOS = [
+  '/video/projects/Drone 360 with landmarks highlight01.mp4',
+  '/video/projects/exterior renders.mp4',
+  '/video/projects/interior renders.mp4',
+  '/video/projects/3d walkthrough 02.mp4',
+  '/video/projects/Superimposition01.mp4',
+  '/video/projects/view from under construction balcony02.mp4'
+];
 
 /* ───────────────────────────────────────────────────────────────────────
    ReelLightbox — fullscreen modal for an Instagram reel
@@ -39,6 +48,23 @@ export function ReelLightbox({ reels, index, onClose, onNavigate }: Props) {
   const reel = reels[index];
   const containerRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
+
+  const [videoSrc, setVideoSrc] = useState(reel?.mediaUrl || '');
+
+  // Sync state with changing active index
+  useEffect(() => {
+    if (reel) {
+      setVideoSrc(reel.mediaUrl);
+    }
+  }, [reel]);
+
+  const handleVideoError = () => {
+    const backup = BACKUP_VIDEOS[index % BACKUP_VIDEOS.length];
+    if (videoSrc !== backup) {
+      console.warn(`Lightbox video failed to load. Falling back to local copy: ${backup}`);
+      setVideoSrc(backup);
+    }
+  };
 
   // ── Body scroll lock ─────────────────────────────────────────────────
   useEffect(() => {
@@ -138,13 +164,14 @@ export function ReelLightbox({ reels, index, onClose, onNavigate }: Props) {
           // `key` forces a fresh element when navigating between reels —
           // browsers don't always reload src cleanly on src-change alone
           key={reel.id}
-          src={reel.mediaUrl}
+          src={videoSrc}
           poster={reel.thumbnailUrl}
           controls
           autoPlay
           muted
           playsInline
           preload="metadata"
+          onError={handleVideoError}
           className="aspect-[9/16] w-full bg-ink-900 object-cover"
         />
 

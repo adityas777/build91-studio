@@ -66,8 +66,8 @@ export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
     >
       <div className="container-page">
         {/* ── Header ────────────────────────────────────────────────── */}
-        <AnimatedSection className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
+        <AnimatedSection className="mb-10 flex flex-col gap-4 max-w-2xl">
+          <div>
             <span className="section-eyebrow">Selected Work</span>
             <h2 className="section-heading mt-4">
               A glimpse of{' '}
@@ -80,20 +80,18 @@ export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
             href={SITE.social.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 self-start text-sm font-medium text-white/80 transition-colors hover:text-gold md:self-end"
+            className="inline-flex items-center gap-2 text-sm font-medium text-white/80 transition-colors hover:text-gold"
           >
             View on Instagram
             <ArrowUpRight className="h-4 w-4" />
           </Link>
         </AnimatedSection>
-
+ 
         {/* ── Strip ─────────────────────────────────────────────────── */}
         <AnimatedSection>
           <div className="mb-4 flex items-center justify-between">
             <span className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.3em] text-violet-soft">
-              From the instagram
-              <span aria-hidden className="text-white/35">·</span>
-              <span className="text-white/60">Swipe / scroll →</span>
+              From the studio instagram
             </span>
             <div className="hidden gap-2 md:flex">
               <button

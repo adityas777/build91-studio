@@ -4,6 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import { Play } from 'lucide-react';
 import type { Reel } from '@/lib/instagram';
 
+const BACKUP_VIDEOS = [
+  '/video/projects/Drone 360 with landmarks highlight01.mp4',
+  '/video/projects/exterior renders.mp4',
+  '/video/projects/interior renders.mp4',
+  '/video/projects/3d walkthrough 02.mp4',
+  '/video/projects/Superimposition01.mp4',
+  '/video/projects/view from under construction balcony02.mp4'
+];
+
 /* ───────────────────────────────────────────────────────────────────────
    InstagramReelCard — 9:16 reel card backed by an IG `media_url`
    ───────────────────────────────────────────────────────────────────────
@@ -47,6 +56,20 @@ export function InstagramReelCard({ reel, onOpen, index }: Props) {
 
   const [inView, setInView] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [videoSrc, setVideoSrc] = useState(reel.mediaUrl);
+
+  // Sync state with changing API reel source URLs
+  useEffect(() => {
+    setVideoSrc(reel.mediaUrl);
+  }, [reel.mediaUrl]);
+
+  const handleVideoError = () => {
+    const backup = BACKUP_VIDEOS[index % BACKUP_VIDEOS.length];
+    if (videoSrc !== backup) {
+      console.warn(`Instagram video failed to load. Falling back to local copy: ${backup}`);
+      setVideoSrc(backup);
+    }
+  };
 
   // ── Visibility tracking — start/pause playback as cards scroll ─────
   useEffect(() => {
@@ -106,16 +129,16 @@ export function InstagramReelCard({ reel, onOpen, index }: Props) {
         <video
           ref={videoRef}
           key={reel.id}
+          src={videoSrc}
           poster={reel.thumbnailUrl}
           autoPlay
           muted
           loop
           playsInline
           preload="metadata"
+          onError={handleVideoError}
           className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src={reel.mediaUrl} type="video/mp4" />
-        </video>
+        />
       )}
 
       {/* Full-card click target — opens lightbox */}

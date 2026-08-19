@@ -190,13 +190,13 @@ function LogoMarquee({ logos }: { logos: ClientLogo[] }) {
   const duration = Math.max(24, logos.length * 3);
 
   return (
-    <div className="relative">
+    <div className="relative -mx-6 md:mx-0">
       {/* Edge fade masks — soft cutoff so logos dissolve at edges.
           Wider on desktop where the canvas is bigger. */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#060823] to-transparent md:w-24" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#060823] to-transparent md:w-24" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#0d1822] to-[#0d1822]/0 md:w-24" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#0d1822] to-[#0d1822]/0 md:w-24" />
 
-      <div className="overflow-hidden">
+      <div className="overflow-hidden px-6 md:px-0">
         {/* Seam-clean infinite marquee:
             • CRITICAL: `w-max` makes the div size to its CONTENT
               (max-content), not its parent's viewport width. Without

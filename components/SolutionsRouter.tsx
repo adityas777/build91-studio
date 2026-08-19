@@ -46,8 +46,8 @@ export function SolutionsRouter({
   defaultMode = 'type',
 }: Props) {
   const [mode, setMode] = useState<Mode>(defaultMode);
-  const [activeType, setActiveType] = useState<ProjectTypeId | null>('high-rise');
-  const [activeStage, setActiveStage] = useState<StageId | null>('pre-launch');
+  const [activeType, setActiveType] = useState<ProjectTypeId | null>(null);
+  const [activeStage, setActiveStage] = useState<StageId | null>(null);
 
   const activeBundle: Bundle | null =
     mode === 'type'
@@ -108,8 +108,13 @@ export function SolutionsRouter({
           </div>
         </div>
 
+        {/* Chip instruction */}
+        <div className="mt-8 text-center text-[10px] font-semibold uppercase tracking-[0.25em] text-gold/80 md:mt-10">
+          Select a {mode === 'type' ? 'project type' : 'stage'} below to explore scope:
+        </div>
+
         {/* Chip rail */}
-        <div className="mt-6 -mx-6 flex overflow-x-auto hide-scrollbar px-6 gap-2.5 pb-2.5 md:mx-0 md:px-0 md:pb-0 md:flex-wrap md:justify-center md:mt-8">
+        <div className="mt-4 -mx-6 flex overflow-x-auto hide-scrollbar px-6 gap-2.5 pb-2.5 md:mx-0 md:px-0 md:pb-0 md:flex-wrap md:justify-center md:mt-6">
           {mode === 'type'
             ? PROJECT_TYPE_ORDER.map((id) => {
               const b = PROJECT_TYPES[id];
@@ -155,13 +160,23 @@ export function SolutionsRouter({
             ) : (
               <motion.div
                 key="empty"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="mx-auto max-w-md text-center text-sm text-white/40"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="mx-auto max-w-3xl rounded-3xl border border-dashed border-white/10 bg-white/[0.01] p-12 text-center text-sm text-white/50 backdrop-blur-sm"
               >
-                Tap a {mode === 'type' ? 'project type' : 'stage'} above to see
-                what we&rsquo;d recommend.
+                <div className="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/5 bg-white/[0.02] text-gold/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-bounce">
+                    <path d="m18 15-6-6-6 6"/>
+                  </svg>
+                </div>
+                <p className="font-medium text-white/70">
+                  Tap any {mode === 'type' ? 'project type' : 'stage'} above
+                </p>
+                <p className="mt-1 text-xs text-white/45">
+                  to view typical deliverables and ballpark details
+                </p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -218,7 +233,7 @@ function Chip({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`group inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all ${active
+      className={`group inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.97] duration-200 ${active
           ? 'border-violet-glow/60 bg-violet-glow/[0.12] text-white shadow-[0_10px_30px_-12px_rgba(124,58,237,0.6)]'
           : 'border-white/10 bg-white/[0.03] text-white/70 hover:border-white/25 hover:bg-white/[0.05] hover:text-white'
         }`}

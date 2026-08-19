@@ -219,7 +219,10 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/40 md:flex-row md:items-center">
-          <p>© {year} {SITE.name}. All rights reserved.</p>
+          <div className="flex flex-col gap-1.5">
+            <p>© {year} {SITE.name}. All rights reserved.</p>
+            <p className="text-white/35">Made with love by Turbo7X</p>
+          </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link
               href="/privacy"
