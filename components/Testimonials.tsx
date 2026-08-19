@@ -96,7 +96,7 @@ export function Testimonials() {
             className="mx-auto h-10 w-10 text-gold/70 md:h-12 md:w-12"
           />
 
-          <div className="relative mt-8 min-h-[260px] md:min-h-[220px]">
+          <div className="relative mt-8 min-h-[220px] md:min-h-[180px]">
             <AnimatePresence mode="wait">
               <motion.figure
                 key={i}
@@ -104,7 +104,20 @@ export function Testimonials() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-0 flex flex-col items-center text-center"
+                className="w-full flex flex-col items-center text-center cursor-grab active:cursor-grabbing select-none"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(event, info) => {
+                  const threshold = 50; // min distance in px to register a swipe
+                  if (info.offset.x < -threshold) {
+                    // Swiped left -> show next
+                    setI((n) => (n + 1) % TESTIMONIALS.length);
+                  } else if (info.offset.x > threshold) {
+                    // Swiped right -> show prev
+                    setI((n) => (n - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+                  }
+                }}
               >
                 <blockquote className="text-display text-2xl font-medium leading-snug text-white md:text-3xl lg:text-[2.4rem] lg:leading-[1.2]">
                   &ldquo;{t.quote}&rdquo;

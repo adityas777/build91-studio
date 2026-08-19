@@ -6,7 +6,7 @@ import {
   Hourglass,
   MessageCircle,
   Plane,
-  Sparkles,
+  Check,
 } from 'lucide-react';
 import { SITE } from '@/lib/constants';
 import {
@@ -79,7 +79,7 @@ export function QuoteScopePreview({
         {isReview ? (
           <Hourglass className="h-3.5 w-3.5" strokeWidth={2} />
         ) : (
-          <Sparkles className="h-3.5 w-3.5" strokeWidth={2} />
+          <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
         )}
         {isReview ? 'Request received' : 'Quote ready'}
       </div>

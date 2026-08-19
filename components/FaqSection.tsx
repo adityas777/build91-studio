@@ -84,7 +84,7 @@ export function FaqSection() {
     <section className="section-base section-neutral relative overflow-hidden py-24 md:py-32 border-t border-white/5">
       <div className="container-page">
         {/* Header grid matching reference design */}
-        <AnimatedSection className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <AnimatedSection className="mb-8 md:mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-xl">
             <span className="section-eyebrow">FAQ</span>
             <h2 className="section-heading mt-4">
@@ -140,11 +140,17 @@ export function FaqSection() {
                       {faq.question}
                     </span>
                     {!isSearching && (
-                      <ChevronDown
-                        className={`h-5 w-5 text-white/45 transition-transform duration-300 ${
-                          isOpen ? 'rotate-180 text-gold' : 'group-hover:text-white'
-                        }`}
-                      />
+                      <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                        isOpen
+                          ? 'border-gold bg-gold/10 text-gold'
+                          : 'border-white/10 bg-white/[0.02] text-white/50 group-hover:border-white/30 group-hover:text-white'
+                      }`}>
+                        <ChevronDown
+                          className={`h-4 w-4 transition-transform duration-300 ${
+                            isOpen ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </div>
                     )}
                   </button>
 

@@ -91,7 +91,7 @@ export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
         <AnimatedSection>
           <div className="mb-4 flex items-center justify-between">
             <span className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.3em] text-violet-soft">
-              From the studio Instagram
+              From the instagram
               <span aria-hidden className="text-white/35">·</span>
               <span className="text-white/60">Swipe / scroll →</span>
             </span>

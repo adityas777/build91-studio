@@ -871,7 +871,7 @@ function AssetCard({
           }
         }}
         aria-pressed={isOn}
-        className="group flex w-full cursor-pointer select-none items-start gap-4 p-4 text-left transition-colors hover:bg-white/[0.02] md:p-5"
+        className="group flex flex-row-reverse w-full cursor-pointer select-none items-start justify-between gap-4 p-4 text-left transition-colors hover:bg-white/[0.02] md:p-5"
       >
         <div
           className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-colors ${
@@ -1473,7 +1473,7 @@ function SelectableCard({
         }
       }}
       aria-pressed={active}
-      className={`group flex w-full cursor-pointer select-none items-start gap-4 rounded-2xl border p-4 text-left transition-all md:p-5 ${
+      className={`group flex flex-row-reverse w-full cursor-pointer select-none items-start justify-between gap-4 rounded-2xl border p-4 text-left transition-all md:p-5 ${
         active
           ? 'border-violet-glow/60 bg-violet-glow/[0.08] shadow-[0_10px_30px_-12px_rgba(124,58,237,0.5)]'
           : 'border-white/10 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.04]'

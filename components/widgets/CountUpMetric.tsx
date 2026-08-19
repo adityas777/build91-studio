@@ -49,11 +49,16 @@ export function CountUpMetric() {
   return (
     <div
       ref={ref}
-      className="relative flex min-h-[11rem] flex-col justify-between rounded-2xl border border-white/[0.08] bg-[linear-gradient(180deg,rgba(124,58,237,0.10)_0%,rgba(10,8,32,0.6)_100%)] p-5 md:h-full md:min-h-0 md:[grid-area:metric]"
+      className="relative flex min-h-[11rem] flex-col rounded-2xl border border-white/[0.08] bg-[linear-gradient(180deg,rgba(124,58,237,0.10)_0%,rgba(10,8,32,0.6)_100%)] p-5 md:h-full md:min-h-0 md:[grid-area:metric]"
     >
       <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.3em] text-violet-soft">
-          ASSETS DELIVERED
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-violet-soft">
+            ASSETS DELIVERED
+          </span>
+          <span className="text-[10px] uppercase tracking-[0.22em] text-white/35 shrink-0">
+            Last 18 months
+          </span>
         </div>
         <div className="mt-3 flex items-baseline gap-1">
           <span className="text-display text-2xl font-medium text-white/80 md:text-3xl">
@@ -69,11 +74,6 @@ export function CountUpMetric() {
         <p className="mt-2 text-xs text-white/55">
           Aggregate value across launches we&rsquo;ve produced creative for
         </p>
-      </div>
-
-      <div className="mt-4 flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-white/35">
-        <span className="h-px w-6 bg-gradient-to-r from-gold to-transparent" />
-        Last 18 months
       </div>
     </div>
   );

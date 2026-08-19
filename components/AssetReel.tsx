@@ -51,12 +51,14 @@ export function AssetReel() {
           <span className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.3em] text-violet-soft">
             <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
             What we make
-            <span aria-hidden className="text-white/30">·</span>
+          </span>
+          <div className="flex items-center gap-4 text-[10px] font-medium uppercase tracking-[0.3em]">
             <span className="text-white/55">Swipe / scroll →</span>
-          </span>
-          <span className="hidden text-[10px] font-medium uppercase tracking-[0.3em] text-white/40 md:inline">
-            Muted previews
-          </span>
+            <span className="hidden text-white/40 md:inline">
+              <span aria-hidden className="mr-4 text-white/20">|</span>
+              Muted previews
+            </span>
+          </div>
         </div>
 
         <ReelStrip />
@@ -111,14 +113,14 @@ function ReelStrip() {
 
   return (
     <div className="relative">
-      {/* Edge fade masks — gradient overlays that hint at more content. */}
+      {/* Edge fade masks — gradient overlays that hint at more content (hidden on desktop to prevent card shadowing). */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#0C0820] to-transparent md:w-20"
+        className="pointer-events-none absolute inset-y-0 -left-6 z-10 w-12 bg-gradient-to-r from-[#01040b] to-[#01040b]/0 md:hidden"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#0C0820] to-transparent md:w-20"
+        className="pointer-events-none absolute inset-y-0 -right-6 z-10 w-12 bg-gradient-to-l from-[#01040b] to-[#01040b]/0 md:hidden"
       />
 
       <div
@@ -264,10 +266,10 @@ function ReelCard({ item }: { item: AssetReelItem }) {
           {item.project}
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
-          <span className="rounded-full bg-white/10 px-2 py-0.5 text-[9px] font-medium uppercase tracking-[0.2em] text-white/70">
+          <span className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-[9px] font-medium uppercase tracking-[0.18em] text-white/80 border border-white/5 animate-none">
             {item.duration}
           </span>
-          <span className="rounded-full border border-gold/30 bg-gold/[0.08] px-2 py-0.5 text-[9px] font-medium uppercase tracking-[0.2em] text-gold-soft">
+          <span className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-[9px] font-medium uppercase tracking-[0.18em] text-white/80 border border-white/5 animate-none">
             {item.shipped}
           </span>
         </div>

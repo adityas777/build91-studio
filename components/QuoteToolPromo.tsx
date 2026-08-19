@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 /* ───────────────────────────────────────────────────────────────────────
    QuoteToolPromo
@@ -23,12 +23,11 @@ export function QuoteToolPromo() {
       <div className="container-page relative">
         <div className="mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-violet-glow/25 bg-violet-glow/[0.08] px-4 py-1.5 text-xs font-medium uppercase tracking-[0.25em] text-violet-soft">
-            <Sparkles className="h-3.5 w-3.5" strokeWidth={2} />
             ~60 seconds · No complex forms
           </div>
           <h2 className="text-display mt-6 text-3xl font-semibold leading-tight md:text-5xl">
             Get an instant ballpark quote{' '}
-            <span className="text-accent-italic text-gradient-gold">
+            <span className="font-light text-gradient-gold">
               and a tailored proposal in 24 hours.
             </span>
           </h2>
@@ -36,12 +35,12 @@ export function QuoteToolPromo() {
             Tell us what you&rsquo;re launching. We&rsquo;ll share an approx quote with you, and will get back with the
             asset bundle, sequence and timeline within 24 hours.
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/quote" className="btn-primary group">
+          <div className="mt-8 flex flex-row items-center justify-center gap-2 sm:gap-3">
+            <Link href="/quote" className="btn-primary group px-4 py-3 text-xs sm:px-7 sm:py-3.5 sm:text-sm shrink-0">
               Get a Custom Quote
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
-            <Link href="/contact" className="btn-secondary">
+            <Link href="/contact" className="btn-secondary px-4 py-3 text-xs sm:px-7 sm:py-3.5 sm:text-sm shrink-0">
               Or talk to us first
             </Link>
           </div>

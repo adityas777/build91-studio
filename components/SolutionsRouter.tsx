@@ -46,8 +46,8 @@ export function SolutionsRouter({
   defaultMode = 'type',
 }: Props) {
   const [mode, setMode] = useState<Mode>(defaultMode);
-  const [activeType, setActiveType] = useState<ProjectTypeId | null>(null);
-  const [activeStage, setActiveStage] = useState<StageId | null>(null);
+  const [activeType, setActiveType] = useState<ProjectTypeId | null>('high-rise');
+  const [activeStage, setActiveStage] = useState<StageId | null>('pre-launch');
 
   const activeBundle: Bundle | null =
     mode === 'type'
@@ -109,7 +109,7 @@ export function SolutionsRouter({
         </div>
 
         {/* Chip rail */}
-        <div className="mt-6 flex flex-wrap justify-center gap-2.5 md:mt-8">
+        <div className="mt-6 -mx-6 flex overflow-x-auto hide-scrollbar px-6 gap-2.5 pb-2.5 md:mx-0 md:px-0 md:pb-0 md:flex-wrap md:justify-center md:mt-8">
           {mode === 'type'
             ? PROJECT_TYPE_ORDER.map((id) => {
               const b = PROJECT_TYPES[id];
@@ -218,7 +218,7 @@ function Chip({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`group inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all ${active
+      className={`group inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all ${active
           ? 'border-violet-glow/60 bg-violet-glow/[0.12] text-white shadow-[0_10px_30px_-12px_rgba(124,58,237,0.6)]'
           : 'border-white/10 bg-white/[0.03] text-white/70 hover:border-white/25 hover:bg-white/[0.05] hover:text-white'
         }`}
@@ -245,7 +245,7 @@ function BundleCard({ bundle, href }: { bundle: Bundle; href: string }) {
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl md:p-9"
     >
-      <div className="flex items-start gap-4">
+      <div className="flex flex-row-reverse items-start justify-between gap-4">
         <div className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-violet-glow/25 bg-violet-glow/[0.08] text-violet-soft">
           <Icon className="h-5 w-5" strokeWidth={1.8} />
         </div>
@@ -310,7 +310,7 @@ function BundleCard({ bundle, href }: { bundle: Bundle; href: string }) {
       {/* CTA → quote tool (Phase 2) */}
       <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-white/10 pt-6">
         <Link href={href} className="btn-primary group">
-          Scope this →
+          Scope this
           <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </Link>
         <Link href="/contact" className="btn-secondary">

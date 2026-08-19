@@ -155,7 +155,9 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li className="pt-2 border-t border-white/10" />
+              <li className="py-2" aria-hidden="true">
+                <div className="border-t border-white/10 w-full" />
+              </li>
               <li>
                 <Link
                   href="/portfolio#penthouse-design-and-visualization"
@@ -218,13 +220,19 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/40 md:flex-row md:items-center">
           <p>© {year} {SITE.name}. All rights reserved.</p>
-          <p>Made with love by Turbo7X</p>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link
               href="/privacy"
               className="hover:text-white/70 underline underline-offset-2 decoration-white/20"
             >
               Privacy Policy
+            </Link>
+            <Link
+              href="/sitemap.xml"
+              target="_blank"
+              className="hover:text-white/70 underline underline-offset-2 decoration-white/20"
+            >
+              Sitemap
             </Link>
             <Link
               href="/terms"

@@ -312,7 +312,7 @@ function SlideText({
         <span className="h-1 w-1 rounded-full bg-white/40" />
         {slide.eyebrow}
       </span>
-      <h3 className="text-display mt-4 text-3xl font-semibold leading-[1.05] tracking-tight text-white sm:mt-5 sm:text-4xl md:text-5xl lg:text-6xl">
+      <h3 className="text-display mt-4 text-3xl font-semibold leading-[1.15] tracking-tight text-white sm:mt-5 sm:text-4xl md:text-5xl lg:text-6xl">
         {slide.title}
       </h3>
       <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/80 sm:mt-4 sm:text-base md:text-lg">

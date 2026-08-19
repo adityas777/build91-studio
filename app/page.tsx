@@ -68,7 +68,7 @@ const SERVICE_SLIDES: ScrollPinSlide[] = [
     eyebrow: 'Project Showcase',
     title: (
       <>
-        Drone &amp; <span className="text-accent-italic text-gradient">Aerial 360°</span>
+        Drone &amp; <span className="text-accent-italic text-gradient">Aerial 360</span><span className="text-accent-italic text-white">°</span>
       </>
     ),
     body:

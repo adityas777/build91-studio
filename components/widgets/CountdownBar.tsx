@@ -74,8 +74,9 @@ export function CountdownBar() {
   return (
     <div className="relative flex min-h-[11rem] flex-col justify-between rounded-2xl border border-white/[0.08] bg-[linear-gradient(180deg,rgba(224,184,114,0.06)_0%,rgba(10,8,32,0.6)_100%)] p-5 md:h-full md:min-h-0 md:[grid-area:countdown]">
       <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.3em] text-gold-soft">
-          Launch-to-live · {AVG_LAUNCH_DAYS} days
+        <div className="flex items-center justify-between gap-2 text-[10px] font-medium uppercase tracking-[0.3em] text-gold-soft">
+          <span>Launch-to-live</span>
+          <span className="shrink-0">{AVG_LAUNCH_DAYS} days</span>
         </div>
         <div className="mt-3 flex items-baseline gap-2">
           <span className="text-display text-sm font-medium uppercase tracking-[0.2em] text-white/55">

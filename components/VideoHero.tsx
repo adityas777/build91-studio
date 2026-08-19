@@ -46,7 +46,7 @@ import { useIsDesktop } from '@/lib/useMediaQuery';
 
 // REPLACE: swap these paths once the bespoke encodes land in /public/video/.
 const HERO_VIDEO_DESKTOP = '/video/hero-reel-desktop.mp4'; // → /video/hero-reel.mp4
-const HERO_VIDEO_MOBILE = '/video/herobanner_fast.mp4'; // → /video/hero-reel-mobile.mp4
+const HERO_VIDEO_MOBILE = '/video/hero-reel-mobile.mp4';
 const HERO_POSTER_DESKTOP = '/video/hero-poster-desktop.webp';
 const HERO_POSTER_MOBILE = '/video/hero-poster-mobile.webp';
 

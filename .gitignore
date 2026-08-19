@@ -48,4 +48,6 @@ production-state.json
 # Large media & PDF assets (stored on S3)
 *.pdf
 /public/images/extracted_portfolio/
+/scratch
+
 
