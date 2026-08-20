@@ -26,10 +26,6 @@ const COLLECTION_METADATA: Record<string, { title: string; description: string }
     title: 'Exteriors',
     description: 'Our Exterior portfolio showcases a collection of realistic and detailed projects that highlight our dedication to precision and creativity in every design.'
   },
-  elevations: {
-    title: 'Elevations',
-    description: 'Highly detailed 3D elevations illustrating structural facades, building orientations, and material distributions with pinpoint accuracy.'
-  },
   amenities: {
     title: 'Amenities',
     description: 'Immersive spaces designed for communities, detailing pool decks, clubhouses, green areas, and lifestyle facilities with CGI photorealism.'

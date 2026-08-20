@@ -300,6 +300,82 @@ export default function HomePage() {
       <FaqSection />
 
       <CtaSplit />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(homeFaqJsonLd),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteJsonLd),
+        }}
+      />
     </>
   );
 }
+
+const homeFaqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What happens if our architectural plans or material specs change midway through the 3D rendering process?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "We know that real estate development is dynamic and plans often evolve. If structural or material changes occur after we've started drafting the 3D models, we will pause and assess the impact. Minor material tweaks (like changing a wall color or floor texture) are typically covered in our standard revision cycles. However, significant structural changes (like moving load-bearing walls or altering the building facade) may require a 'change order.' We will always communicate any adjusted timelines or nominal fees upfront so there are no surprise costs before we proceed.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do we receive the raw source files upon project completion, or just the final renders?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'By default, our deliverables are the final, high-resolution rendered assets (JPEGs, MP4 videos, and web packages for interactive tours) ready for your marketing campaigns. The raw source files (such as 3ds Max, SketchUp, or Unreal Engine files) and proprietary 3D assets remain the intellectual property of Build91 Studio. However, if your internal team requires the source files for future modifications, we can definitely negotiate an IP handover or extended licensing agreement at the start of the project.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can the interactive tools in your Digital Launchpad integrate with our CRM to track buyer behavior?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. While our standard Digital Launchpad is delivered as a high-performing standalone web experience, we can collaborate with your IT or marketing teams to embed tracking analytics and webhooks. This means you can track valuable buyer metrics—like how long they spent on a specific floor plan, which amenities they clicked on, and direct lead captures—straight into your existing CRM (like Salesforce, Zoho, or HubSpot).',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does our sales team need specialized hardware to showcase the 3D walkthroughs to clients?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Not at all. We optimize our entire Digital Sales Suite to be universally accessible. Your interactive assets, 360° tours, and plotted developments are designed to run smoothly on standard iPads, touchscreen kiosks in your sales gallery, smart TVs, and everyday web browsers on mobile phones. If you specifically want an immersive Virtual Reality (VR) setup for your sales office, we can optimize the files for headsets like the Meta Quest, but standard devices are more than enough to close deals.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Our upcoming flagship project is strictly confidential. How do you ensure data security and prevent premature leaks?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Confidentiality is a cornerstone of our workflow, especially since we work on high-stakes project launches. We routinely execute strict Non-Disclosure Agreements (NDAs) before receiving any initial CAD files or design briefs. Internally, your project data is stored on secure, access-controlled servers, and our team members are bound by legal confidentiality clauses. Furthermore, we never publish your unreleased projects on our portfolio or social media without your explicit, written consent post-launch.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'We are launching a massive township in just a few weeks. Can your team scale up for high-volume asset creation on a tight deadline?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "Speed is one of our core values because we understand that launch windows are unforgiving. Because we house a multidisciplinary team of 3D artists, designers, and software developers under one roof, we can parallel-process different parts of your project. While we prefer standard lead times to ensure maximum photorealism, we can allocate dedicated 'squads' to your project to accommodate aggressive go-to-market timelines for large-scale townships or multi-tower developments.",
+      },
+    },
+  ],
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Build91 Studio',
+  url: 'https://studio.build91.in',
+  description: 'The Complete Digital Sales Suite for Real Estate Developers.',
+};

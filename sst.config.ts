@@ -37,12 +37,15 @@ export default $config({
       public: true
     });
 
+    const isProd = $app.stage === "production" || $app.stage === "prod";
+    const domain = isProd ? {
+      name: "studio.build91.in",
+      dns: false,
+      cert: "arn:aws:acm:us-east-1:533267081620:certificate/567d4fe4-a433-4f4b-b713-dea5835bcb8d",
+    } : undefined;
+
     new sst.aws.Nextjs("MyWeb", {
-      domain: {
-        name: "dev.build91.in",
-        dns: false,
-        cert: "arn:aws:acm:us-east-1:533267081620:certificate/567d4fe4-a433-4f4b-b713-dea5835bcb8d",
-      },
+      domain,
       link: [portfolioBucket],
       environment: {
         RESEND_API_KEY: process.env.RESEND_API_KEY || "",

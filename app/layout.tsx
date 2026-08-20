@@ -61,6 +61,43 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'ProfessionalService'],
+  name: SITE.name,
+  legalName: 'Manojava Systems Private Limited',
+  url: SITE.url,
+  logo: `${SITE.url}${SITE.logo}`,
+  image: `${SITE.url}${SITE.logo}`,
+  description: SITE.description,
+  email: SITE.email,
+  telephone: SITE.phone,
+  address: [
+    {
+      '@type': 'PostalAddress',
+      addressLocality: 'Raipur',
+      addressRegion: 'Chhattisgarh',
+      postalCode: '492001',
+      streetAddress: 'Telibandha',
+      addressCountry: 'IN',
+    },
+    {
+      '@type': 'PostalAddress',
+      addressLocality: 'Bengaluru',
+      addressRegion: 'Karnataka',
+      postalCode: '560076',
+      streetAddress: 'BTM Layout',
+      addressCountry: 'IN',
+    },
+  ],
+  sameAs: [
+    SITE.social.instagram,
+    SITE.social.facebook,
+    SITE.social.youtube,
+  ],
+  priceRange: '$$$',
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -71,6 +108,14 @@ export default function RootLayout({
       lang="en"
       className={`${jost.variable} ${cormorant.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-ink-900 text-white antialiased">
         <Navigation />
         <main className="relative">{children}</main>

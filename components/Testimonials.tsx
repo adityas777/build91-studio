@@ -96,7 +96,7 @@ export function Testimonials() {
             className="mx-auto h-10 w-10 text-gold/70 md:h-12 md:w-12"
           />
 
-          <div className="relative mt-8 min-h-[220px] md:min-h-[180px]">
+          <div className="relative mt-8 h-[340px] xs:h-[300px] sm:h-[250px] md:h-[210px] lg:h-[180px]">
             <AnimatePresence mode="wait">
               <motion.figure
                 key={i}

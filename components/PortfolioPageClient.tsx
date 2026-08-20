@@ -355,33 +355,8 @@ export function PortfolioPageClient() {
 
                   <hr className="border-white/10" />
 
-                  {/* Row 2: Elevations & Amenities */}
+                  {/* Row 2: Amenities & Isometric */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 md:gap-x-24 gap-y-12">
-                    {/* Elevations */}
-                    <div className="flex flex-col">
-                      <div 
-                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
-                        onClick={() => setActiveCollection('elevations')}
-                      >
-                        <Image
-                          src={COLLECTIONS.elevations.heroImage}
-                          alt={COLLECTIONS.elevations.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                        />
-                      </div>
-                      <h3 
-                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
-                        onClick={() => setActiveCollection('elevations')}
-                      >
-                        {COLLECTIONS.elevations.title}
-                      </h3>
-                      <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
-                        {COLLECTIONS.elevations.description}
-                      </p>
-                    </div>
-
                     {/* Amenities */}
                     <div className="flex flex-col">
                       <div 
@@ -406,33 +381,31 @@ export function PortfolioPageClient() {
                         {COLLECTIONS.amenities.description}
                       </p>
                     </div>
-                  </div>
 
-                  <hr className="border-white/10" />
-
-                  {/* Row 3: Isometric (Full width showcase banner) */}
-                  <div className="flex flex-col">
-                    <div 
-                      className="aspect-[16/7] lg:aspect-[21/9] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
-                      onClick={() => setActiveCollection('isometric')}
-                    >
-                      <Image
-                        src={COLLECTIONS.isometric.heroImage}
-                        alt={COLLECTIONS.isometric.title}
-                        fill
-                        sizes="100vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                      />
+                    {/* Isometric */}
+                    <div className="flex flex-col">
+                      <div 
+                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
+                        onClick={() => setActiveCollection('isometric')}
+                      >
+                        <Image
+                          src={COLLECTIONS.isometric.heroImage}
+                          alt={COLLECTIONS.isometric.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                      </div>
+                      <h3 
+                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
+                        onClick={() => setActiveCollection('isometric')}
+                      >
+                        {COLLECTIONS.isometric.title}
+                      </h3>
+                      <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
+                        {COLLECTIONS.isometric.description}
+                      </p>
                     </div>
-                    <h3 
-                      className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
-                      onClick={() => setActiveCollection('isometric')}
-                    >
-                      {COLLECTIONS.isometric.title}
-                    </h3>
-                    <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide max-w-2xl">
-                      {COLLECTIONS.isometric.description}
-                    </p>
                   </div>
                 </div>
               </AnimatedSection>
@@ -832,17 +805,6 @@ const STATIC_COLLECTIONS: Record<string, Collection> = {
       '/images/portfolio/extracted_image_15.jpeg',
       '/images/portfolio/extracted_image_17.jpeg',
       '/images/portfolio/extracted_image_3.jpeg',
-    ]
-  },
-  elevations: {
-    id: 'elevations',
-    title: 'Elevations',
-    description: 'Highly detailed 3D elevations illustrating structural facades, building orientations, and material distributions with pinpoint accuracy.',
-    heroImage: '/images/portfolio/extracted_image_7.png',
-    images: [
-      '/images/portfolio/extracted_image_7.png',
-      '/images/portfolio/extracted_image_2.jpeg',
-      '/images/portfolio/extracted_image_19.jpeg',
     ]
   },
   amenities: {

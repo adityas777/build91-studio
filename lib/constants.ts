@@ -35,7 +35,7 @@ export const SITE = {
   social: {
     // Confirmed real account (owner, 2026-06-10): build91studio_ — note the
     // trailing underscore. Every IG link on the site must read this constant.
-    instagram: 'https://www.instagram.com/build_91/',
+    instagram: 'https://www.instagram.com/build91studio_/',
     facebook: 'https://facebook.com/build91studio',
     youtube: 'https://www.youtube.com/@build91_studio',
   },

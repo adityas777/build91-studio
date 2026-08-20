@@ -71,6 +71,62 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(servicesJsonLd),
+        }}
+      />
     </>
   );
 }
+
+const servicesJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Build91 Studio Real Estate Visual Disciplines',
+  description: 'A complete digital sales suite for real estate developers and architects.',
+  itemListElement: [
+    {
+      '@type': 'Service',
+      position: 1,
+      name: 'Project Showcase',
+      description: 'Cinematic project film, elevation cut, amenities reel and developer story.',
+      provider: { '@type': 'Organization', name: 'Build91 Studio', url: 'https://studio.build91.in' },
+      url: 'https://studio.build91.in/services#project-showcase',
+    },
+    {
+      '@type': 'Service',
+      position: 2,
+      name: '3D Visualization',
+      description: 'Photoreal 3D interior, exterior, elevation, amenity, and isometric architectural renderings.',
+      provider: { '@type': 'Organization', name: 'Build91 Studio', url: 'https://studio.build91.in' },
+      url: 'https://studio.build91.in/services#3d-visualization',
+    },
+    {
+      '@type': 'Service',
+      position: 3,
+      name: 'Virtual Experiences',
+      description: 'Drone 360 views, interactive virtual tours, 3D video walkthroughs, and location intelligence.',
+      provider: { '@type': 'Organization', name: 'Build91 Studio', url: 'https://studio.build91.in' },
+      url: 'https://studio.build91.in/services#virtual-experiences',
+    },
+    {
+      '@type': 'Service',
+      position: 4,
+      name: 'Marketing Stack',
+      description: '2D drawings, 3D floor plans, 3D cut sections, brochures, and digital collateral.',
+      provider: { '@type': 'Organization', name: 'Build91 Studio', url: 'https://studio.build91.in' },
+      url: 'https://studio.build91.in/services#marketing-stack',
+    },
+    {
+      '@type': 'Service',
+      position: 5,
+      name: 'Digital Launchpad',
+      description: 'Interactive project microsite, dynamic inventory selector, and digital launch campaign engine.',
+      provider: { '@type': 'Organization', name: 'Build91 Studio', url: 'https://studio.build91.in' },
+      url: 'https://studio.build91.in/services#digital-launchpad',
+    },
+  ],
+};

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Check } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Check, ChevronDown, MousePointerClick } from 'lucide-react';
 import {
   PROJECT_TYPES,
   PROJECT_TYPE_ORDER,
@@ -108,9 +108,22 @@ export function SolutionsRouter({
           </div>
         </div>
 
-        {/* Chip instruction */}
-        <div className="mt-8 text-center text-[10px] font-semibold uppercase tracking-[0.25em] text-gold/80 md:mt-10">
-          Select a {mode === 'type' ? 'project type' : 'stage'} below to explore scope:
+        {/* Interactive Prompt & Animated Downward Arrow Indicator */}
+        <div className="mt-8 flex flex-col items-center justify-center gap-1.5 text-center md:mt-10">
+          <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/[0.08] px-4 py-1.5 text-xs font-medium text-gold backdrop-blur-md shadow-[0_0_20px_-5px_rgba(224,184,114,0.3)]">
+            <MousePointerClick className="h-3.5 w-3.5 animate-pulse text-gold" />
+            <span>Select a {mode === 'type' ? 'project type' : 'stage'} below</span>
+            <motion.span
+              animate={{ y: [0, 4, 0] }}
+              transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
+              className="inline-flex items-center text-gold"
+            >
+              <ArrowDown className="h-3.5 w-3.5" />
+            </motion.span>
+          </div>
+          <span className="text-[11px] text-white/50 tracking-wide">
+            Tap any chip to reveal its full scope & deliverables
+          </span>
         </div>
 
         {/* Chip rail */}
@@ -212,17 +225,24 @@ function Chip({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`group inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.97] duration-200 ${active
-          ? 'border-violet-glow/60 bg-violet-glow/[0.12] text-white shadow-[0_10px_30px_-12px_rgba(124,58,237,0.6)]'
-          : 'border-white/10 bg-white/[0.03] text-white/70 hover:border-white/25 hover:bg-white/[0.05] hover:text-white'
+      className={`group inline-flex shrink-0 items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm font-medium transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.97] duration-200 ${active
+          ? 'border-violet-glow bg-violet-glow/[0.18] text-white shadow-[0_0_25px_-5px_rgba(124,58,237,0.6)] ring-1 ring-violet-glow/50'
+          : 'border-white/12 bg-white/[0.04] text-white/75 hover:border-white/30 hover:bg-white/[0.08] hover:text-white'
         }`}
     >
       <Icon
-        className={`h-4 w-4 transition-colors ${active ? 'text-violet-soft' : 'text-white/45 group-hover:text-white/70'
+        className={`h-4 w-4 transition-colors ${active ? 'text-violet-soft' : 'text-white/50 group-hover:text-white/80'
           }`}
         strokeWidth={1.8}
       />
-      {bundle.label}
+      <span>{bundle.label}</span>
+      <ChevronDown
+        className={`h-3.5 w-3.5 transition-transform duration-300 ${
+          active
+            ? 'rotate-180 text-gold'
+            : 'text-white/35 group-hover:text-white/70 group-hover:translate-y-0.5'
+        }`}
+      />
     </button>
   );
 }

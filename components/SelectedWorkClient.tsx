@@ -66,52 +66,50 @@ export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
     >
       <div className="container-page">
         {/* ── Header ────────────────────────────────────────────────── */}
-        <AnimatedSection className="mb-5 flex flex-col gap-4 max-w-2xl">
-          <div>
-            <span className="section-eyebrow">Selected Work</span>
-            <h2 className="section-heading mt-4">
-              A glimpse of{' '}
-              <span className="text-accent-italic text-gradient">
-                work in the wild.
-              </span>
-            </h2>
+        <div className="mb-8 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <AnimatedSection className="flex flex-col gap-3 max-w-2xl">
+            <div>
+              <span className="section-eyebrow">Selected Work</span>
+              <h2 className="section-heading mt-3">
+                A glimpse of{' '}
+                <span className="text-accent-italic text-gradient">
+                  work in the wild.
+                </span>
+              </h2>
+            </div>
+            <Link
+              href={SITE.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium text-white/80 transition-colors hover:text-gold w-fit"
+            >
+              View on Instagram
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </AnimatedSection>
+
+          <div className="hidden gap-2 md:flex">
+            <button
+              type="button"
+              onClick={() => scrollStrip(-1)}
+              aria-label="Scroll left"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all hover:border-violet-glow/50 hover:text-white"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollStrip(1)}
+              aria-label="Scroll right"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all hover:border-violet-glow/50 hover:text-white"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
-          <Link
-            href={SITE.social.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-medium text-white/80 transition-colors hover:text-gold"
-          >
-            View on Instagram
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        </AnimatedSection>
- 
+        </div>
+
         {/* ── Strip ─────────────────────────────────────────────────── */}
         <AnimatedSection>
-          <div className="mb-4 flex items-center justify-between">
-            <span className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.3em] text-violet-soft">
-              From the studio instagram
-            </span>
-            <div className="hidden gap-2 md:flex">
-              <button
-                type="button"
-                onClick={() => scrollStrip(-1)}
-                aria-label="Scroll left"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all hover:border-violet-glow/50 hover:text-white"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollStrip(1)}
-                aria-label="Scroll right"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all hover:border-violet-glow/50 hover:text-white"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
 
           {/* Native scrollbar kept visible (themed thin track) so the
               affordance for "more content to the right" is obvious. */}
