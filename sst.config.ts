@@ -39,9 +39,9 @@ export default $config({
 
     const isProd = $app.stage === "production" || $app.stage === "prod";
     const domain = isProd ? {
-      name: "dev.build91.in",
+      name: "studio.build91.in",
       dns: false,
-      cert: "arn:aws:acm:us-east-1:533267081620:certificate/567d4fe4-a433-4f4b-b713-dea5835bcb8d",
+      cert: "arn:aws:acm:us-east-1:533267081620:certificate/7f309896-38ad-432a-948d-df7de7489590",
     } : undefined;
 
     new sst.aws.Nextjs("MyWeb", {
