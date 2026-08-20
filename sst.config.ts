@@ -40,8 +40,9 @@ export default $config({
     const isProd = $app.stage === "production" || $app.stage === "prod";
     const domain = isProd ? {
       name: "studio.build91.in",
+      aliases: ["www.studio.build91.in"],
       dns: false,
-      cert: "arn:aws:acm:us-east-1:533267081620:certificate/7f309896-38ad-432a-948d-df7de7489590",
+      cert: "arn:aws:acm:us-east-1:533267081620:certificate/456a4078-d60b-465e-ae2a-7c607ddf0987",
     } : undefined;
 
     new sst.aws.Nextjs("MyWeb", {
