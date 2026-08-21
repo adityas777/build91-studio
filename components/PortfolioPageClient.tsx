@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { Loader2, Smartphone } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 
+
+
 const FEATURED_VIDEOS = [
   {
     id: 'penthouse-design-and-visualization',
@@ -197,12 +199,21 @@ export function PortfolioPageClient() {
     if (!containerRef.current) return;
     const handleResize = () => {
       if (!containerRef.current) return;
-      const width = containerRef.current.clientWidth;
-      setScale(width / 1920);
+      const rect = containerRef.current.getBoundingClientRect();
+      const width = rect.width || containerRef.current.clientWidth;
+      if (width > 0) {
+        setScale(width / 1920);
+      }
     };
     handleResize();
+    const timer = setTimeout(handleResize, 100);
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -298,9 +309,9 @@ export function PortfolioPageClient() {
                 style={{
                   width: '1920px',
                   height: '800px',
-                  transform: `scale(${scale})`,
-                  transformOrigin: 'top left',
-                  left: 0,
+                  transform: `translateX(-50%) scale(${scale})`,
+                  transformOrigin: 'top center',
+                  left: '50%',
                   top: 0,
                 }}
                 allowFullScreen
