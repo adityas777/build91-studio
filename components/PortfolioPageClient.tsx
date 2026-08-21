@@ -2,7 +2,8 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Loader2, Smartphone } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 
 const FEATURED_VIDEOS = [
@@ -259,8 +260,33 @@ export function PortfolioPageClient() {
             </div>
           </section>
 
-          {/* ── 3D Virtual Tour Embed (Moved from Homepage) ──────────────────────────────────── */}
-          <AnimatedSection className="w-full my-16 md:my-20">
+          {/* ── 3D Virtual Tour Embed ──────────────────────────────────── */}
+          <AnimatedSection className="w-full my-12 md:my-20">
+            {/* Mobile Landscape Hint Pill with Animated Rotating Phone Icon */}
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="md:hidden flex items-center justify-center gap-2.5 px-4 py-2.5 mb-4 mx-auto w-fit rounded-full bg-white/[0.06] border border-gold/30 backdrop-blur-md text-xs text-white/90 shadow-xl"
+            >
+              <motion.div
+                animate={{ rotate: [0, 90, 90, 0, 0] }}
+                transition={{
+                  duration: 2.6,
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                  ease: [0.25, 1, 0.5, 1],
+                }}
+                className="flex items-center justify-center text-gold"
+              >
+                <Smartphone className="w-4 h-4 text-gold" />
+              </motion.div>
+
+              <span>
+                <strong className="text-gold font-semibold">Rotate phone to landscape</strong> for full 360° tour
+              </span>
+            </motion.div>
+
             <div
               ref={containerRef}
               className="relative w-full border-y border-white/10 bg-black/20 shadow-2xl overflow-hidden"
