@@ -96,7 +96,7 @@ export function Testimonials() {
             className="mx-auto h-10 w-10 text-gold/70 md:h-12 md:w-12"
           />
 
-          <div className="relative mt-8 h-[340px] xs:h-[300px] sm:h-[250px] md:h-[210px] lg:h-[180px]">
+          <div className="relative mt-8 flex min-h-[320px] flex-col items-center justify-center sm:min-h-[280px] md:min-h-[250px] lg:min-h-[230px]">
             <AnimatePresence mode="wait">
               <motion.figure
                 key={i}
@@ -119,11 +119,11 @@ export function Testimonials() {
                   }
                 }}
               >
-                <blockquote className="text-display text-2xl font-medium leading-snug text-white md:text-3xl lg:text-[2.4rem] lg:leading-[1.2]">
+                <blockquote className="text-display text-2xl font-medium leading-snug text-white md:text-3xl lg:text-[2.2rem] lg:leading-[1.25]">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
 
-                <figcaption className="mt-10 flex items-center gap-4">
+                <figcaption className="mt-8 flex items-center gap-4">
                   <Avatar
                     src={t.avatarUrl}
                     name={t.author}
