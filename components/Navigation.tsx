@@ -32,6 +32,10 @@ export function Navigation() {
     };
   }, [open]);
 
+  if (pathname === '/feedback') {
+    return null;
+  }
+
   return (
     <>
       <motion.header

@@ -1,10 +1,18 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Instagram, Facebook, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import { NAV_LINKS, SERVICE_PILLARS, SITE } from '@/lib/constants';
 
 export function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  if (pathname === '/feedback') {
+    return null;
+  }
 
   return (
     <footer className="relative isolate overflow-hidden border-t border-white/10 bg-ink-900">

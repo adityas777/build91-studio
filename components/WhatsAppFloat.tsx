@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { SITE } from '@/lib/constants';
 
 /**
@@ -11,6 +12,7 @@ import { SITE } from '@/lib/constants';
  * rather than the stock green button. Number is derived from SITE.phone.
  */
 export function WhatsAppFloat() {
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
 
   // Fade in after a beat so it doesn't compete with the hero load animation.
@@ -18,6 +20,10 @@ export function WhatsAppFloat() {
     const t = setTimeout(() => setVisible(true), 1500);
     return () => clearTimeout(t);
   }, []);
+
+  if (pathname === '/feedback') {
+    return null;
+  }
 
   const number = SITE.phone.replace(/[^\d]/g, ''); // → "917880147772"
   const message = encodeURIComponent(
