@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Loader2, Smartphone } from 'lucide-react';
+import { Loader2, Smartphone, ArrowLeft, Eye } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
-
-
 
 const FEATURED_VIDEOS = [
   {
@@ -116,11 +115,22 @@ function LightboxImage({ src, alt, isFullscreen }: { src: string; alt: string; i
   );
 }
 
-export function PortfolioPageClient() {
+interface PortfolioPageClientProps {
+  initialCategory?: string | null;
+}
+
+export function PortfolioPageClient({ initialCategory = null }: PortfolioPageClientProps = {}) {
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [activeCollection, setActiveCollection] = useState<string | null>(null);
+  const [activeCollection, setActiveCollection] = useState<string | null>(initialCategory);
   const [COLLECTIONS, setCOLLECTIONS] = useState<Record<string, Collection>>(STATIC_COLLECTIONS);
+
+  // Sync activeCollection if initialCategory prop changes
+  useEffect(() => {
+    if (initialCategory !== undefined) {
+      setActiveCollection(initialCategory);
+    }
+  }, [initialCategory]);
 
   // Dynamic YouTube Videos Section
   const [youtubeVideos, setYoutubeVideos] = useState<any[]>([]);
@@ -249,7 +259,7 @@ export function PortfolioPageClient() {
           </section>
 
           {/* ── 3D Virtual Tour Embed ──────────────────────────────────── */}
-          <AnimatedSection className="w-full my-6 md:my-10">
+          <AnimatedSection className="w-full my-6 md:my-10" id="3d-tour">
             {/* Mobile Landscape Hint Pill with Animated Rotating Phone Icon */}
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
@@ -289,14 +299,60 @@ export function PortfolioPageClient() {
           </AnimatedSection>
 
           {/* ── 3D Portfolio Grid Section ──────────────────────────────────── */}
-          <section className="section-base overflow-hidden pt-2 pb-14 md:pb-18">
+          <section className="section-base overflow-hidden pt-2 pb-14 md:pb-18" id="collections">
             <div className="container-page">
               {/* Category Grid Header */}
-              <AnimatedSection className="text-center mb-8 md:mb-10">
+              <AnimatedSection className="text-center mb-6 md:mb-8">
                 <h2 className="text-display text-4xl md:text-6xl font-semibold leading-[1.05] tracking-tight">
                   3D Designs That Turn<br/>
                   <span className="text-accent-italic text-gradient">Vision Into Reality</span>
                 </h2>
+              </AnimatedSection>
+
+              {/* Category Navigation Pills */}
+              <AnimatedSection className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 md:mb-12">
+                <Link
+                  href="/portfolio"
+                  className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 bg-gradient-to-r from-violet-deep to-violet-glow text-white shadow-lg shadow-violet-glow/20 border border-violet-glow/50"
+                >
+                  All Collections
+                </Link>
+                <Link
+                  href="/portfolio/interiors"
+                  className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 bg-white/[0.04] text-white/75 hover:text-gold hover:bg-white/[0.08] hover:border-gold/40 border border-white/10"
+                >
+                  Interiors ({COLLECTIONS.interiors?.images?.length || 20})
+                </Link>
+                <Link
+                  href="/portfolio/exteriors"
+                  className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 bg-white/[0.04] text-white/75 hover:text-gold hover:bg-white/[0.08] hover:border-gold/40 border border-white/10"
+                >
+                  Exteriors ({COLLECTIONS.exteriors?.images?.length || 10})
+                </Link>
+                <Link
+                  href="/portfolio/amenities"
+                  className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 bg-white/[0.04] text-white/75 hover:text-gold hover:bg-white/[0.08] hover:border-gold/40 border border-white/10"
+                >
+                  Amenities ({COLLECTIONS.amenities?.images?.length || 14})
+                </Link>
+                <Link
+                  href="/portfolio/isometric"
+                  className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 bg-white/[0.04] text-white/75 hover:text-gold hover:bg-white/[0.08] hover:border-gold/40 border border-white/10"
+                >
+                  Isometric ({COLLECTIONS.isometric?.images?.length || 6})
+                </Link>
+                <a
+                  href="/portfolio#3d-tour"
+                  className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white/60 hover:text-white hover:bg-white/[0.08] border border-white/10 bg-white/[0.02] transition-all duration-300"
+                >
+                  3D Tour
+                </a>
+                <a
+                  href="/portfolio#video-walkthroughs"
+                  className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white/60 hover:text-white hover:bg-white/[0.08] border border-white/10 bg-white/[0.02] transition-all duration-300"
+                >
+                  Walkthroughs
+                </a>
               </AnimatedSection>
 
               {/* Symmetrical 2-Column + Centerpiece Collections Grid */}
@@ -306,9 +362,9 @@ export function PortfolioPageClient() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 md:gap-x-24 gap-y-12">
                     {/* Interiors */}
                     <div className="flex flex-col">
-                      <div 
-                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
-                        onClick={() => setActiveCollection('interiors')}
+                      <Link 
+                        href="/portfolio/interiors"
+                        className="aspect-[3/2] w-full overflow-hidden rounded-md group relative bg-black/20 block"
                       >
                         <Image
                           src={COLLECTIONS.interiors.heroImage}
@@ -318,13 +374,16 @@ export function PortfolioPageClient() {
                           className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                           priority
                         />
-                      </div>
-                      <h3 
-                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
-                        onClick={() => setActiveCollection('interiors')}
+                        <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white/90 border border-white/10 group-hover:border-gold/50 group-hover:text-gold transition-colors">
+                          {COLLECTIONS.interiors.images.length} Renders
+                        </div>
+                      </Link>
+                      <Link
+                        href="/portfolio/interiors"
+                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 inline-block w-fit"
                       >
                         {COLLECTIONS.interiors.title}
-                      </h3>
+                      </Link>
                       <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
                         {COLLECTIONS.interiors.description}
                       </p>
@@ -332,9 +391,9 @@ export function PortfolioPageClient() {
 
                     {/* Exteriors */}
                     <div className="flex flex-col">
-                      <div 
-                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
-                        onClick={() => setActiveCollection('exteriors')}
+                      <Link 
+                        href="/portfolio/exteriors"
+                        className="aspect-[3/2] w-full overflow-hidden rounded-md group relative bg-black/20 block"
                       >
                         <Image
                           src={COLLECTIONS.exteriors.heroImage}
@@ -344,13 +403,16 @@ export function PortfolioPageClient() {
                           className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                           priority
                         />
-                      </div>
-                      <h3 
-                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
-                        onClick={() => setActiveCollection('exteriors')}
+                        <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white/90 border border-white/10 group-hover:border-gold/50 group-hover:text-gold transition-colors">
+                          {COLLECTIONS.exteriors.images.length} Renders
+                        </div>
+                      </Link>
+                      <Link
+                        href="/portfolio/exteriors"
+                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 inline-block w-fit"
                       >
                         {COLLECTIONS.exteriors.title}
-                      </h3>
+                      </Link>
                       <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
                         {COLLECTIONS.exteriors.description}
                       </p>
@@ -363,9 +425,9 @@ export function PortfolioPageClient() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 md:gap-x-24 gap-y-12">
                     {/* Amenities */}
                     <div className="flex flex-col">
-                      <div 
-                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
-                        onClick={() => setActiveCollection('amenities')}
+                      <Link 
+                        href="/portfolio/amenities"
+                        className="aspect-[3/2] w-full overflow-hidden rounded-md group relative bg-black/20 block"
                       >
                         <Image
                           src={COLLECTIONS.amenities.heroImage}
@@ -374,13 +436,16 @@ export function PortfolioPageClient() {
                           sizes="(max-width: 768px) 100vw, 50vw"
                           className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                         />
-                      </div>
-                      <h3 
-                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
-                        onClick={() => setActiveCollection('amenities')}
+                        <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white/90 border border-white/10 group-hover:border-gold/50 group-hover:text-gold transition-colors">
+                          {COLLECTIONS.amenities.images.length} Renders
+                        </div>
+                      </Link>
+                      <Link
+                        href="/portfolio/amenities"
+                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 inline-block w-fit"
                       >
                         {COLLECTIONS.amenities.title}
-                      </h3>
+                      </Link>
                       <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
                         {COLLECTIONS.amenities.description}
                       </p>
@@ -388,9 +453,9 @@ export function PortfolioPageClient() {
 
                     {/* Isometric */}
                     <div className="flex flex-col">
-                      <div 
-                        className="aspect-[3/2] w-full overflow-hidden rounded-md cursor-pointer group relative bg-black/20"
-                        onClick={() => setActiveCollection('isometric')}
+                      <Link 
+                        href="/portfolio/isometric"
+                        className="aspect-[3/2] w-full overflow-hidden rounded-md group relative bg-black/20 block"
                       >
                         <Image
                           src={COLLECTIONS.isometric.heroImage}
@@ -399,13 +464,16 @@ export function PortfolioPageClient() {
                           sizes="(max-width: 768px) 100vw, 50vw"
                           className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                         />
-                      </div>
-                      <h3 
-                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 cursor-pointer inline-block w-fit"
-                        onClick={() => setActiveCollection('isometric')}
+                        <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white/90 border border-white/10 group-hover:border-gold/50 group-hover:text-gold transition-colors">
+                          {COLLECTIONS.isometric.images.length} Renders
+                        </div>
+                      </Link>
+                      <Link
+                        href="/portfolio/isometric"
+                        className="font-accent text-2xl md:text-3xl font-light tracking-[0.18em] uppercase mt-6 text-white hover:text-gold transition-colors duration-300 inline-block w-fit"
                       >
                         {COLLECTIONS.isometric.title}
-                      </h3>
+                      </Link>
                       <p className="font-body text-white/50 text-sm md:text-base font-light mt-3 leading-relaxed tracking-wide">
                         {COLLECTIONS.isometric.description}
                       </p>
@@ -615,50 +683,123 @@ export function PortfolioPageClient() {
         <section className="section-base overflow-hidden pt-28 md:pt-36 pb-16 md:pb-20">
           <div className="container-page">
             <AnimatedSection>
-              {/* Gallery Header */}
-              <div className="border-b border-white/10 pb-6 mb-8">
-                <button
+              {/* Category Quick Navigation Pills */}
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8">
+                <Link
+                  href="/portfolio"
                   onClick={() => {
-                    setActiveCollection(null);
-                    window.scrollTo({ top: 0, behavior: 'instant' });
+                    if (initialCategory === null) setActiveCollection(null);
                   }}
-                  className="flex items-center gap-3 text-sm font-medium tracking-[0.2em] text-gold/80 hover:text-gold transition-colors uppercase mb-6 mt-2 group"
+                  className="flex items-center gap-2.5 text-xs md:text-sm font-medium tracking-[0.16em] text-gold hover:text-white transition-all uppercase group bg-white/[0.04] hover:bg-white/[0.08] px-4 py-2 rounded-full border border-gold/30 hover:border-white/30"
                 >
-                  <span className="text-lg transition-transform duration-300 group-hover:-translate-x-1">←</span> Back to Portfolio
-                </button>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                  <div>
-                    <h2 className="font-accent text-4xl md:text-6xl font-light uppercase tracking-[0.18em] text-white leading-none">
-                      {COLLECTIONS[activeCollection].title}
-                    </h2>
-                  </div>
-                  <div>
-                    <p className="text-base md:text-lg leading-relaxed text-white/65 font-light">
-                      {COLLECTIONS[activeCollection].description}
-                    </p>
-                  </div>
+                  <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
+                  <span>All Portfolio</span>
+                </Link>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <Link
+                    href="/portfolio"
+                    className="px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 bg-white/[0.03] text-white/60 hover:text-white hover:bg-white/[0.08] border border-white/10"
+                  >
+                    Overview
+                  </Link>
+                  <Link
+                    href="/portfolio/interiors"
+                    onClick={() => setActiveCollection('interiors')}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                      activeCollection === 'interiors'
+                        ? 'bg-gradient-to-r from-violet-deep to-violet-glow text-white shadow-lg shadow-violet-glow/20 border border-gold/50'
+                        : 'bg-white/[0.03] text-white/70 hover:text-gold hover:bg-white/[0.08] border border-white/10'
+                    }`}
+                  >
+                    Interiors
+                  </Link>
+                  <Link
+                    href="/portfolio/exteriors"
+                    onClick={() => setActiveCollection('exteriors')}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                      activeCollection === 'exteriors'
+                        ? 'bg-gradient-to-r from-violet-deep to-violet-glow text-white shadow-lg shadow-violet-glow/20 border border-gold/50'
+                        : 'bg-white/[0.03] text-white/70 hover:text-gold hover:bg-white/[0.08] border border-white/10'
+                    }`}
+                  >
+                    Exteriors
+                  </Link>
+                  <Link
+                    href="/portfolio/amenities"
+                    onClick={() => setActiveCollection('amenities')}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                      activeCollection === 'amenities'
+                        ? 'bg-gradient-to-r from-violet-deep to-violet-glow text-white shadow-lg shadow-violet-glow/20 border border-gold/50'
+                        : 'bg-white/[0.03] text-white/70 hover:text-gold hover:bg-white/[0.08] border border-white/10'
+                    }`}
+                  >
+                    Amenities
+                  </Link>
+                  <Link
+                    href="/portfolio/isometric"
+                    onClick={() => setActiveCollection('isometric')}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
+                      activeCollection === 'isometric'
+                        ? 'bg-gradient-to-r from-violet-deep to-violet-glow text-white shadow-lg shadow-violet-glow/20 border border-gold/50'
+                        : 'bg-white/[0.03] text-white/70 hover:text-gold hover:bg-white/[0.08] border border-white/10'
+                    }`}
+                  >
+                    Isometric
+                  </Link>
                 </div>
               </div>
+
+              {/* Gallery Title & Description Header */}
+              {(() => {
+                const coll = COLLECTIONS[activeCollection] || STATIC_COLLECTIONS[activeCollection];
+                if (!coll) return null;
+                return (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-6">
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-xs uppercase font-semibold tracking-widest text-gold/80 bg-gold/10 px-3 py-1 rounded-full border border-gold/20">
+                          {coll.images.length} High-Res Renders
+                        </span>
+                      </div>
+                      <h1 className="font-accent text-4xl md:text-6xl font-light uppercase tracking-[0.18em] text-white leading-none">
+                        {coll.title}
+                      </h1>
+                    </div>
+                    <div>
+                      <p className="text-base md:text-lg leading-relaxed text-white/65 font-light">
+                        {coll.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
             </AnimatedSection>
 
-            {/* Scrollable Gallery Stack (Rendered directly to prevent opacity: 0 issues on tall containers) */}
-            <div className="flex flex-col gap-6 md:gap-8 mt-8">
-              {COLLECTIONS[activeCollection].images.map((src, index) => (
-                <OptimizedGalleryImage
-                  key={index}
-                  src={src}
-                  alt={`${COLLECTIONS[activeCollection].title} rendering ${index + 1}`}
-                  width={1600}
-                  height={1000}
-                  priority={index === 0}
-                  onClick={() => {
-                    setActiveImageIndex(index);
-                    setIsFullscreen(false);
-                  }}
-                  className="rounded-lg cursor-pointer group"
-                />
-              ))}
-            </div>
+            {/* Scrollable Gallery Stack */}
+            {(() => {
+              const coll = COLLECTIONS[activeCollection] || STATIC_COLLECTIONS[activeCollection];
+              if (!coll) return null;
+              return (
+                <div className="flex flex-col gap-6 md:gap-8 mt-8">
+                  {coll.images.map((src, index) => (
+                    <OptimizedGalleryImage
+                      key={index}
+                      src={src}
+                      alt={`${coll.title} rendering ${index + 1}`}
+                      width={1600}
+                      height={1000}
+                      priority={index === 0}
+                      onClick={() => {
+                        setActiveImageIndex(index);
+                        setIsFullscreen(false);
+                      }}
+                      className="rounded-lg cursor-pointer group"
+                    />
+                  ))}
+                </div>
+              );
+            })()}
           </div>
         </section>
       )}

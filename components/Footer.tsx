@@ -155,31 +155,50 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li className="py-2" aria-hidden="true">
+              <li className="py-1" aria-hidden="true">
                 <div className="border-t border-white/10 w-full" />
               </li>
+              <li className="text-xs uppercase font-semibold tracking-wider text-gold/80 pt-1">
+                Portfolio Collections
+              </li>
               <li>
                 <Link
-                  href="/portfolio#penthouse-design-and-visualization"
+                  href="/portfolio/interiors"
                   className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
                 >
-                  Penthouse Design and Visualization
+                  Interiors Renders
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/portfolio#classic-luxury-living"
+                  href="/portfolio/exteriors"
                   className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
                 >
-                  Classic Luxury Living
+                  Exteriors & Facades
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/portfolio#mumbai-residential-community"
+                  href="/portfolio/amenities"
                   className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
                 >
-                  Mumbai Residential community
+                  Amenities & Clubhouses
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/portfolio/isometric"
+                  className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
+                >
+                  Isometric Floor Plans
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/portfolio#3d-tour"
+                  className="text-sm text-white/70 transition-colors hover:text-white underline underline-offset-2 decoration-white/20"
+                >
+                  3D Virtual Tour
                 </Link>
               </li>
             </ul>

@@ -8,6 +8,7 @@ type Direction = 'up' | 'down' | 'left' | 'right' | 'none';
 type Props = {
   children: ReactNode;
   className?: string;
+  id?: string;
   direction?: Direction;
   delay?: number;
   duration?: number;
@@ -27,6 +28,7 @@ const OFFSETS: Record<Direction, { x: number; y: number }> = {
 export function AnimatedSection({
   children,
   className,
+  id,
   direction = 'up',
   delay = 0,
   duration = 0.7,
@@ -49,6 +51,7 @@ export function AnimatedSection({
   return (
     <MotionTag
       ref={ref}
+      id={id}
       initial="hidden"
       animate={inView ? 'visible' : 'hidden'}
       variants={variants}
