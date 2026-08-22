@@ -29,7 +29,7 @@ export function ServicesPageClient() {
   }, []);
 
   return (
-    <div className="container-page relative grid gap-16 lg:grid-cols-[220px_1fr] lg:gap-20">
+    <div className="container-page relative grid gap-10 lg:grid-cols-[220px_1fr] lg:gap-14">
       {/* Sticky side nav */}
       <aside className="hidden lg:block">
         <div className="sticky top-28 space-y-1">
@@ -71,7 +71,7 @@ export function ServicesPageClient() {
         </div>
       </aside>
 
-      <div className="min-w-0 space-y-32">
+      <div className="min-w-0 space-y-16 md:space-y-20">
         {SERVICE_PILLARS.map((pillar) => {
           const Icon = pillar.icon;
           return (

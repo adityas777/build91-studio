@@ -74,7 +74,7 @@ export function ClientLogoWall({
   return (
     <section
       aria-label="Clients and partners"
-      className={`section-base section-neutral relative overflow-hidden py-16 md:py-20 ${className ?? ''}`}
+      className={`section-base section-neutral relative overflow-hidden py-10 md:py-14 ${className ?? ''}`}
     >
       {/* Soft ambient glows to keep this section in family with StatsBar above */}
       <div className="pointer-events-none absolute -left-32 top-1/2 -z-0 h-64 w-64 -translate-y-1/2 rounded-full bg-violet-glow/[0.07] blur-[120px]" />

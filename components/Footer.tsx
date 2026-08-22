@@ -52,7 +52,7 @@ export function Footer() {
         </svg>
       </div>
 
-      <div className="container-page relative pt-20 pb-10">
+      <div className="container-page relative pt-12 pb-8">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-3">
             <Link href="/" className="inline-flex items-center gap-3">

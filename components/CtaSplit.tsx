@@ -18,7 +18,8 @@ export function CtaSplit() {
   return (
     <section
       id="contact"
-      className="section-base section-premium relative overflow-hidden py-16 md:py-36"
+      aria-label="Contact and consultation"
+      className="section-base section-premium relative overflow-hidden py-10 md:py-16"
     >
       <div className="absolute inset-0 -z-10 animated-gradient opacity-40" />
       <div className="pointer-events-none absolute inset-0 -z-10 bg-grid-soft opacity-30" />

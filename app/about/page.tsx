@@ -28,7 +28,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Opening — warm intro */}
-      <section className="section-base section-warm overflow-hidden pb-20 pt-40 md:pb-28 md:pt-48">
+      <section className="section-base section-warm overflow-hidden pb-8 pt-28 md:pb-12 md:pt-36">
         <div className="absolute inset-0 -z-10 bg-mesh opacity-45" />
         <div className="pointer-events-none absolute -left-32 top-1/3 -z-10 h-96 w-96 rounded-full bg-violet-glow/20 blur-[140px]" />
         <div className="pointer-events-none absolute -right-32 bottom-0 -z-10 h-96 w-96 rounded-full bg-gold/15 blur-[140px]" />
@@ -54,7 +54,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission — violet wash */}
-      <section className="section-base section-violet overflow-hidden py-28 md:py-36">
+      <section className="section-base section-violet overflow-hidden py-10 md:py-16">
         <div className="pointer-events-none absolute right-0 top-1/4 -z-10 h-72 w-72 rounded-full bg-violet-glow/15 blur-[140px]" />
         <div className="container-page grid gap-16 lg:grid-cols-2">
           <AnimatedSection>
@@ -89,7 +89,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story — cool, restrained */}
-      <section className="section-base section-cool overflow-hidden py-28 md:py-36">
+      <section className="section-base section-cool overflow-hidden py-10 md:py-16">
         <div className="absolute inset-0 -z-10 bg-grid-soft opacity-20" />
         <div className="container-page">
           <AnimatedSection className="mx-auto max-w-3xl text-center">
@@ -143,7 +143,7 @@ export default function AboutPage() {
           components/AboutStudioVideo.tsx. */}
       <section
         id="studio"
-        className="section-base section-violet overflow-hidden py-16 md:py-28 scroll-mt-24"
+        className="section-base section-violet overflow-hidden py-10 md:py-16 scroll-mt-24"
       >
         <div className="pointer-events-none absolute -right-32 top-1/3 -z-10 h-72 w-72 rounded-full bg-violet-glow/15 blur-[140px]" />
         <div className="container-page">
@@ -166,7 +166,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team — neutral */}
-      <section className="section-base section-neutral overflow-hidden py-28 md:py-36">
+      <section className="section-base section-neutral overflow-hidden py-10 md:py-16">
         <div className="pointer-events-none absolute -left-20 bottom-0 -z-10 h-72 w-72 rounded-full bg-violet-deep/20 blur-[120px]" />
         <div className="container-page grid gap-16 lg:grid-cols-[1fr_1.2fr]">
           <AnimatedSection>
@@ -217,7 +217,7 @@ export default function AboutPage() {
       </section>
 
       {/* Offices — cosmic */}
-      <section className="section-base section-cosmic overflow-hidden py-28 md:py-36">
+      <section className="section-base section-cosmic overflow-hidden py-10 md:py-16">
         <div className="absolute inset-0 -z-10 starfield opacity-60" />
         <div className="container-page">
           <AnimatedSection className="mb-14 max-w-3xl">
@@ -247,7 +247,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values — violet */}
-      <section className="section-base section-violet overflow-hidden py-28 md:py-36">
+      <section className="section-base section-violet overflow-hidden py-10 md:py-16">
         <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-72 w-[60%] -translate-x-1/2 bg-gradient-to-b from-violet-glow/20 to-transparent blur-3xl" />
         <div className="container-page">
           <AnimatedSection className="mb-14 max-w-3xl">
@@ -275,7 +275,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA — premium */}
-      <section className="section-base section-premium overflow-hidden py-28">
+      <section className="section-base section-premium overflow-hidden py-12 md:py-16">
         <div className="absolute inset-0 -z-10 animated-gradient opacity-30" />
         <div className="pointer-events-none absolute inset-0 -z-10 bg-grid-soft opacity-25" />
         <div className="container-page text-center">

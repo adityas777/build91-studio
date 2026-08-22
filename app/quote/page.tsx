@@ -23,7 +23,7 @@ export default async function QuotePage({
   return (
     <>
       {/* Hero band */}
-      <section className="section-base section-violet relative overflow-hidden pb-12 pt-40 md:pb-16 md:pt-48">
+      <section className="section-base section-violet relative overflow-hidden pb-8 pt-28 md:pb-12 md:pt-36">
         <div className="absolute inset-0 -z-10 bg-mesh opacity-40" />
         <div className="absolute inset-0 -z-10 bg-grid-soft opacity-25" />
         <div className="pointer-events-none absolute -left-32 top-1/4 -z-10 h-96 w-96 rounded-full bg-violet-glow/20 blur-[140px]" />
@@ -47,7 +47,7 @@ export default async function QuotePage({
       </section>
 
       {/* Wizard */}
-      <section className="section-base section-cool overflow-hidden pb-32 pt-12">
+      <section className="section-base section-cool overflow-hidden pb-16 pt-8 md:pb-20">
         <div className="pointer-events-none absolute right-0 top-1/3 -z-10 h-96 w-96 rounded-full bg-violet-deep/15 blur-[140px]" />
         <div className="container-page">
           <QuoteWizard

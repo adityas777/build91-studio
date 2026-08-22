@@ -49,5 +49,6 @@ production-state.json
 *.pdf
 /public/images/extracted_portfolio/
 /scratch
+/s3_downloads/
 
 

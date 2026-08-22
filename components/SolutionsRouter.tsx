@@ -62,7 +62,7 @@ export function SolutionsRouter({
     <section
       id="solutions"
       aria-label="Find your solution"
-      className="section-base section-warm relative overflow-hidden py-14 md:py-32"
+      className="section-base section-warm relative overflow-hidden py-10 md:py-16"
     >
       <div className="pointer-events-none absolute -left-32 top-1/4 -z-0 h-72 w-72 rounded-full bg-violet-glow/15 blur-[140px]" />
       <div className="pointer-events-none absolute -right-32 bottom-0 -z-0 h-72 w-72 rounded-full bg-gold/10 blur-[140px]" />

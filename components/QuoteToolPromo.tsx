@@ -13,7 +13,7 @@ export function QuoteToolPromo() {
   return (
     <section
       aria-label="Get a tailored quote"
-      className="section-base section-warm relative overflow-hidden border-y border-white/[0.06] py-12 md:py-16"
+      className="section-base section-warm relative overflow-hidden border-y border-white/[0.06] py-8 md:py-12"
     >
       <div className="pointer-events-none absolute inset-0 bg-grid-soft opacity-[0.18]" />
       <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[60%] -translate-x-1/2 bg-gradient-to-r from-transparent via-violet-glow/40 to-transparent" />

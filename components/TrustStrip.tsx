@@ -64,7 +64,7 @@ export function TrustStrip() {
   return (
     <section
       aria-label="Studio trust signals"
-      className="section-base relative overflow-hidden border-b border-white/[0.06] bg-[#070825] py-10 md:py-12"
+      className="section-base relative overflow-hidden border-b border-white/[0.06] bg-[#070825] py-6 md:py-8"
     >
       {/* Very faint grid wash to tie into StatsBar above */}
       <div className="pointer-events-none absolute inset-0 bg-grid-soft opacity-[0.18]" />

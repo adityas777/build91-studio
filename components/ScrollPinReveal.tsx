@@ -132,7 +132,7 @@ export function ScrollPinReveal({
           Sits ABOVE the sticky scroll runway so the cinematic sequence
           plays clean. User reads the section header once, scrolls past,
           then video owns the viewport. */}
-      <div className="container-page relative pt-24 pb-12 sm:pt-28 md:pt-32 md:pb-16">
+      <div className="container-page relative pt-10 pb-6 sm:pt-12 md:pt-14 md:pb-8">
         <span className="section-eyebrow">{sectionEyebrow}</span>
         <h2 className="text-display mt-3 max-w-3xl text-3xl font-semibold leading-tight tracking-tight sm:mt-4 sm:text-4xl md:text-5xl lg:text-6xl">
           {sectionHeading}
@@ -180,7 +180,7 @@ export function ScrollPinReveal({
           />
 
           {/* Text panels */}
-          <div className="container-page absolute inset-x-0 bottom-0 z-10 pb-16 sm:pb-20 lg:pb-28">
+          <div className="container-page absolute inset-x-0 bottom-0 z-10 pb-10 sm:pb-12 lg:pb-16">
             <div className="relative h-[300px] sm:h-[260px] lg:h-[280px]">
               {slides.map((s, i) => (
                 <SlideText

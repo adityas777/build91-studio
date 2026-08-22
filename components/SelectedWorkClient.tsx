@@ -62,7 +62,7 @@ export function SelectedWorkClient({ reels }: { reels: Reel[] }) {
   return (
     <section
       id="work"
-      className="section-base section-neutral relative overflow-hidden py-16 md:py-36"
+      className="section-base section-neutral relative overflow-hidden py-10 md:py-16"
     >
       <div className="container-page">
         {/* ── Header ────────────────────────────────────────────────── */}

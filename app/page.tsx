@@ -281,7 +281,7 @@ export default function HomePage() {
           ─────────────────────────────────────────────────────────────── */}
 
       {/* Global Presence — cosmic mood */}
-      <section className="section-base section-cosmic overflow-hidden py-16 md:py-36">
+      <section className="section-base section-cosmic overflow-hidden py-10 md:py-16">
         <div className="absolute inset-0 -z-10 starfield opacity-70" />
         <div className="pointer-events-none absolute left-1/4 top-1/3 -z-10 h-96 w-96 rounded-full bg-violet-glow/15 blur-[140px]" />
         <div className="container-page">

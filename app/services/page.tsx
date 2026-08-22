@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <section className="section-base section-violet overflow-hidden pb-20 pt-40 md:pb-28 md:pt-48">
+      <section className="section-base section-violet overflow-hidden pb-8 pt-28 md:pb-12 md:pt-36">
         <div className="absolute inset-0 -z-10 bg-mesh opacity-50" />
         <div className="absolute inset-0 -z-10 bg-grid-soft opacity-30" />
         <div className="pointer-events-none absolute -left-32 top-1/3 -z-10 h-96 w-96 rounded-full bg-violet-glow/20 blur-[140px]" />
@@ -44,11 +44,11 @@ export default function ServicesPage() {
       {/* Interstitial — chip router (Phase 1) before deep service detail */}
       <SolutionsRouter framing="services" />
 
-      <section className="section-base section-cool pb-32 pt-20">
+      <section className="section-base section-cool pb-16 pt-8 md:pb-20">
         <ServicesPageClient />
       </section>
 
-      <section className="section-base section-premium overflow-hidden py-28">
+      <section className="section-base section-premium overflow-hidden py-12 md:py-16">
         <div className="absolute inset-0 -z-10 animated-gradient opacity-30" />
         <div className="pointer-events-none absolute inset-0 -z-10 bg-grid-soft opacity-25" />
         <div className="container-page">

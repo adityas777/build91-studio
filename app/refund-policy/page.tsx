@@ -138,22 +138,22 @@ const SECTIONS: { title: string; body: React.ReactNode }[] = [
 export default function RefundPolicyPage() {
   return (
     <>
-      <section className="section-base section-violet overflow-hidden pb-12 pt-40 md:pb-16 md:pt-48">
+      <section className="section-base section-violet overflow-hidden pb-8 pt-28 md:pb-12 md:pt-36">
         <div className="absolute inset-0 -z-10 bg-mesh opacity-40" />
         <div className="absolute inset-0 -z-10 bg-grid-soft opacity-25" />
         <div className="container-page">
           <div className="max-w-3xl">
             <span className="section-eyebrow">Legal</span>
             <h1 className="text-display mt-6 text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
-              Refund{' '}
-              <span className="text-accent-italic text-gradient">Policy.</span>
+              Cancellation &{' '}
+              <span className="text-accent-italic text-gradient">Refund Policy.</span>
             </h1>
-            <p className="mt-4 text-sm text-white/50">Last updated: 10 August 2026</p>
+            <p className="mt-4 text-sm text-white/50">Last updated: 10 June 2026</p>
           </div>
         </div>
       </section>
 
-      <section className="section-base section-neutral pb-28 pt-8 md:pb-36 md:pt-12">
+      <section className="section-base section-neutral pb-16 pt-8 md:pb-20">
         <div className="container-page">
           <div className="max-w-3xl space-y-12">
             <div className="space-y-4 text-base leading-relaxed text-white/65 font-medium">

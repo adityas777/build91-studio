@@ -78,7 +78,7 @@ export function Testimonials() {
 
   return (
     <section
-      className="section-base section-warm relative overflow-hidden py-16 md:py-36"
+      className="section-base section-warm relative overflow-hidden py-10 md:py-16"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >

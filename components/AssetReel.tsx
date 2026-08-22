@@ -41,7 +41,7 @@ export function AssetReel() {
   return (
     <section
       aria-label="What we make — a menu of asset types"
-      className="section-base section-violet relative overflow-hidden border-b border-white/[0.06] py-14 md:py-20"
+      className="section-base section-violet relative overflow-hidden border-b border-white/[0.06] py-8 md:py-12"
     >
       <div className="pointer-events-none absolute inset-0 bg-grid-soft opacity-[0.18]" />
       <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[60%] -translate-x-1/2 bg-gradient-to-r from-transparent via-violet-glow/30 to-transparent" />

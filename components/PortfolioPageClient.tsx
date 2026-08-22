@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Loader2, Smartphone } from 'lucide-react';
@@ -117,8 +117,6 @@ function LightboxImage({ src, alt, isFullscreen }: { src: string; alt: string; i
 }
 
 export function PortfolioPageClient() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [activeCollection, setActiveCollection] = useState<string | null>(null);
@@ -196,27 +194,6 @@ export function PortfolioPageClient() {
   }, []);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-    const handleResize = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const width = rect.width || containerRef.current.clientWidth;
-      if (width > 0) {
-        setScale(width / 1920);
-      }
-    };
-    handleResize();
-    const timer = setTimeout(handleResize, 100);
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleResize);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
     if (activeCollection) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -248,7 +225,7 @@ export function PortfolioPageClient() {
       {activeCollection === null ? (
         <>
           {/* Header section */}
-          <section className="section-base section-warm overflow-hidden pb-12 pt-40 md:pb-16 md:pt-48">
+          <section className="section-base section-warm overflow-hidden pb-8 pt-28 md:pb-10 md:pt-36">
             <div className="absolute inset-0 -z-10 bg-mesh opacity-45" />
             <div className="pointer-events-none absolute -left-32 top-1/3 -z-10 h-96 w-96 rounded-full bg-violet-glow/20 blur-[140px]" />
             <div className="pointer-events-none absolute -right-32 bottom-0 -z-10 h-96 w-96 rounded-full bg-gold/15 blur-[140px]" />
@@ -272,7 +249,7 @@ export function PortfolioPageClient() {
           </section>
 
           {/* ── 3D Virtual Tour Embed ──────────────────────────────────── */}
-          <AnimatedSection className="w-full my-12 md:my-20">
+          <AnimatedSection className="w-full my-6 md:my-10">
             {/* Mobile Landscape Hint Pill with Animated Rotating Phone Icon */}
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
@@ -299,21 +276,11 @@ export function PortfolioPageClient() {
             </motion.div>
 
             <div
-              ref={containerRef}
-              className="relative w-full border-y border-white/10 bg-black/20 shadow-2xl overflow-hidden"
-              style={{ height: `${800 * scale}px` }}
+              className="relative w-full h-[520px] sm:h-[580px] md:h-[680px] lg:h-[780px] border-y border-white/10 bg-black/20 shadow-2xl overflow-hidden"
             >
               <iframe
                 src="https://demo.build91.in/3BHK-Tour/index.htm"
-                className="absolute border-0"
-                style={{
-                  width: '1920px',
-                  height: '800px',
-                  transform: `translateX(-50%) scale(${scale})`,
-                  transformOrigin: 'top center',
-                  left: '50%',
-                  top: 0,
-                }}
+                className="w-full h-full border-0 block"
                 allowFullScreen
                 loading="lazy"
                 title="Build91 Studio 3D Virtual Tour"
@@ -322,10 +289,10 @@ export function PortfolioPageClient() {
           </AnimatedSection>
 
           {/* ── 3D Portfolio Grid Section ──────────────────────────────────── */}
-          <section className="section-base overflow-hidden pt-4 pb-32">
+          <section className="section-base overflow-hidden pt-2 pb-14 md:pb-18">
             <div className="container-page">
               {/* Category Grid Header */}
-              <AnimatedSection className="text-center mb-16">
+              <AnimatedSection className="text-center mb-8 md:mb-10">
                 <h2 className="text-display text-4xl md:text-6xl font-semibold leading-[1.05] tracking-tight">
                   3D Designs That Turn<br/>
                   <span className="text-accent-italic text-gradient">Vision Into Reality</span>
@@ -334,7 +301,7 @@ export function PortfolioPageClient() {
 
               {/* Symmetrical 2-Column + Centerpiece Collections Grid */}
               <AnimatedSection>
-                <div className="flex flex-col gap-16">
+                <div className="flex flex-col gap-10 md:gap-12">
                   {/* Row 1: Interiors & Exteriors */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 md:gap-x-24 gap-y-12">
                     {/* Interiors */}
@@ -450,28 +417,28 @@ export function PortfolioPageClient() {
           </section>
 
           {/* ── 3D Video Walkthroughs Section ──────────────────────────────────── */}
-          <section className="section-base overflow-hidden pt-4 pb-32 border-t border-white/10" id="video-walkthroughs">
+          <section className="section-base overflow-hidden pt-4 pb-14 md:pb-18 border-t border-white/10" id="video-walkthroughs">
             <div className="container-page">
-              <AnimatedSection className="text-center mb-16">
+              <AnimatedSection className="text-center mb-8 md:mb-10">
                 <h2 className="text-display text-4xl md:text-6xl font-semibold leading-[1.05] tracking-tight">
                   Featured 3D<br/>
                   <span className="text-accent-italic text-gradient">Video Walkthroughs</span>
                 </h2>
-                <p className="mt-6 mx-auto max-w-2xl text-base leading-relaxed text-white/65 md:text-lg">
+                <p className="mt-4 mx-auto max-w-2xl text-base leading-relaxed text-white/65 md:text-lg">
                   Explore immersive cinematic video walkthroughs showcasing township masterplans, luxury apartments, and penthouse visualizations.
                 </p>
               </AnimatedSection>
 
               <AnimatedSection>
-                <div className="flex flex-col gap-16 md:gap-24">
+                <div className="flex flex-col gap-10 md:gap-14">
                   {FEATURED_VIDEOS.map((video) => (
                     <div
                       key={video.id}
                       id={video.id}
-                      className="group flex flex-col items-center w-full max-w-[90vw] mx-auto px-4 md:px-12 py-10 md:py-16 rounded-3xl border border-white/5 bg-white/[0.01] backdrop-blur-md transition-all duration-500 hover:border-violet-glow/20 hover:bg-white/[0.02] hover:shadow-[0_20px_60px_rgba(50,156,221,0.06)]"
+                      className="group flex flex-col items-center w-full max-w-[90vw] mx-auto px-4 md:px-12 py-8 md:py-12 rounded-3xl border border-white/5 bg-white/[0.01] backdrop-blur-md transition-all duration-500 hover:border-violet-glow/20 hover:bg-white/[0.02] hover:shadow-[0_20px_60px_rgba(50,156,221,0.06)]"
                     >
                       {/* Video Title */}
-                      <h3 className="text-display text-2xl md:text-4xl lg:text-5xl font-medium tracking-wide text-white mb-6 md:mb-10 text-center transition-colors duration-300 group-hover:text-gold">
+                      <h3 className="text-display text-2xl md:text-4xl lg:text-5xl font-medium tracking-wide text-white mb-4 md:mb-6 text-center transition-colors duration-300 group-hover:text-gold">
                         {video.title}
                       </h3>
 
@@ -498,12 +465,12 @@ export function PortfolioPageClient() {
                       </div>
 
                       {/* Video Info (Description & Label) */}
-                      <div className="mt-8 text-center max-w-4xl">
+                      <div className="mt-6 text-center max-w-4xl">
                         <p className="text-base md:text-lg leading-relaxed text-white/70 font-light">
                           {video.description}
                         </p>
                         
-                        <div className="mt-6 flex items-center justify-center gap-6">
+                        <div className="mt-4 flex items-center justify-center gap-6">
                           <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-violet-soft border border-white/10 rounded-full px-3 py-1 bg-white/[0.02]">
                             {video.type === 'youtube' ? 'YouTube' : 'Google Drive'}
                           </span>
@@ -526,8 +493,8 @@ export function PortfolioPageClient() {
               </AnimatedSection>
 
               {/* Dynamic YouTube Videos Section */}
-              <AnimatedSection className="mt-32 border-t border-white/10 pt-24 pb-12">
-                <div className="text-center mb-16">
+              <AnimatedSection className="mt-14 border-t border-white/10 pt-10 pb-8">
+                <div className="text-center mb-8 md:mb-10">
                   <span className="section-eyebrow">Our Channel</span>
                   <h2 className="text-display mt-4 text-4xl md:text-5xl font-semibold leading-[1.1] tracking-tight">
                     Latest from <span className="text-accent-italic text-gradient">YouTube</span>
@@ -645,17 +612,17 @@ export function PortfolioPageClient() {
         </>
       ) : (
         /* Collection Gallery View (Independent Page layout) */
-        <section className="section-base overflow-hidden pt-40 md:pt-48 pb-32">
+        <section className="section-base overflow-hidden pt-28 md:pt-36 pb-16 md:pb-20">
           <div className="container-page">
             <AnimatedSection>
               {/* Gallery Header */}
-              <div className="border-b border-white/10 pb-8 mb-12">
+              <div className="border-b border-white/10 pb-6 mb-8">
                 <button
                   onClick={() => {
                     setActiveCollection(null);
                     window.scrollTo({ top: 0, behavior: 'instant' });
                   }}
-                  className="flex items-center gap-3 text-sm font-medium tracking-[0.2em] text-gold/80 hover:text-gold transition-colors uppercase mb-10 mt-6 group"
+                  className="flex items-center gap-3 text-sm font-medium tracking-[0.2em] text-gold/80 hover:text-gold transition-colors uppercase mb-6 mt-2 group"
                 >
                   <span className="text-lg transition-transform duration-300 group-hover:-translate-x-1">←</span> Back to Portfolio
                 </button>
@@ -675,7 +642,7 @@ export function PortfolioPageClient() {
             </AnimatedSection>
 
             {/* Scrollable Gallery Stack (Rendered directly to prevent opacity: 0 issues on tall containers) */}
-            <div className="flex flex-col gap-8 md:gap-12 mt-12">
+            <div className="flex flex-col gap-6 md:gap-8 mt-8">
               {COLLECTIONS[activeCollection].images.map((src, index) => (
                 <OptimizedGalleryImage
                   key={index}

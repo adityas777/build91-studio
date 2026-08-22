@@ -41,8 +41,8 @@ import { AnimatedSection } from './AnimatedSection';
 export function OutcomeWidgets() {
   return (
     <section
-      aria-label="What launches look like with Build91"
-      className="section-base section-cool relative overflow-hidden py-14 md:py-32"
+      aria-label="Real estate marketing outcomes"
+      className="section-base section-cool relative overflow-hidden py-10 md:py-16"
     >
       <div className="pointer-events-none absolute inset-0 bg-grid-soft opacity-[0.18]" />
       <div className="pointer-events-none absolute -left-32 top-1/4 -z-10 h-72 w-72 rounded-full bg-violet-glow/12 blur-[140px]" />

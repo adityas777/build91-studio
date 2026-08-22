@@ -50,11 +50,8 @@ export function BlogsPageClient() {
 
   return (
     <div className="min-h-screen bg-[#05071a] text-white selection:bg-violet-glow/20 selection:text-white">
-      {/* Spacer for navigation header */}
-      <div className="h-24 bg-[#05071a]" />
-
       {/* Hero Section */}
-      <section className="bg-[#05071a] text-white relative overflow-hidden py-16 md:py-24 border-b border-white/10">
+      <section className="bg-[#05071a] text-white relative overflow-hidden pt-28 md:pt-36 pb-8 md:pb-12 border-b border-white/10">
         <div className="absolute inset-0 -z-10 bg-mesh opacity-30" />
         <div className="pointer-events-none absolute -left-32 top-1/3 -z-10 h-96 w-96 rounded-full bg-violet-glow/15 blur-[140px]" />
         <div className="pointer-events-none absolute -right-32 bottom-0 -z-10 h-96 w-96 rounded-full bg-gold/10 blur-[140px]" />
@@ -72,7 +69,7 @@ export function BlogsPageClient() {
                 unveiled.
               </span>
             </h1>
-            <p className="mt-6 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
+            <p className="mt-8 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
               Explore our latest ideas, technical updates, and strategies on the future of digital real estate sales, 3D rendering, and immersive tech.
             </p>
           </AnimatedSection>
@@ -80,9 +77,9 @@ export function BlogsPageClient() {
       </section>
 
       {/* Main Content Section */}
-      <section className="py-20 bg-ink-900/40 border-t border-white/5">
+      <section className="py-10 md:py-14 bg-ink-900/40 border-t border-white/5">
         <div className="container-page max-w-6xl mx-auto px-4">
-          <AnimatedSection className="mb-12 text-center">
+          <AnimatedSection className="mb-8 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
               Top Blogs and Resources
             </h2>

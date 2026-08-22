@@ -81,7 +81,7 @@ export function FaqSection() {
   const isSearching = searchQuery.trim().length > 0;
 
   return (
-    <section className="section-base section-neutral relative overflow-hidden py-24 md:py-32 border-t border-white/5">
+    <section className="section-base section-neutral relative overflow-hidden py-10 md:py-16 border-t border-white/5">
       <div className="container-page">
         {/* Header grid matching reference design */}
         <AnimatedSection className="mb-8 md:mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">

@@ -155,7 +155,7 @@ const SECTIONS: { title: string; body: React.ReactNode }[] = [
 export default function PrivacyPage() {
   return (
     <>
-      <section className="section-base section-violet overflow-hidden pb-12 pt-40 md:pb-16 md:pt-48">
+      <section className="section-base section-violet overflow-hidden pb-8 pt-28 md:pb-12 md:pt-36">
         <div className="absolute inset-0 -z-10 bg-mesh opacity-40" />
         <div className="absolute inset-0 -z-10 bg-grid-soft opacity-25" />
         <div className="container-page">
@@ -170,7 +170,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <section className="section-base section-neutral pb-28 pt-8 md:pb-36 md:pt-12">
+      <section className="section-base section-neutral pb-16 pt-8 md:pb-20">
         <div className="container-page">
           <div className="max-w-3xl space-y-12">
             {SECTIONS.map((s) => (
