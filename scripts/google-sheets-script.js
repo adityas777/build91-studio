@@ -1,7 +1,7 @@
 /**
  * Google Apps Script for Build91 Studio Feedback Logging
  * 
- * Target Sheet: https://docs.google.com/spreadsheets/d/1dJB3V5PLKdA0HIbbmy8qbhfQjWfbNrf2xfAkj3z8Nz8/edit?gid=0#gid=0
+ * Target Sheet: https://docs.google.com/spreadsheets/d/1zyOIBfjnkRmm9mXv-9O5jc26H-UloMixs_loGX8WWyY/edit?gid=0#gid=0
  * 
  * HOW TO SETUP (Takes 1 minute):
  * 1. Open the Google Sheet above.

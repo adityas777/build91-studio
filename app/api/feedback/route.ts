@@ -88,7 +88,7 @@ export async function POST(req: Request) {
   });
 
   // Google Sheets Webhook Log (if configured)
-  const sheetWebhookUrl = process.env.GOOGLE_SHEETS_FEEDBACK_WEBHOOK_URL;
+  const sheetWebhookUrl = process.env.GOOGLE_SHEETS_FEEDBACK_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbyZdvI51g7OrAxucVW3RjWtM8Vi5FUH0MCo1XtqpzvF1WpyXo-9BOt3PcVlyNVLWkas/exec';
   if (sheetWebhookUrl) {
     try {
       await fetch(sheetWebhookUrl, {
