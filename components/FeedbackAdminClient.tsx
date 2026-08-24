@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -21,17 +21,25 @@ export function FeedbackAdminClient() {
   const [clientName, setClientName] = useState('');
   const [organization, setOrganization] = useState('');
   const [copied, setCopied] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Generate live client link
   const generatedUrl = useMemo(() => {
-    if (typeof window === 'undefined') return '';
-    const origin = window.location.origin;
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
     const params = new URLSearchParams();
     if (clientName.trim()) params.set('client', clientName.trim());
     if (organization.trim()) params.set('org', organization.trim());
     const queryString = params.toString();
+    
+    if (!origin) {
+      return queryString ? `/feedback?${queryString}` : '/feedback';
+    }
     return queryString ? `${origin}/feedback?${queryString}` : `${origin}/feedback`;
-  }, [clientName, organization]);
+  }, [clientName, organization, mounted]);
 
   const handleCopy = async () => {
     if (!generatedUrl) return;
@@ -64,7 +72,7 @@ export function FeedbackAdminClient() {
 
       {/* Top Header */}
       <header className="w-full border-b border-white/10 bg-ink-900/80 backdrop-blur-xl sticky top-0 z-30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative h-9 w-9 rounded-full overflow-hidden border border-white/20 p-0.5 bg-white/5 transition-transform duration-300 group-hover:scale-105">
               <Image
@@ -81,12 +89,12 @@ export function FeedbackAdminClient() {
                 BUILD91
               </span>
               <span className="text-[10px] tracking-[0.25em] uppercase text-gold/80 font-medium">
-                Studio · Admin
+                Studio
               </span>
             </div>
           </Link>
 
-          <span className="text-xs uppercase tracking-widest text-gold bg-gold/10 px-3 py-1 rounded-full border border-gold/20 font-semibold">
+          <span className="text-xs uppercase tracking-widest text-white/50 font-medium">
             Link Generator
           </span>
         </div>
@@ -161,8 +169,8 @@ export function FeedbackAdminClient() {
               </span>
 
               <div className="bg-black/60 border border-white/15 rounded-xl p-3.5 flex items-center justify-between gap-3">
-                <div className="text-xs sm:text-sm text-white/80 font-mono truncate select-all">
-                  {generatedUrl}
+                <div suppressHydrationWarning className="text-xs sm:text-sm text-white/80 font-mono truncate select-all">
+                  {mounted ? generatedUrl : '/feedback'}
                 </div>
               </div>
 

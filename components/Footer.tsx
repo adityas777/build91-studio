@@ -10,7 +10,7 @@ export function Footer() {
   const pathname = usePathname();
   const year = new Date().getFullYear();
 
-  if (pathname === '/feedback') {
+  if (pathname?.startsWith('/feedback')) {
     return null;
   }
 

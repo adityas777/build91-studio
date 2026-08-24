@@ -21,7 +21,7 @@ export function WhatsAppFloat() {
     return () => clearTimeout(t);
   }, []);
 
-  if (pathname === '/feedback') {
+  if (pathname?.startsWith('/feedback')) {
     return null;
   }
 

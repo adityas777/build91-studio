@@ -32,7 +32,7 @@ export function Navigation() {
     };
   }, [open]);
 
-  if (pathname === '/feedback') {
+  if (pathname?.startsWith('/feedback')) {
     return null;
   }
 
