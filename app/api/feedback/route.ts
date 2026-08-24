@@ -3,8 +3,10 @@ import { Resend } from 'resend';
 
 type FeedbackPayload = {
   clientName?: string;
+  name?: string;
   organization?: string;
   project?: string;
+  data?: string;
   date?: string;
   company?: string;
   overallSatisfaction: 'happy' | 'neutral' | 'sad';
@@ -34,8 +36,10 @@ export async function POST(req: Request) {
 
   const {
     clientName,
+    name,
     organization,
     project,
+    data,
     date,
     company,
     overallSatisfaction,
@@ -46,8 +50,18 @@ export async function POST(req: Request) {
     comments,
   } = body;
 
-  const resolvedOrg = organization || company || project || '';
-  const resolvedClient = clientName || 'Anonymous Client';
+  const resolvedOrg = organization?.trim() || company?.trim() || project?.trim() || data?.trim() || '';
+  const resolvedClient = clientName?.trim() || name?.trim() || '';
+
+  // Validate that client/project URL parameters are present
+  if (!resolvedClient && !resolvedOrg) {
+    return NextResponse.json(
+      { error: 'Missing client name or project data. URL parameters are required to submit feedback.' },
+      { status: 400 }
+    );
+  }
+
+  const finalClientName = resolvedClient || resolvedOrg || 'Valued Client';
 
   // Validate required rating fields
   if (!overallSatisfaction || !['happy', 'neutral', 'sad'].includes(overallSatisfaction)) {
@@ -75,7 +89,7 @@ export async function POST(req: Request) {
   const deliveryDate = date ? date.trim() : 'Unspecified Date';
 
   console.log('[feedback] new feedback submission received', {
-    client: resolvedClient,
+    client: finalClientName,
     organization: resolvedOrg,
     deliveryDate,
     overallSatisfaction,
@@ -96,7 +110,7 @@ export async function POST(req: Request) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           timestamp,
-          clientName: resolvedClient,
+          clientName: finalClientName,
           organization: resolvedOrg,
           deliveryDate,
           overallSatisfaction,
@@ -127,13 +141,13 @@ export async function POST(req: Request) {
   try {
     const resend = new Resend(apiKey);
 
-    const subjectHeadline = resolvedOrg ? `${resolvedClient} (${resolvedOrg})` : resolvedClient;
+    const subjectHeadline = resolvedOrg && resolvedClient ? `${resolvedClient} (${resolvedOrg})` : finalClientName;
     const subject = `Client Feedback: ${subjectHeadline} — ${RATING_LABELS[overallSatisfaction]?.emoji} ${RATING_LABELS[overallSatisfaction]?.label}`;
 
     const text = `
 Client Feedback Submission
 ----------------------------------------
-Client Name: ${resolvedClient}
+Client Name: ${finalClientName}
 ${resolvedOrg ? `Organization / Project: ${resolvedOrg}\n` : ''}${deliveryDate !== 'Unspecified Date' ? `Delivery Date: ${deliveryDate}\n` : ''}Submitted At: ${timestamp}
 
 Ratings:

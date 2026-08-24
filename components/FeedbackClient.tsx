@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   CheckCircle2, 
@@ -10,7 +11,8 @@ import {
   Loader2, 
   AlertCircle,
   Building2,
-  UserCheck
+  UserCheck,
+  Link2Off
 } from 'lucide-react';
 import { SITE } from '@/lib/constants';
 
@@ -40,8 +42,33 @@ export function FeedbackClient({
   initialOrg = '',
   initialDate = '',
 }: FeedbackClientProps) {
-  const clientName = initialClient.trim();
-  const organization = initialOrg.trim();
+  const searchParams = useSearchParams();
+
+  const urlClient = (
+    searchParams?.get('client') ||
+    searchParams?.get('name') ||
+    searchParams?.get('customer') ||
+    searchParams?.get('user') ||
+    ''
+  ).trim();
+
+  const urlOrg = (
+    searchParams?.get('org') ||
+    searchParams?.get('organization') ||
+    searchParams?.get('project') ||
+    searchParams?.get('company') ||
+    searchParams?.get('data') ||
+    ''
+  ).trim();
+
+  const urlDate = (searchParams?.get('date') || '').trim();
+
+  const clientName = (urlClient || initialClient || '').trim();
+  const organization = (urlOrg || initialOrg || '').trim();
+  const deliveryDate = (urlDate || initialDate || '').trim();
+
+  // Valid params require at least client name or project / organization data
+  const hasValidParams = Boolean(clientName || organization);
 
   // Ratings
   const [overallSatisfaction, setOverallSatisfaction] = useState<RatingValue | null>(null);
@@ -59,6 +86,11 @@ export function FeedbackClient({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+
+    if (!hasValidParams || (!clientName && !organization)) {
+      setErrorMessage('Feedback cannot be submitted without a valid personalized client link.');
+      return;
+    }
 
     if (!overallSatisfaction) {
       setErrorMessage('Please select your Overall Satisfaction rating.');
@@ -88,9 +120,9 @@ export function FeedbackClient({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          clientName: clientName || 'Valued Client',
+          clientName: clientName || '',
           organization: organization || '',
-          date: initialDate || '',
+          date: deliveryDate || '',
           overallSatisfaction,
           quality,
           turnaroundTime,
@@ -159,7 +191,57 @@ export function FeedbackClient({
       {/* Main Content Area */}
       <main className="flex-1 max-w-2xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col justify-center">
         <AnimatePresence mode="wait">
-          {submitted ? (
+          {!hasValidParams ? (
+            /* ── Missing Parameters / Locked State ────────────────────────────── */
+            <motion.div
+              key="missing-params"
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="glass-card rounded-2xl p-8 sm:p-12 text-center border border-amber-500/30 shadow-2xl relative overflow-hidden my-auto"
+            >
+              <div className="absolute top-0 right-0 w-60 h-60 bg-amber-500/10 rounded-full blur-[100px] pointer-events-none" />
+
+              {/* Centered Locked / Alert Icon */}
+              <div className="flex flex-col items-center justify-center mb-6">
+                <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-400 mb-4 shadow-[0_0_35px_rgba(245,158,11,0.25)]">
+                  <Link2Off className="w-8 h-8 sm:w-10 sm:h-10" />
+                </div>
+                <span className="inline-block text-[11px] uppercase tracking-[0.25em] text-amber-400 font-semibold bg-amber-500/10 px-3.5 py-1 rounded-full border border-amber-500/20">
+                  Personalized Link Required
+                </span>
+              </div>
+
+              {/* Headline */}
+              <h2 className="text-display text-2xl sm:text-3xl font-semibold text-white tracking-tight mb-3">
+                Client Feedback Link Required
+              </h2>
+
+              {/* Description */}
+              <p className="text-white/70 text-sm sm:text-base leading-relaxed max-w-md mx-auto mb-8 font-light">
+                To ensure your review is accurately attributed to your project deliverables, feedback cannot be submitted without a verified client link. If you are a client of Build91 Studio, please use the custom link sent to you directly via WhatsApp or Email.
+              </p>
+
+              {/* Actions */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <Link
+                  href="/"
+                  className="w-full sm:w-auto bg-gradient-to-r from-gold via-gold-light to-gold text-ink-900 font-accent text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase py-3.5 px-8 rounded-full shadow-lg shadow-gold/20 hover:shadow-gold/40 hover:scale-105 active:scale-95 transition-all duration-300 inline-flex items-center justify-center"
+                >
+                  Return to Homepage
+                </Link>
+                <a
+                  href="https://wa.me/919106093310?text=Hi%20Build91%20Studio%2C%20I%20need%20a%20feedback%20link%20for%20my%20project."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto bg-white/10 hover:bg-white/15 text-white font-accent text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase py-3.5 px-6 rounded-full border border-white/20 transition-all duration-300 inline-flex items-center justify-center gap-2"
+                >
+                  Contact Studio
+                </a>
+              </div>
+            </motion.div>
+          ) : submitted ? (
             /* ── Polished Centered Thank You State ────────────────────────────── */
             <motion.div
               key="success"

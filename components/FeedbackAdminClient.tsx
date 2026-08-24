@@ -27,6 +27,8 @@ export function FeedbackAdminClient() {
     setMounted(true);
   }, []);
 
+  const isReady = Boolean(clientName.trim() || organization.trim());
+
   // Generate live client link
   const generatedUrl = useMemo(() => {
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
@@ -35,10 +37,10 @@ export function FeedbackAdminClient() {
     if (organization.trim()) params.set('org', organization.trim());
     const queryString = params.toString();
     
-    if (!origin) {
-      return queryString ? `/feedback?${queryString}` : '/feedback';
+    if (!queryString) {
+      return '';
     }
-    return queryString ? `${origin}/feedback?${queryString}` : `${origin}/feedback`;
+    return origin ? `${origin}/feedback?${queryString}` : `/feedback?${queryString}`;
   }, [clientName, organization, mounted]);
 
   const handleCopy = async () => {
@@ -163,14 +165,29 @@ export function FeedbackAdminClient() {
 
             {/* Live Generated URL Box */}
             <div className="mt-2 pt-6 border-t border-white/10 flex flex-col gap-3">
-              <span className="text-xs uppercase tracking-wider text-white/60 font-semibold flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-gold" />
-                <span>Generated Feedback Link:</span>
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="text-xs uppercase tracking-wider text-white/60 font-semibold flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-gold" />
+                  <span>Generated Feedback Link:</span>
+                </span>
+                {isReady ? (
+                  <span className="text-[10px] uppercase tracking-wider font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+                    Ready to Share
+                  </span>
+                ) : (
+                  <span className="text-[10px] uppercase tracking-wider font-medium text-white/40">
+                    Requires Client Name
+                  </span>
+                )}
+              </div>
 
               <div className="bg-black/60 border border-white/15 rounded-xl p-3.5 flex items-center justify-between gap-3">
-                <div suppressHydrationWarning className="text-xs sm:text-sm text-white/80 font-mono truncate select-all">
-                  {mounted ? generatedUrl : '/feedback'}
+                <div suppressHydrationWarning className="text-xs sm:text-sm font-mono truncate select-all">
+                  {isReady ? (
+                    <span className="text-white/90">{mounted ? generatedUrl : '/feedback'}</span>
+                  ) : (
+                    <span className="text-white/30 italic">Enter client name above to generate link...</span>
+                  )}
                 </div>
               </div>
 
@@ -178,11 +195,14 @@ export function FeedbackAdminClient() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
                 <button
                   type="button"
+                  disabled={!isReady}
                   onClick={handleCopy}
                   className={`py-3 px-5 rounded-xl font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 ${
-                    copied
+                    !isReady
+                      ? 'bg-white/5 text-white/30 border border-white/10 cursor-not-allowed'
+                      : copied
                       ? 'bg-emerald-500 text-ink-900 shadow-lg shadow-emerald-500/30'
-                      : 'bg-gold hover:bg-gold-light text-ink-900 shadow-lg shadow-gold/20 active:scale-95'
+                      : 'bg-gold hover:bg-gold-light text-ink-900 shadow-lg shadow-gold/20 active:scale-95 cursor-pointer'
                   }`}
                 >
                   {copied ? (
@@ -200,8 +220,13 @@ export function FeedbackAdminClient() {
 
                 <button
                   type="button"
+                  disabled={!isReady}
                   onClick={handleWhatsApp}
-                  className="py-3 px-5 rounded-xl font-semibold text-xs uppercase tracking-wider bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] border border-[#25D366]/40 flex items-center justify-center gap-2 transition-all active:scale-95"
+                  className={`py-3 px-5 rounded-xl font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${
+                    !isReady
+                      ? 'bg-white/5 text-white/30 border border-white/10 cursor-not-allowed'
+                      : 'bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] border border-[#25D366]/40 active:scale-95 cursor-pointer'
+                  }`}
                 >
                   <Share2 className="w-4 h-4" />
                   <span>Share on WhatsApp</span>
@@ -209,17 +234,19 @@ export function FeedbackAdminClient() {
               </div>
 
               {/* Preview Link */}
-              <div className="text-center mt-2">
-                <a
-                  href={generatedUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-gold transition-colors"
-                >
-                  <span>Open client view in new tab</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </div>
+              {isReady && (
+                <div className="text-center mt-2">
+                  <a
+                    href={generatedUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-gold transition-colors"
+                  >
+                    <span>Open client view in new tab</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </motion.div>
