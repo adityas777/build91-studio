@@ -1,6 +1,7 @@
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { NextResponse } from 'next/server';
-import { FALLBACK_BLOGS } from '@/lib/blogData';
+import { BlogPost, FALLBACK_BLOGS } from '@/lib/blogData';
+import { fetchLinkedInPosts } from '@/lib/linkedin';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,12 +17,12 @@ const s3Client = new S3Client({
   } : {})
 });
 
-export async function GET() {
+async function getStaticBlogs(): Promise<BlogPost[]> {
   const bucketName = process.env.PORTFOLIO_BUCKET_NAME;
-  
+
   if (!bucketName) {
     console.warn('PORTFOLIO_BUCKET_NAME is missing. Falling back to local blog data.');
-    return NextResponse.json(FALLBACK_BLOGS);
+    return FALLBACK_BLOGS;
   }
 
   try {
@@ -37,16 +38,25 @@ export async function GET() {
       throw new Error('Blogs body returned from S3 is empty.');
     }
 
-    const blogs = JSON.parse(bodyContents);
-
-    return NextResponse.json(blogs, {
-      headers: {
-        'Cache-Control': 's-maxage=300, stale-while-revalidate=600',
-        'CDN-Cache-Control': 's-maxage=300'
-      }
-    });
+    return JSON.parse(bodyContents);
   } catch (error: any) {
     console.error('Error fetching S3 blogs. Falling back to local blog data:', error);
-    return NextResponse.json(FALLBACK_BLOGS);
+    return FALLBACK_BLOGS;
   }
+}
+
+export async function GET() {
+  // Static articles always come first and are never affected by LinkedIn's
+  // availability; live LinkedIn posts (if any) are appended after them.
+  const [staticBlogs, linkedInPosts] = await Promise.all([
+    getStaticBlogs(),
+    fetchLinkedInPosts(),
+  ]);
+
+  return NextResponse.json([...staticBlogs, ...linkedInPosts], {
+    headers: {
+      'Cache-Control': 's-maxage=300, stale-while-revalidate=600',
+      'CDN-Cache-Control': 's-maxage=300',
+    },
+  });
 }

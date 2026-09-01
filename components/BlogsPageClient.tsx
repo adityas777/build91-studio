@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowUpRight, X } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Linkedin, X } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { BlogPost } from '@/lib/blogData';
 
@@ -113,6 +113,14 @@ export function BlogsPageClient() {
                       <div className="absolute left-4 top-4 rounded-full bg-[#05071a]/80 backdrop-blur-sm px-3 py-1 text-[9px] font-semibold uppercase tracking-wider text-violet-soft border border-white/5">
                         {blog.category}
                       </div>
+                      {blog.source === 'linkedin' && (
+                        <div
+                          className="absolute right-4 top-4 rounded-full bg-[#05071a]/80 backdrop-blur-sm p-1.5 text-[#0A66C2] border border-white/5"
+                          title="From LinkedIn"
+                        >
+                          <Linkedin className="h-3.5 w-3.5" fill="currentColor" />
+                        </div>
+                      )}
                     </div>
 
                     {/* Meta & Info */}
@@ -250,6 +258,20 @@ export function BlogsPageClient() {
                   <p className="mt-4 text-base md:text-lg text-white/70 font-medium leading-relaxed">
                     {selectedBlog.subtitle}
                   </p>
+                )}
+
+                {/* LinkedIn source link */}
+                {selectedBlog.source === 'linkedin' && selectedBlog.externalUrl && (
+                  <a
+                    href={selectedBlog.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#0A66C2] hover:text-[#0A66C2]/80 transition-colors"
+                  >
+                    <Linkedin className="h-3.5 w-3.5" fill="currentColor" />
+                    View original post on LinkedIn
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
                 )}
 
                 {/* Cover Image */}

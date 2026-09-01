@@ -1,10 +1,18 @@
 import type { Metadata } from 'next';
 import { Jost, Cormorant_Garamond } from 'next/font/google';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { WhatsAppFloat } from '@/components/WhatsAppFloat';
 import { SITE } from '@/lib/constants';
+
+// Only reports from production deploys — local `npm run dev` traffic never
+// hits GA. Unset NEXT_PUBLIC_GA_MEASUREMENT_ID and no script is injected.
+const gaMeasurementId =
+  process.env.NODE_ENV === 'production'
+    ? process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+    : undefined;
 
 const jost = Jost({ 
   subsets: ['latin'], 
@@ -122,6 +130,7 @@ export default function RootLayout({
         <Footer />
         <WhatsAppFloat />
       </body>
+      {gaMeasurementId && <GoogleAnalytics gaId={gaMeasurementId} />}
     </html>
   );
 }

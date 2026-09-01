@@ -18,6 +18,11 @@ export type BlogPost = {
   image: string;
   category: string;
   content: BlogContentBlock[];
+  // Present only on posts pulled live from LinkedIn (see lib/linkedin.ts).
+  // These have no structured content, so the UI links out to `externalUrl`
+  // instead of opening the in-house reader modal.
+  source?: 'linkedin';
+  externalUrl?: string;
 };
 
 export const FALLBACK_BLOGS: BlogPost[] = [
