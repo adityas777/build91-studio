@@ -95,7 +95,7 @@ export function BlogsPageClient() {
             <>
               {/* Blogs Grid */}
               <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {displayedBlogs.map((blog) => (
+                {displayedBlogs.map((blog, index) => (
                   <div
                     key={blog.id}
                     onClick={() => setSelectedBlog(blog)}
@@ -108,7 +108,10 @@ export function BlogsPageClient() {
                         src={blog.image}
                         alt={blog.title}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
+                        // The first card is the LCP element on initial load — lazy-loading it
+                        // actively delays the fetch instead of prioritizing it.
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        fetchPriority={index === 0 ? 'high' : 'auto'}
                       />
                       <div className="absolute left-4 top-4 rounded-full bg-[#05071a]/80 backdrop-blur-sm px-3 py-1 text-[9px] font-semibold uppercase tracking-wider text-violet-soft border border-white/5">
                         {blog.category}
